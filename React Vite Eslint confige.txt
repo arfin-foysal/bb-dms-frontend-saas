@@ -1,0 +1,28 @@
+//foysal
+npm install vite-plugin-eslint --save-dev
+
+//foysal
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import eslint from 'vite-plugin-eslint';
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [react(), eslint()],
+});
+
+
+//foysal
+npm install eslint --save-dev
+
+//foysal
+npm install eslint-config-react-app --save-dev
+
+//foysal
+touch/ni .eslintrc
+
+{
+  "extends": [
+    "react-app"
+  ]
+}
