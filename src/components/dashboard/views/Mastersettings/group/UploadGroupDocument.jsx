@@ -14,21 +14,15 @@ import {
 } from "../../../../../services/ThirdSubCategoryApi";
 
 import { useNavigate } from "react-router-dom";
-import { useGroupDocumentUpdateMutation } from "../../../../../services/groupApi";
+import { useAddGroupDocumentMutation, useGroupDocumentUpdateMutation } from "../../../../../services/groupApi";
 
-const UploadGroupDocument = ({ handleClose }) => {
+const UploadGroupDocument = ({ handleClose,param }) => {
   const navigate=useNavigate()
-
-
-  const [groupDocumentUpdate, res] = useGroupDocumentUpdateMutation();
-
-  const [category, setcategory] = useState(0);
-  const [subCategory, setsubCategory] = useState(0);
+  const [addGroupDocument, res] = useAddGroupDocumentMutation();
     const [description, setDescription] = useState();
     const editor = useRef(null);
-  const cateRes = useAllCategoryQuery();
-  const subCateRes = useSubCategoryByCategoryIdQuery(category);
-  const thirdSubCateRes = useThirdCateBySubCateIdQuery(subCategory);
+
+console.log(param)
 
   const [previewImage, setPreviewImage] = useState();
   function handelImage(e) {
@@ -38,26 +32,21 @@ const UploadGroupDocument = ({ handleClose }) => {
   const formik = useFormik({
     initialValues: {
       name: "",
-      catagory_id: "",
-      sub_catagory_id: "",
-      sub_sub_catagory_id: "",
-    //   description: "",
+      group_id: "",
       file: "",
     },
 
     onSubmit: async (values, { resetForm }) => {
       let formData = new FormData();
       formData.append("name", values.name);
-      formData.append("catagory_id", values.catagory_id);
-      formData.append("sub_catagory_id", values.sub_catagory_id);
-      formData.append("sub_sub_catagory_id", values.sub_sub_catagory_id);
+      formData.append("group_id", param);
       formData.append("description",description);
       formData.append("file", values.file);
         resetForm();
 
       try {
         console.log(values);
-        const result = await groupDocumentUpdate(formData).unwrap();
+        const result = await addGroupDocument(formData).unwrap();
         toast.success(result.message);
       } catch (error) {
         toast.warn(error.data.message);
@@ -85,7 +74,7 @@ const UploadGroupDocument = ({ handleClose }) => {
             encType="multipart/form-data"
           >
             <div className="row">
-              <Col md={4}>
+              <Col md={12}>
                 <Form.Group controlId="exampleForm.ControlInput1">
                   <Form.Label>Name</Form.Label>
                   <Form.Control
@@ -100,77 +89,10 @@ const UploadGroupDocument = ({ handleClose }) => {
               </Col>
               <Col md={8}>
                 <Row>
-                  <Col>
-                    <Form.Label>Category</Form.Label>
-                    <select
-                      className=" form-control form-select mb-3"
-                      name="catagory_id"
-                      required
-                      onChange={(e) => {
-                        formik.handleChange(e);
-                        setcategory(e.target.value);
-                      }}
-                      value={formik.values.catagory_id}
-                    >
-                      <option>--Selact--</option>
-                      {cateRes.data?.map((item) => (
-                        <option value={item.id}>{item.name}</option>
-                      ))}
-                    </select>
-                  </Col>
-                  <Col
-                  // className={catagory_id === undefined ? "d-none" : "d-block"}
-                  >
-                    <Form.Label>Sub Category</Form.Label>
-                    <select
-                      className="mb-3 form-control form-select"
-                      name="sub_catagory_id"
-                      required
-                      onChange={(e) => {
-                        formik.handleChange(e);
-                        setsubCategory(e.target.value);
-                      }}
-                      value={formik.values.sub_catagory_id}
-                    >
-                      <option>--Selact--</option>
-                      {subCateRes.data?.map((item) => (
-                        <option value={item.id}>{item.name}</option>
-                      ))}
-                    </select>
-                  </Col>
-                  <Col>
-                    <Form.Label>Third Sub Category</Form.Label>
-                    <Form.Control
-                      as="select"
-                      className="mb-3"
-                      name="sub_sub_catagory_id"
-                      required
-                      onChange={formik.handleChange}
-                      value={formik.values.sub_sub_catagory_id}
-                    >
-                      <option>--Selact--</option>
-                      {thirdSubCateRes.data?.map((item) => (
-                        <option value={item.id}>{item.name}</option>
-                      ))}
-                    </Form.Control>
-                  </Col>
                 </Row>
               </Col>
             </div>
-            {/* <div className="form-group row col-12 my-1">
-              <label className="col-12 col-form-label">Description</label>
-              <div className="col-12">
-                <textarea
-                  placeholder="Enter description"
-                  type="text"
-                  className="form-control"
-                  name="description"
-                  onChange={formik.handleChange}
-                  value={formik.values.description}
-                  required
-                />
-              </div>
-            </div> */}
+
 
             <Form.Label>Description</Form.Label> 
            <JoditEditor

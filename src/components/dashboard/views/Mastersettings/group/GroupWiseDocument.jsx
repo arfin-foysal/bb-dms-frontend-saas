@@ -1,27 +1,23 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import PageTopHeader from "../../../common/PageTopHeader";
 
 import Loader from "../../../common/Loader";
 import { Link, useParams } from "react-router-dom";
 import { Card } from "react-bootstrap";
 
-import {
-
-  useDocumentpublishMutation,
-} from "../../../../../services/documentApi";
+import { useDocumentpublishMutation } from "../../../../../services/documentApi";
 import {
   BsFillArrowDownCircleFill,
   BsFillCheckCircleFill,
   BsFillEyeFill,
   BsFillTrashFill,
-
+  BsPencilSquare,
   BsXCircleFill,
 } from "react-icons/bs";
 import { RiUploadCloud2Fill } from "react-icons/ri";
 import {
   DocumentPublish,
   deleteHandel,
-
   groupdownload,
 } from "../../../../../utils/Document";
 import {
@@ -31,6 +27,7 @@ import {
 } from "../../../../../services/groupApi";
 import NoImage from "../../../common/NoImage";
 import { useSelector } from "react-redux";
+import QuickUploadGroupModal from "./QuickUploadGroupModal";
 
 export const GroupWiseDocument = () => {
   const { id } = useParams();
@@ -39,28 +36,60 @@ export const GroupWiseDocument = () => {
   const [documentpublish] = useDocumentpublishMutation();
 
   const { data, isFetching, isSuccess, isError } = res;
-  const { data: singalData, isSuccess: singalDataSuccess } = useSingalGroupQuery(id);
+  const { data: singalData, isSuccess: singalDataSuccess } =
+    useSingalGroupQuery(id);
   const authUser = useSelector((state) => state.auth.user);
- 
+  const [show, setShow] = useState(false);
+  const [clickValue, setClickValue] = useState(null);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const [paramId, setParamId] = useState(null);
+  const handelClickValue = useCallback((value) => {
+    setClickValue(value);
+  }, []);
 
   return (
     <>
+      {isFetching && <Loader />}
+      <QuickUploadGroupModal
+        show={show}
+        handleClose={handleClose}
+        clickValue={clickValue}
+        paramId={paramId}
+      />
       <PageTopHeader title="Documnet" />
-      <div class="card border shadow-lg ">
-        <div class="card-header d-flex justify-content-start ">
-          <div>Group Document ||</div>
-          {singalDataSuccess &&
-                singalData.data.user.map((item) => (
-                  <span>
-                    <img
-                      width={20}
-                      alt={item.name}
-                      className="rounded-circle pb-1 "
-                      variant="top"
-                      src={item.image?`${import.meta.env.VITE_FILE_URL}${item.image}` :"l"}
-                    />
-                  </span>
-                ))}
+      <div className="card border shadow-lg ">
+        <div className="card-header d-flex justify-content-between">
+          <div>
+            Group Document ||
+            {singalDataSuccess &&
+              singalData.data.user.map((item) => (
+                <span>
+                  <img
+                    width={20}
+                    alt={item.name}
+                    className="rounded-circle pb-1 "
+                    variant="top"
+                    src={
+                      item.image
+                        ? `${import.meta.env.VITE_FILE_URL}${item.image}`
+                        : "l"
+                    }
+                  />
+                </span>
+              ))}
+          </div>
+
+          <button
+            className="btn btn-primary btn-sm"
+            onClick={() => {
+              handleShow();
+              handelClickValue("Add New Documnet");
+              setParamId(id);
+            }}
+          >
+            Add New Documnet
+          </button>
         </div>
 
         <div class="card-body ">
@@ -86,7 +115,7 @@ export const GroupWiseDocument = () => {
                     className=" "
                   > */}
                   <Card style={{ width: "15rem" }} className=" border-0">
-                  <NoImage item={item} />
+                    <NoImage item={item} />
                     <Card.Body className=" px-2 text-dark">
                       <div className=" d-flex">
                         <div className="mb-1">
@@ -121,15 +150,12 @@ export const GroupWiseDocument = () => {
                     <div className="text-center  py-2 shadow text-dark ">
                       <div>
                         <Link
-               
-
                           to={
                             (authUser?.user_type === "Admin" &&
-                            `/dashboard/group-singal-document-view/${item?.id}`) ||
+                              `/dashboard/group-singal-document-view/${item?.id}`) ||
                             (authUser?.user_type === "User" &&
-                            `/dashboard/user/group-singal-document-view/${item?.id}`)
+                              `/dashboard/user/group-singal-document-view/${item?.id}`)
                           }
-
                         >
                           <BsFillEyeFill color="blue" size={22} />
                         </Link>
@@ -138,12 +164,17 @@ export const GroupWiseDocument = () => {
                             onClick={(e) => groupdownload(e, item)}
                           />
                         </span>
-                        {/* <Link
-                          to={`/dashboard/edit-document/${item?.id}`}
+                        <Link
+                          to="#"
+                          onClick={() => {
+                            handleShow();
+                            handelClickValue("Edit Documnet");
+                            setParamId(item);
+                          }}
                           className="px-3"
                         >
                           <BsPencilSquare size={18} color="blue" />
-                        </Link> */}
+                        </Link>
                         <BsFillTrashFill
                           className="pointer mx-1"
                           color="red"
