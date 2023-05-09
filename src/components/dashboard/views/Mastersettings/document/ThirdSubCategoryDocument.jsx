@@ -4,16 +4,11 @@ import PageTopHeader from "../../../common/PageTopHeader";
 import Loader from "../../../common/Loader";
 import { Link, useParams } from "react-router-dom";
 import { Card } from "react-bootstrap";
-import folder from "./../../../../../assets/images/File/file-folder.png";
-import file from "./../../../../../assets/images/File/file.png";
+
 import {
-  useCateDocByCateIdQuery,
   useDeleteDocumentMutation,
   useDocumentpublishMutation,
-  useSubCateFolderByCateIdQuery,
-  useSubcategoryDocumentBySubCategoryIdQuery,
   useThirdSubCategoryDocumentByThirdSubCategoryIdQuery,
-  useThirdSubCategoryFolderBySubCategoryIdQuery,
 } from "../../../../../services/documentApi";
 import {
   BsFillArrowDownCircleFill,
@@ -31,15 +26,15 @@ import {
 } from "../../../../../utils/Document";
 import NoImage from "../../../common/NoImage";
 import QuickUploadModal from "./QuickUploadModal";
+import { useSelector } from "react-redux";
 
 export const ThirdSubCategoryDocument = () => {
   const { id } = useParams();
-  const res = useThirdSubCategoryFolderBySubCategoryIdQuery(id);
-  const { data, isFetching, isSuccess, isError } = res;
+
   const cateDocRes = useThirdSubCategoryDocumentByThirdSubCategoryIdQuery(id);
   const [documentpublish] = useDocumentpublishMutation();
   const [deleteDocument] = useDeleteDocumentMutation();
-
+  const authUser = useSelector((state) => state.auth.user);
   const {
     data: cateDocData,
     isFetching: cateDocIsFetching,
@@ -127,7 +122,19 @@ export const ThirdSubCategoryDocument = () => {
 
                     <div className="text-center  py-2 shadow text-dark ">
                       <div>
-                        <Link to={`/dashboard/document-view/${item.id}`}>
+                        <Link
+                  
+
+                          to={
+                            (authUser?.user_type === "Admin" &&
+                            `/dashboard/document-view/${item.id}`) ||
+                            (authUser?.user_type === "User" &&
+                            `/dashboard/user/document-view/${item.id}`)
+                          }
+                        
+                        >
+
+
                           <BsFillEyeFill color="blue" size={22} />
                         </Link>
                         <span className="pointer ml-3 ms-3">
@@ -136,7 +143,15 @@ export const ThirdSubCategoryDocument = () => {
                           />
                         </span>
                         <Link
-                          to={`/dashboard/edit-document/${item.id}`}
+                    
+
+                          to={
+                            (authUser?.user_type === "Admin" &&
+                            `/dashboard/edit-document/${item.id}`) ||
+                            (authUser?.user_type === "User" &&
+                            `/dashboard/user/edit-document/${item.id}`)
+                          }
+
                           className="px-3"
                         >
                           <BsPencilSquare size={18} color="blue" />

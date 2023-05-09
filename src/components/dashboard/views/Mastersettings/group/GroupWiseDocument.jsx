@@ -4,11 +4,9 @@ import PageTopHeader from "../../../common/PageTopHeader";
 import Loader from "../../../common/Loader";
 import { Link, useParams } from "react-router-dom";
 import { Card } from "react-bootstrap";
-import folder from "./../../../../../assets/images/File/file-folder.png";
-import file from "./../../../../../assets/images/File/file.png";
+
 import {
-  useCateDocByCateIdQuery,
-  useDeleteDocumentMutation,
+
   useDocumentpublishMutation,
 } from "../../../../../services/documentApi";
 import {
@@ -16,14 +14,14 @@ import {
   BsFillCheckCircleFill,
   BsFillEyeFill,
   BsFillTrashFill,
-  BsPencilSquare,
+
   BsXCircleFill,
 } from "react-icons/bs";
 import { RiUploadCloud2Fill } from "react-icons/ri";
 import {
   DocumentPublish,
   deleteHandel,
-  download,
+
   groupdownload,
 } from "../../../../../utils/Document";
 import {
@@ -32,6 +30,7 @@ import {
   useSingalGroupQuery,
 } from "../../../../../services/groupApi";
 import NoImage from "../../../common/NoImage";
+import { useSelector } from "react-redux";
 
 export const GroupWiseDocument = () => {
   const { id } = useParams();
@@ -41,7 +40,7 @@ export const GroupWiseDocument = () => {
 
   const { data, isFetching, isSuccess, isError } = res;
   const { data: singalData, isSuccess: singalDataSuccess } = useSingalGroupQuery(id);
-
+  const authUser = useSelector((state) => state.auth.user);
  
 
   return (
@@ -122,7 +121,15 @@ export const GroupWiseDocument = () => {
                     <div className="text-center  py-2 shadow text-dark ">
                       <div>
                         <Link
-                          to={`/dashboard/group-singal-document-view/${item?.id}`}
+               
+
+                          to={
+                            (authUser?.user_type === "Admin" &&
+                            `/dashboard/group-singal-document-view/${item?.id}`) ||
+                            (authUser?.user_type === "User" &&
+                            `/dashboard/user/group-singal-document-view/${item?.id}`)
+                          }
+
                         >
                           <BsFillEyeFill color="blue" size={22} />
                         </Link>

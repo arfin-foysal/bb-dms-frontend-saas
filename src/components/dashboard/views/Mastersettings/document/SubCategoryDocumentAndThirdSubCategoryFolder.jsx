@@ -30,6 +30,7 @@ import {
 } from "../../../../../utils/Document";
 import NoImage from "../../../common/NoImage";
 import QuickUploadModal from "./QuickUploadModal";
+import { useSelector } from "react-redux";
 
 export const SubCategoryDocumentAndThirdSubCategoryFolder = () => {
   const { id } = useParams();
@@ -38,7 +39,7 @@ export const SubCategoryDocumentAndThirdSubCategoryFolder = () => {
   const cateDocRes = useSubcategoryDocumentBySubCategoryIdQuery(id);
   const [documentpublish] = useDocumentpublishMutation();
   const [deleteDocument] = useDeleteDocumentMutation();
-
+  const authUser = useSelector((state) => state.auth.user);
   const {
     data: cateDocData,
     isFetching: cateDocIsFetching,
@@ -88,7 +89,14 @@ export const SubCategoryDocumentAndThirdSubCategoryFolder = () => {
               {data.map((category, i) => (
                 <div className="mx-1" key={i}>
                   <Link
-                    to={`/dashboard/third-sub-category-document/${category.id}`}
+
+
+                    to={
+                      (authUser?.user_type === "Admin" &&
+                      `/dashboard/third-sub-category-document/${category.id}`) ||
+                      (authUser?.user_type === "User" &&
+                      `/dashboard/user/third-sub-category-document/${category.id}`)
+                    }
                     className=" m-2 "
                   >
                     <Card style={{ width: "7rem" }} className=" border-0">
@@ -170,7 +178,18 @@ export const SubCategoryDocumentAndThirdSubCategoryFolder = () => {
 
                     <div className="text-center  py-2 shadow text-dark ">
                       <div>
-                        <Link to={`/dashboard/document-view/${item.id}`}>
+                        <Link
+
+
+                          to={
+                            (authUser?.user_type === "Admin" &&
+                            `/dashboard/document-view/${item.id}`) ||
+                            (authUser?.user_type === "User" &&
+                            `/dashboard/user/document-view/${item.id}`)
+                          }
+                          
+                          
+                        >
                           <BsFillEyeFill color="blue" size={22} />
                         </Link>
                         <span className="pointer ml-3 ms-3">
@@ -179,7 +198,15 @@ export const SubCategoryDocumentAndThirdSubCategoryFolder = () => {
                           />
                         </span>
                         <Link
-                          to={`/dashboard/edit-document/${item.id}`}
+                   
+
+                          to={
+                            (authUser?.user_type === "Admin" &&
+                            `/dashboard/edit-document/${item.id}`) ||
+                            (authUser?.user_type === "User" &&
+                            `/dashboard/user/edit-document/${item.id}`)
+                          }
+
                           className="px-3"
                         >
                           <BsPencilSquare size={18} color="blue" />

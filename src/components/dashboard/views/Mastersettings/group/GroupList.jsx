@@ -29,7 +29,7 @@ const GroupList = () => {
   const [deleteGroup] = useDeleteGroupMutation();
   const auth = useSelector((state) => state.auth.user);
 
-  const [deleteCategory] = useDeleteCategoryMutation();
+  const authUser = useSelector((state) => state.auth.user);
 
   const { data, isSuccess, isFetching, isError, error } = res;
   const [clickValue, setClickValue] = useState(null);
@@ -72,7 +72,6 @@ const GroupList = () => {
         <div class="card-body ">
           {isFetching && <Loader />}
 
-     
           {isError && (
             <div className="d-flex justify-content-center">
               <p> Something went wrong (:</p>
@@ -138,7 +137,12 @@ const GroupList = () => {
                       >
                         <div>
                           <Link
-                            to={`/dashboard/group-document-view/${item?.group?.id}`}
+                            to={
+                              (authUser?.user_type === "Admin" &&
+                                `/dashboard/group-document-view/${item?.group?.id}`) ||
+                              (authUser?.user_type === "User" &&
+                                `/dashboard/user/group-document-view/${item?.group?.id}`)
+                            }
                           >
                             <BsFillEyeFill color="blue" size={22} />
                           </Link>

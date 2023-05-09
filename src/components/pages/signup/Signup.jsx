@@ -39,9 +39,9 @@ const Signup = () => {
   }
 
   return (
-    <div className="container">
+    <div className="container mt-5">
       <div className="row justify-content-center">
-        <div className="col-12 col-md-6">
+        <div className="col-12 col-md-6 py-2  ">
           <div className="card o-hidden border-0 shadow-lg my-5">
             <div className="card-body p-0">
               {/* <!-- Nested Row within Card Body --> */}
@@ -63,7 +63,7 @@ const Signup = () => {
                     </div>
                     <form className="user" onSubmit={formik.handleSubmit}>
                       <div className="form-group row">
-                        <div className="col-sm-6 mb-3 mb-sm-0">
+                        <div className="col-sm-6 py-2 mb-3 mb-sm-0">
                           <input
                             type="text"
                             placeholder="Enter Full Name"
@@ -83,7 +83,7 @@ const Signup = () => {
                             </div>
                           ) : null}
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-sm-6 py-2">
                           <input
                             type="text"
                             placeholder="uaername"
@@ -103,8 +103,7 @@ const Signup = () => {
                             </div>
                           ) : null}
                         </div>
-                      </div>
-                      <div className="form-group py-2">
+                        <div className="col-sm-6 py-2">
                         <input
                           type="number"
                           placeholder="Enter Number"
@@ -123,8 +122,8 @@ const Signup = () => {
                             {formik.errors.number}
                           </div>
                         ) : null}
-                      </div>
-                      <div className="form-group py-2">
+                        </div>
+                        <div className="col-sm-6 py-2">
                         <input
                           type="email"
                           placeholder="Email Address"
@@ -143,10 +142,13 @@ const Signup = () => {
                             {formik.errors.email}
                           </div>
                         ) : null}
+                        </div>
                       </div>
+           
+                
 
                       <div className="form-group row ">
-                        <div className="col-sm-6 mb-3 mb-sm-0">
+                        <div className="col-sm-6 py-2 mb-3 mb-sm-0">
                           <input
                             type="password"
                             id="exampleInputPassword"
@@ -167,11 +169,11 @@ const Signup = () => {
                             </div>
                           ) : null}
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-sm-6 py-2">
                           <input
                             type="password"
                             id="exampleRepeatPassword"
-                            placeholder="Repeat Password"
+                            placeholder="Confirm Password"
                             name="confirm_password"
                             value={formik.values.confirm_password}
                             onChange={formik.handleChange}

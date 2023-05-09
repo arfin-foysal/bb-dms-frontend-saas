@@ -7,34 +7,32 @@ import {
   BsFillCheckCircleFill,
   BsFillEyeFill,
   BsFillFileEarmarkMedicalFill,
-  BsFillTrashFill,
-  BsPencilSquare,
+
   BsStack,
   BsXCircleFill,
 } from "react-icons/bs";
 import { GiSandsOfTime } from "react-icons/gi";
-import { FcApproval } from "react-icons/fc";
 import { ImCross } from "react-icons/im";
-import { RiUploadCloud2Fill } from "react-icons/ri";
+
 import { Link } from "react-router-dom";
 import { Button, Card } from "react-bootstrap";
 import {
-  useAllPublishDocumentQuery,
-  useDashboardDetailsQuery,
+
   useDashboardPublishDocumentQuery,
 } from "../../../../services/publishApi";
 import { download } from "../../../../utils/Document";
 import QuickUploadModal from "../Mastersettings/document/QuickUploadModal";
 import NoImage from "../../common/NoImage";
 import Loader from "../../common/Loader";
-import PageTopHeader from "../../common/PageTopHeader";
+import { useSelector } from "react-redux";
+
 
 const AdminPage = () => {
 
   const res = useDashboardPublishDocumentQuery();
   const { data, isFetching, isSuccess, isError } = res;
 
-
+  const authUser = useSelector((state) => state.auth.user);
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -158,7 +156,16 @@ const AdminPage = () => {
 
                   <div className="text-center  py-2 shadow text-dark ">
                     <div>
-                      <Link to={`/dashboard/document-view/${item.id}`}>
+                      <Link 
+                         to={
+                          (authUser?.user_type === "Admin" &&
+                          `/dashboard/document-view/${item.id}`) ||
+                          (authUser?.user_type === "User" &&
+                          `/dashboard/user/document-view/${item.id}`)
+                        }
+
+                      
+                      >
                         <BsFillEyeFill color="blue" size={22} />
                       </Link>
                       <span className="pointer ml-3 ms-3">

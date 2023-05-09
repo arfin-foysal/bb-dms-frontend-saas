@@ -177,7 +177,17 @@ export const CategoryDocumentAndSubCategoryFolder = () => {
 
                     <div className="text-center  py-2 shadow text-dark ">
                       <div>
-                        <Link to={`/dashboard/document-view/${item.id}`}>
+                        <Link
+                        
+
+                          to={
+                            (authUser?.user_type === "Admin" &&
+                            `/dashboard/document-view/${item.id}`) ||
+                            (authUser?.user_type === "User" &&
+                            `/dashboard/user/document-view/${item.id}`)
+                          }
+                        
+                        >
                           <BsFillEyeFill color="blue" size={22} />
                         </Link>
                         <span className="pointer ml-3 ms-3">
@@ -186,8 +196,14 @@ export const CategoryDocumentAndSubCategoryFolder = () => {
                           />
                         </span>
                         <Link
-                          to={`/dashboard/edit-document/${item.id}`}
                           className="px-3"
+
+                          to={
+                            (authUser?.user_type === "Admin" &&
+                            `/dashboard/edit-document/${item.id}`) ||
+                            (authUser?.user_type === "User" &&
+                            `/dashboard/user/edit-document/${item.id}`)
+                          }
                         >
                           <BsPencilSquare size={18} color="blue" />
                         </Link>

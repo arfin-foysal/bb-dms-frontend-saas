@@ -12,12 +12,15 @@ import { Card } from "react-bootstrap";
 import { useAllPublishDocumentQuery } from "../../../../../services/publishApi";
 import NoImage from "../../../common/NoImage";
 import Loader from "../../../common/Loader";
+import { useSelector } from "react-redux";
 
 const AllDocumentList = () => {
+  const authUser = useSelector((state) => state.auth.user);
   const [search, setSearch] = useState("");
-  const { data, isSuccess, isLoading,isFetching,isError } = useAllPublishDocumentQuery({
-    search: search,
-  });
+  const { data, isSuccess, isLoading, isFetching, isError } =
+    useAllPublishDocumentQuery({
+      search: search,
+    });
 
   return (
     <>
@@ -42,12 +45,12 @@ const AllDocumentList = () => {
           <div className="d-flex justify-content-center">
             <p className="text-center">No Document Found :)</p>
           </div>
-            )}
+        )}
         {isError && (
-             <div className="d-flex justify-content-center">
-                <p> Something went wrong (:</p>
-              </div>
-            )}
+          <div className="d-flex justify-content-center">
+            <p> Something went wrong (:</p>
+          </div>
+        )}
 
         <div class="card-body ">
           <div className="d-flex flex-wrap justify-content-center justify-content-md-start">
@@ -89,7 +92,14 @@ const AllDocumentList = () => {
 
                     <div className="text-center  py-2 shadow text-dark ">
                       <div>
-                        <Link to={`/dashboard/document-view/${item.id}`}>
+                        <Link
+                          to={
+                            (authUser?.user_type === "Admin" &&
+                              `/dashboard/document-view/${item.id}`) ||
+                            (authUser?.user_type === "User" &&
+                              `/dashboard/user/document-view/${item.id}`)
+                          }
+                        >
                           <BsFillEyeFill color="blue" size={22} />
                         </Link>
                         <span className="pointer ml-3 ms-3">
