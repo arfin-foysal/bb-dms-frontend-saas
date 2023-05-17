@@ -3,7 +3,7 @@ import { headers } from "../utils/ApiHeaders";
 export const publishApi = createApi({
   reducerPath: 'publishApi',
   baseQuery: fetchBaseQuery({
-  baseUrl:import.meta.env.VITE_API_URL
+    baseUrl:import.meta.env.VITE_API_URL
   }),
   tagTypes: ['Publish'],
 
@@ -14,7 +14,7 @@ export const publishApi = createApi({
         method: 'GET',
         headers
       }),
-      providesTags: ['Publish']
+      providesTags: ['Publish', 'DocumentData']
     }),
 
     AllPublishDocument: builder.query({

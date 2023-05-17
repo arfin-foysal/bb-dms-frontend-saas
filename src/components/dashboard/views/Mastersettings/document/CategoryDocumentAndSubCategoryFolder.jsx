@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PageTopHeader from "../../../common/PageTopHeader";
 
 import Loader from "./../../../common/Loader";
 import { Link, useParams } from "react-router-dom";
 import { Card } from "react-bootstrap";
 import folder from "./../../../../../assets/images/File/file-folder.png";
-
 
 import {
   useCateDocByCateIdQuery,
@@ -22,7 +21,7 @@ import {
   BsXCircleFill,
 } from "react-icons/bs";
 import { RiUploadCloud2Fill } from "react-icons/ri";
-import {AiFillWarning} from "react-icons/ai"
+import { AiFillWarning } from "react-icons/ai";
 import {
   DocumentPublish,
   deleteHandel,
@@ -40,7 +39,9 @@ export const CategoryDocumentAndSubCategoryFolder = () => {
   const cateDocRes = useCateDocByCateIdQuery(id);
   const [documentpublish] = useDocumentpublishMutation();
   const [deleteDocument] = useDeleteDocumentMutation();
-
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const {
     data: cateDocData,
     isFetching: cateDocIsFetching,
@@ -48,9 +49,32 @@ export const CategoryDocumentAndSubCategoryFolder = () => {
     isError: cateDocIsError,
   } = cateDocRes;
 
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  // search Functionality start
+  const [search, setSearch] = useState(null);
+  const [filteredData, setFilteredData] = useState([]);
+
+  const handelSearch = (e) => {
+    e.preventDefault();
+    setSearch(e.target.value);
+
+    if (e.target.value !== "") {
+      const newFilter = cateDocData?.filter((value) => {
+        return value.name.toLowerCase().includes(search.toLowerCase());
+      });
+
+      setFilteredData(newFilter);
+    }
+
+    if (e.target.value === "") {
+      setFilteredData(cateDocData);
+    }
+  };
+
+  useEffect(() => {
+    setFilteredData(cateDocData);
+  }, [cateDocData]);
+
+  // search Functionality end
 
   return (
     <>
@@ -58,7 +82,18 @@ export const CategoryDocumentAndSubCategoryFolder = () => {
       <PageTopHeader title="Documents" />
       <div class="card border shadow-lg ">
         <div class="card-header d-flex justify-content-between ">
-          <div>Documents</div>
+          <div className="mt-2">Documents</div>
+
+          <div className="col-md-4 mt-2">
+            <input
+              type="search"
+              className="form-control form-control-sm"
+              name="search"
+              placeholder="Search"
+              onChange={(e) => handelSearch(e)}
+            />
+          </div>
+
           <div className="mt-2">
             <button
               className="btn btn-primary btn-sm"
@@ -73,6 +108,8 @@ export const CategoryDocumentAndSubCategoryFolder = () => {
 
         <div class="card-body ">
           {isFetching && <Loader />}
+
+          {/* search bar create */}
 
           {data?.length === 0 && (
             <div className="d-flex justify-content-center">
@@ -90,13 +127,11 @@ export const CategoryDocumentAndSubCategoryFolder = () => {
               {data.map((category, i) => (
                 <div className="mx-1" key={i}>
                   <Link
-                
-
                     to={
                       (authUser?.user_type === "Admin" &&
-                      `/dashboard/sub-category-document-and-third-sub-category-folder/${category.id}`) ||
+                        `/dashboard/sub-category-document-and-third-sub-category-folder/${category.id}`) ||
                       (authUser?.user_type === "User" &&
-                      `/dashboard/user/sub-category-document-and-third-sub-category-folder/${category.id}`)
+                        `/dashboard/user/sub-category-document-and-third-sub-category-folder/${category.id}`)
                     }
                     className=" m-2 "
                   >
@@ -138,7 +173,7 @@ export const CategoryDocumentAndSubCategoryFolder = () => {
 
           <div className="d-flex flex-wrap justify-content-center justify-content-md-start">
             {cateDocIsSuccess &&
-              cateDocData.map((item, i) => (
+              filteredData?.map((item, i) => (
                 <div className="mx-1 m-2 " key={i}>
                   {/* <Link
                     // to={`/documents/document_category_view/${category.id}`}
@@ -149,7 +184,6 @@ export const CategoryDocumentAndSubCategoryFolder = () => {
                     <Card.Body className=" px-2 text-dark">
                       <div className=" d-flex">
                         <div className="mb-1">
-
                           {item.admin_status === "Pending" && (
                             <span>
                               <AiFillWarning className="mx-1" color="orange" />
@@ -158,18 +192,19 @@ export const CategoryDocumentAndSubCategoryFolder = () => {
                           )}
                           {item.admin_status === "Active" && (
                             <span>
-                              <BsFillCheckCircleFill className="mx-1" color="green"  />
+                              <BsFillCheckCircleFill
+                                className="mx-1"
+                                color="green"
+                              />
                               Published
                             </span>
                           )}
                           {item.admin_status === "Cancel" && (
                             <span>
-                              <BsXCircleFill className="mx-1" color="red"  />
+                              <BsXCircleFill className="mx-1" color="red" />
                               Canceled
                             </span>
                           )}
-
-
                         </div>
                       </div>
 
@@ -187,15 +222,12 @@ export const CategoryDocumentAndSubCategoryFolder = () => {
                     <div className="text-center  py-2 shadow text-dark ">
                       <div>
                         <Link
-                        
-
                           to={
                             (authUser?.user_type === "Admin" &&
-                            `/dashboard/document-view/${item.id}`) ||
+                              `/dashboard/document-view/${item.id}`) ||
                             (authUser?.user_type === "User" &&
-                            `/dashboard/user/document-view/${item.id}`)
+                              `/dashboard/user/document-view/${item.id}`)
                           }
-                        
                         >
                           <BsFillEyeFill color="blue" size={22} />
                         </Link>
@@ -206,12 +238,11 @@ export const CategoryDocumentAndSubCategoryFolder = () => {
                         </span>
                         <Link
                           className="px-3"
-
                           to={
                             (authUser?.user_type === "Admin" &&
-                            `/dashboard/edit-document/${item.id}`) ||
+                              `/dashboard/edit-document/${item.id}`) ||
                             (authUser?.user_type === "User" &&
-                            `/dashboard/user/edit-document/${item.id}`)
+                              `/dashboard/user/edit-document/${item.id}`)
                           }
                         >
                           <BsPencilSquare size={18} color="blue" />

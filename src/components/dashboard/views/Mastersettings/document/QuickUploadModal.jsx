@@ -15,7 +15,7 @@ const QuickUploadModal = ({show, handleClose}) => {
             <Modal.Title>Quick Uploade</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <UploadDocument />
+            <UploadDocument handleClose={handleClose} />
           </Modal.Body>
         </Modal>
       </>

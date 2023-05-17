@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PageTopHeader from "../../../common/PageTopHeader";
 
 import Loader from "./../../../common/Loader";
@@ -52,13 +52,50 @@ export const SubCategoryDocumentAndThirdSubCategoryFolder = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+
+    // search Functionality start
+    const [search, setSearch] = useState(null);
+    const [filteredData, setFilteredData] = useState([]);
+  
+    const handelSearch = (e) => {
+      e.preventDefault();
+      setSearch(e.target.value);
+  
+      if (e.target.value !== "") {
+        const newFilter = cateDocData?.filter((value) => {
+          return value.name.toLowerCase().includes(search.toLowerCase());
+        });
+  
+        setFilteredData(newFilter);
+      }
+  
+      if (e.target.value === "") {
+        setFilteredData(cateDocData);
+      }
+    };
+  
+    useEffect(() => {
+      setFilteredData(cateDocData);
+    }, [cateDocData]);
+  
+    // search Functionality end
+
   return (
     <>
        <QuickUploadModal show={show} handleClose={handleClose} />
       <PageTopHeader title="Documents" />
       <div class="card border shadow-lg ">
         <div class="card-header d-flex justify-content-between ">
-          <div> Documents</div>
+          <div className="mt-2"> Documents</div>
+          <div className="col-md-4 mt-2">
+            <input
+              type="search"
+              className="form-control form-control-sm"
+              name="search"
+              placeholder="Search"
+              onChange={(e) => handelSearch(e)}
+            />
+          </div>
           <div className="mt-2">
             <button
               className="btn btn-primary btn-sm"
@@ -138,7 +175,7 @@ export const SubCategoryDocumentAndThirdSubCategoryFolder = () => {
 
           <div className="d-flex flex-wrap justify-content-center justify-content-md-start">
             {cateDocIsSuccess &&
-              cateDocData.map((item, i) => (
+              filteredData?.map((item, i) => (
                 <div className="mx-1 m-2 " key={i}>
                   {/* <Link
                     // to={`/documents/document_category_view/${category.id}`}

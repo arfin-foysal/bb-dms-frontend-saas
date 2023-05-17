@@ -11,12 +11,12 @@ import { CategoryDocumentAndSubCategoryFolder } from "../components/dashboard/vi
 import DocumentView from "../components/dashboard/views/Mastersettings/document/DocumentView";
 import EditDocument from "../components/dashboard/views/Mastersettings/document/EditDocument";
 import { SubCategoryDocumentAndThirdSubCategoryFolder } from "../components/dashboard/views/Mastersettings/document/SubCategoryDocumentAndThirdSubCategoryFolder";
-import { ThirdSubCategoryDocument } from "../components/dashboard/views/Mastersettings/document/thirdSubCategoryDocument";
 import UnpublishDocumentList from "../components/dashboard/views/Mastersettings/unpublishDocument/UnpublishDocumentList";
 import GroupList from "../components/dashboard/views/Mastersettings/group/GroupList";
 import { GroupWiseDocument } from "../components/dashboard/views/Mastersettings/group/GroupWiseDocument";
 import GroupDocumentView from "../components/dashboard/views/Mastersettings/group/GroupDocumentView";
 import AllDocumentList from "../components/dashboard/views/Mastersettings/document/AllDocumentList";
+import { ThirdSubCategoryDocument } from './../components/dashboard/views/Mastersettings/document/ThirdSubCategoryDocument';
 
 
 

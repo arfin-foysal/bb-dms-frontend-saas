@@ -59,8 +59,10 @@ const UploadDocument = ({ handleClose }) => {
       }
     },
   });
+
+
   // if (res.isSuccess) {
-  //   navigate(-1);
+  //   handleClose()
   // }
 
   return (
@@ -106,8 +108,8 @@ const UploadDocument = ({ handleClose }) => {
                       value={formik.values.catagory_id}
                     >
                       <option>--Selact--</option>
-                      {cateRes.data?.map((item) => (
-                        <option value={item.id}>{item.name}</option>
+                      {cateRes.data?.map((item,i) => (
+                        <option key={i} value={item.id}>{item.name}</option>
                       ))}
                     </select>
                   </Col>
@@ -128,8 +130,8 @@ const UploadDocument = ({ handleClose }) => {
                       value={formik.values.sub_catagory_id}
                     >
                       <option>--Selact--</option>
-                      {subCateRes.data?.map((item) => (
-                        <option value={item.id}>{item.name}</option>
+                      {subCateRes.data?.map((item,i) => (
+                        <option key={i} value={item.id}>{item.name}</option>
                       ))}
                     </select>
                   </Col>
@@ -140,18 +142,18 @@ const UploadDocument = ({ handleClose }) => {
                         : "d-block"
                     }
                   >
-                    <Form.Label>Third Sub Category</Form.Label>
+                    <Form.Label>3rd Category</Form.Label>
                     <Form.Control
                       as="select"
-                      className="mb-3"
+                      className="mb-3 form-select"
                       name="sub_sub_catagory_id"
                       required
                       onChange={formik.handleChange}
                       value={formik.values.sub_sub_catagory_id}
                     >
                       <option>--Selact--</option>
-                      {thirdSubCateRes.data?.map((item) => (
-                        <option value={item.id}>{item.name}</option>
+                      {thirdSubCateRes.data?.map((item,i) => (
+                        <option key={i} value={item.id}>{item.name}</option>
                       ))}
                     </Form.Control>
                   </Col>
