@@ -1,30 +1,23 @@
-import React, { useCallback, useMemo, useState } from "react";
-
+import React, { useMemo } from "react";
 import MaterialReactTable from "material-react-table";
-
-import { FaEdit, FaTrash } from "react-icons/fa";
-import { confirmHandel } from "../../../../../utils/Alert";
-import avatar from "../../../../../assets/images/profile-picture.png";
-import { toast } from "react-toastify";
 import Loader from "../../../common/Loader";
-
 import PageTopHeader from "../../../common/PageTopHeader";
 
-import CategoryModal from "../category/CategoryModal";
-import { useDeleteCategoryMutation } from "../../../../../services/categoryApi";
+
 import {
   useAdminDocumentPublishMutation,
   useAdminUnpublishDocumentListQuery,
 } from "../../../../../services/publishApi";
-import { BsFillEyeFill, BsFillTrashFill, BsXCircleFill } from "react-icons/bs";
+import { BsFillEyeFill, BsXCircleFill } from "react-icons/bs";
+import { FcCancel } from "react-icons/fc";
 import { Link } from "react-router-dom";
-import { DocumentPublish, deleteHandel } from "../../../../../utils/Document";
-import { useDeleteDocumentMutation } from "../../../../../services/documentApi";
+import { DocumentPublish, cancelHandel } from "../../../../../utils/Document";
+import { useLazyAdminCancelDocumnetQuery } from "../../../../../services/documentApi";
 import { RiUploadCloud2Fill } from "react-icons/ri";
 
 const UnpublishDocumentList = () => {
   const res = useAdminUnpublishDocumentListQuery();
-  const [deleteDocument] = useDeleteDocumentMutation();
+  const [adminCancelDocumnet,ress]=useLazyAdminCancelDocumnetQuery() 
   const [adminDocumentPublish] = useAdminDocumentPublishMutation();
   const { data, isSuccess, isFetching, isError, error } = res;
 
@@ -134,12 +127,13 @@ const UnpublishDocumentList = () => {
                       </Link>
 
                       <button
+                        className=" btn btn-outline-none"
                         style={{ "border-style": "none" }}
                         onClick={() =>
-                          deleteHandel(deleteDocument, row?.row?.original?.id)
+                          cancelHandel(adminCancelDocumnet, row?.row?.original?.id)
                         }
                       >
-                        <BsFillTrashFill color="red" size={17} />
+                        <FcCancel color="red" size={20} />
                       </button>
 
                       {row?.row?.original?.admin_status === "Pending" && (

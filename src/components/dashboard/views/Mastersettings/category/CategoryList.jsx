@@ -19,8 +19,8 @@ const CategoryList = () => {
 
 
 
+
   const [deleteCategory] = useDeleteCategoryMutation();
-  
   const { data, isSuccess, isFetching, isError, error } = res;
   const [clickValue, setClickValue] = useState(null);
   const [paramId, setParamId] = useState(null);

@@ -12,6 +12,18 @@ const routes = [
         role: 'admin'
     },
     {
+        path: '/dashboard/systemadmin',
+        role: 'systemadmin'
+    },
+    {
+        path: '/dashboard/developer',
+        role: 'developer'
+    },
+    {
+        path: '/dashboard/admin',
+        role: 'admin'
+    },
+    {
         path: '/dashboard/user',
         role: 'user'
     },

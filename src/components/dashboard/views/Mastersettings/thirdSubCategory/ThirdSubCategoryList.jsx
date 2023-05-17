@@ -78,6 +78,11 @@ const ThirdSubCategoryList = () => {
         header: "Category Name",
         size: 10,
       },
+      {
+        accessorKey: "sub_catagory.name", //access nested data with dot notation
+        header: "Sub Category Name",
+        size: 10,
+      },
 
       {
         accessorKey: "description", //normal accessorKey

@@ -16,6 +16,9 @@ export  const confirmHandel = async (icon, buttonTxt, ButtonClr, Did, funC) => {
         // deleteFunc(Did);
         Swal.fire("success");
         
+      } else
+      {
+        Swal.fire("error");
       }
     });
   };

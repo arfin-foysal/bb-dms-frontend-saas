@@ -41,7 +41,13 @@ const DocumentView = () => {
     name: "",
     description: "",
     file: "",
+    doc_id: "",
   });
+
+
+
+
+
 
   const shareDocHandler = (doc) => {
 
@@ -49,7 +55,9 @@ const DocumentView = () => {
     setShare({
       name: doc.name,
       description: doc.description,
-      file: doc.file
+      file: doc.file,
+      doc_id: doc.id,
+
     });
   };
 
@@ -60,11 +68,12 @@ const DocumentView = () => {
         description: share.description,
         file: share.file,
         group_id: group_id,
+        doc_id: share?.doc_id,
       }).unwrap();
       setSmShow(false);
       toast.success(result.message);
     } catch (error) {
-      toast.error("Group not selected");
+      toast.error(error.data.message);
     }
   };
 
@@ -94,8 +103,8 @@ const DocumentView = () => {
               <option>Selact Group</option>
               {userSuccess &&
                 userData.data?.map((item, i) => (
-                  <option key={i} value={item.group.id}>
-                    {item.group.name}
+                  <option key={i} value={item?.group?.id}>
+                    {item?.group?.name}
                   </option>
                 ))}
             </Form.Control>
@@ -159,9 +168,8 @@ const DocumentView = () => {
                             alt=""
                           />
                         </div>
-
                         <div>
-                          {data?.data?.status === "Pending" && (
+                          {data?.data?.admin_status === "Pending" && data?.data?.status !=="Active" &&(
                             <img
                               onClick={(e) =>
                                 DocumentPublish(documentpublish, data?.data?.id)
@@ -173,6 +181,7 @@ const DocumentView = () => {
                             />
                           )}
                         </div>
+
                         <div>
                           <img
                             onClick={() => {
@@ -187,7 +196,7 @@ const DocumentView = () => {
                         </div>
                       </div>
 
-                      <div className=" mx-1 ">
+                      <div className=" mx-3 ">
                         <div>
                           <hr />
                           <h5>
@@ -248,9 +257,23 @@ const DocumentView = () => {
                         {data?.data?.file?.split(".").pop().includes("docx") ||
                         data?.data?.file?.split(".").pop().includes("xls") ||
                         data?.data?.file?.split(".").pop().includes("xlsx") ||
-                        data?.data?.file?.split(".").pop().includes("csv") ? (
-                          <div class="alert alert-warning" role="alert">
-                            Pleass Download this Document !!
+                          data?.data?.file?.split(".").pop().includes("csv") ||
+                          data?.data?.file?.split(".").pop().includes("ppt") ||
+                          data?.data?.file?.split(".").pop().includes("pptx") ||
+                          data?.data?.file?.split(".").pop().includes("doc") ||
+                          data?.data?.file?.split(".").pop().includes("xlx") 
+                          
+                        
+                          ? (
+                            <div class="alert alert-warning" role="alert">
+                              This Document is Not Viewable, Please Download this Document 👉<img
+                            onClick={(e) => download(e, data?.data)}
+                            className="btn"
+                            width={50}
+                            src={downloade}
+                            alt=""
+                          />
+                        
                           </div>
                         ) : (
                           <embed

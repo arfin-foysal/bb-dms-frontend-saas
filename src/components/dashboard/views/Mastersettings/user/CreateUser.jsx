@@ -11,11 +11,12 @@ const CreateUser = ({ handleClose }) => {
     setPreviewImage(URL.createObjectURL(e.target.files[0]));
   }
 
+ const randomstring = Math.random().toString(36).slice(-8);
   const formik = useFormik({
     initialValues: {
       name: "",
       email: "",
-      username: "",
+      username: randomstring,
       password: "",
       image: "",
       gender: "",

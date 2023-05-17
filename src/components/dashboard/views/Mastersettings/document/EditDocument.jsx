@@ -166,10 +166,10 @@ const EditDocument = () => {
                 />
               )}
             </div>
+
+
             <div className=" d-flex justify-content-end">
-              <div>
-                <button className="btn btn-dark">Close</button>
-              </div>
+         
               <div className="mx-5">
                 <button type="submit" className="btn btn-success">
                   Submit

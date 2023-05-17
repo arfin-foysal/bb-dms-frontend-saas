@@ -14,7 +14,7 @@ export const download = (e,doc) => {
       responseType: 'blob'
     })
       .then((response) => {
-        fileDownload(response.data, `${doc.name}.${response.data.type.split('/').pop()}`);
+        fileDownload(response.data, `${doc.name}.${doc.file.split('.').pop()}`);
       })
       .catch((error) => {
         toast.error('Something went wrong');
@@ -56,6 +56,23 @@ export const deleteHandel = async (deleteDocument,Did) => {
       }
     });
   };
+export const cancelHandel = async (CancelDocument,Did) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      // text: "You won't be able to revert this!",
+      icon: 'error',
+      confirmButtonColor: '#d33 ',
+      cancelButtonColor: ' #4e4e4e',
+      confirmButtonText: 'Yes, Cancel it!',
+      width: 200,
+      showCancelButton: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        CancelDocument(Did);
+        Swal.fire('Canceled!', 'Your Documnet has been Canceled.', 'success');
+      }
+    });
+  };
 
   export const groupdownload = (e, item) => {
     e.preventDefault();
@@ -68,7 +85,7 @@ export const deleteHandel = async (deleteDocument,Did) => {
       responseType: 'blob'
     })
       .then((response) => {
-        fileDownload(response.data, `${item.name}.${response.data.type.split('/').pop()}`);
+        fileDownload(response.data, `${item.name}.${item.file.split('.').pop()}`);
       })
       .catch((error) => {
         toast.error('Something went wrong');

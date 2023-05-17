@@ -92,7 +92,12 @@ const GroupList = () => {
                     <div>
                       <Link
                         className="text-center"
-                        to={`/groups/group_document/${item.group.id}`}
+                        to={
+                          (authUser?.user_type === "Admin" &&
+                            `/dashboard/group-document-view/${item?.group?.id}`) ||
+                          (authUser?.user_type === "User" &&
+                            `/dashboard/user/group-document-view/${item?.group?.id}`)
+                        }
                       >
                         <Card.Img
                           className="mt-3 m-2 pointer rounded-circle "
@@ -116,7 +121,7 @@ const GroupList = () => {
                         {item?.group?.name.slice(0, 12)}
                       </Card.Title>
                       <Card.Text>
-                        {/* <img
+                        <img
                 className=" rounded-circle mb-1 mr-1"
                 width={15}
                  src={
@@ -125,7 +130,7 @@ const GroupList = () => {
                     : `${avatar}`
                  }
                 alt=""
-              /> */}
+              />
                         {item?.group?.group_creator?.name}
                       </Card.Text>
                     </div>

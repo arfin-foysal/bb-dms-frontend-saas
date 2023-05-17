@@ -1,9 +1,9 @@
 import React, { useCallback, useState } from "react";
 import PageTopHeader from "../../../common/PageTopHeader";
-
 import Loader from "../../../common/Loader";
 import { Link, useParams } from "react-router-dom";
 import { Card } from "react-bootstrap";
+import avater from "../../../../../assets/images/profile-picture.png";
 
 import { useDocumentpublishMutation } from "../../../../../services/documentApi";
 import {
@@ -32,13 +32,16 @@ import QuickUploadGroupModal from "./QuickUploadGroupModal";
 export const GroupWiseDocument = () => {
   const { id } = useParams();
   const res = useGroupDocumentQuery(id);
+
+  const authUser = useSelector((state) => state.auth.user);
+
   const [groupDeleteDocument] = useGroupDeleteDocumentMutation();
   const [documentpublish] = useDocumentpublishMutation();
 
   const { data, isFetching, isSuccess, isError } = res;
   const { data: singalData, isSuccess: singalDataSuccess } =
     useSingalGroupQuery(id);
-  const authUser = useSelector((state) => state.auth.user);
+
   const [show, setShow] = useState(false);
   const [clickValue, setClickValue] = useState(null);
   const handleClose = () => setShow(false);
@@ -73,7 +76,7 @@ export const GroupWiseDocument = () => {
                     src={
                       item.image
                         ? `${import.meta.env.VITE_FILE_URL}${item.image}`
-                        : "l"
+                        : avater
                     }
                   />
                 </span>
@@ -150,6 +153,7 @@ export const GroupWiseDocument = () => {
                     <div className="text-center  py-2 shadow text-dark ">
                       <div>
                         <Link
+                          className="mx-2"
                           to={
                             (authUser?.user_type === "Admin" &&
                               `/dashboard/group-singal-document-view/${item?.id}`) ||
@@ -159,33 +163,42 @@ export const GroupWiseDocument = () => {
                         >
                           <BsFillEyeFill color="blue" size={22} />
                         </Link>
-                        <span className="pointer ml-3 ms-3">
+
+                        <span className="pointer ml-3 mx-2">
                           <BsFillArrowDownCircleFill
                             onClick={(e) => groupdownload(e, item)}
                           />
                         </span>
-                        <Link
-                          to="#"
-                          onClick={() => {
-                            handleShow();
-                            handelClickValue("Edit Documnet");
-                            setParamId(item);
-                          }}
-                          className="px-3"
-                        >
-                          <BsPencilSquare size={18} color="blue" />
-                        </Link>
-                        <BsFillTrashFill
-                          className="pointer mx-1"
-                          color="red"
-                          size={17}
-                          onClick={() =>
-                            deleteHandel(groupDeleteDocument, item?.id)
-                          }
-                        />
+
+                        {item?.is_shared === "no" &&
+                          authUser?.id === item?.user_id && (
+                            <Link
+                              to="#"
+                              onClick={() => {
+                                handleShow();
+                                handelClickValue("Edit Documnet");
+                                setParamId(item);
+                              }}
+                              className="px-2"
+                            >
+                              <BsPencilSquare size={18} color="blue" />
+                            </Link>
+                          )}
+
+                        {authUser?.id === item?.user_id && (
+                          <BsFillTrashFill
+                            className="pointer mx-1"
+                            color="red"
+                            size={17}
+                            onClick={() =>
+                              deleteHandel(groupDeleteDocument, item?.id)
+                            }
+                          />
+                        )}
+
                         {item.status === "Pending" && (
                           <RiUploadCloud2Fill
-                            className="pointer mx-1  "
+                            className="pointer mx-2  "
                             color="Teal"
                             size={22}
                             onClick={(e) =>

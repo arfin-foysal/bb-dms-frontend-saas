@@ -131,13 +131,24 @@ const GroupDocumentView = () => {
                   <Col md={9}>
                     <Card width="1000px" height="500px">
                       <div>
-                        {data?.file?.split(".").pop().includes("docx") ||
-                        data?.file?.split(".").pop().includes("xls") ||
-                        data?.file?.split(".").pop().includes("xlsx") ||
-                        data?.file?.split(".").pop().includes("csv") ? (
+                      {data?.data?.file?.split(".").pop().includes("docx") ||
+                        data?.data?.file?.split(".").pop().includes("xls") ||
+                        data?.data?.file?.split(".").pop().includes("xlsx") ||
+                          data?.data?.file?.split(".").pop().includes("csv") ||
+                          data?.data?.file?.split(".").pop().includes("ppt") ||
+                          data?.data?.file?.split(".").pop().includes("pptx") ||
+                          data?.data?.file?.split(".").pop().includes("doc") ||
+                          data?.data?.file?.split(".").pop().includes("xlx")   ? (
                           <div class="alert alert-warning" role="alert">
-                            Pleass Download this Document !!
-                          </div>
+                          This Document is Not Viewable, Please Download this Document 👉<img
+                        onClick={(e) => download(e, data?.data)}
+                        className="btn"
+                        width={50}
+                        src={downloade}
+                        alt=""
+                      />
+                    
+                      </div>
                         ) : (
                           <embed
                             width="100%"

@@ -21,7 +21,7 @@ export const Document = () => {
       <PageTopHeader title="Documents" />
       <div class="card border shadow-lg ">
         <div class="card-header d-flex justify-content-between ">
-          <div>Documents 1</div>
+          <div className="mt-2">Documents</div>
           <div className="mt-2">
             <button
               className="btn btn-primary btn-sm"

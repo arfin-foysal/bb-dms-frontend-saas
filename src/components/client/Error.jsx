@@ -14,7 +14,7 @@ const Error = () => {
           <p className="text-gray-500 mb-0">
             It looks like you found a glitch in the matrix...
           </p>
-          <Link to="dashboard">&larr; Back to Dashboard</Link>
+          <Link to="dashboard" className=" btn btn-sm btn-primary" >&larr; Back to Dashboard</Link>
         </div>
       </div>
     </>

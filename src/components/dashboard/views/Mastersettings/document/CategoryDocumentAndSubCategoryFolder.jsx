@@ -5,7 +5,8 @@ import Loader from "./../../../common/Loader";
 import { Link, useParams } from "react-router-dom";
 import { Card } from "react-bootstrap";
 import folder from "./../../../../../assets/images/File/file-folder.png";
-import file from "./../../../../../assets/images/File/file.png";
+
+
 import {
   useCateDocByCateIdQuery,
   useDeleteDocumentMutation,
@@ -21,6 +22,7 @@ import {
   BsXCircleFill,
 } from "react-icons/bs";
 import { RiUploadCloud2Fill } from "react-icons/ri";
+import {AiFillWarning} from "react-icons/ai"
 import {
   DocumentPublish,
   deleteHandel,
@@ -56,7 +58,7 @@ export const CategoryDocumentAndSubCategoryFolder = () => {
       <PageTopHeader title="Documents" />
       <div class="card border shadow-lg ">
         <div class="card-header d-flex justify-content-between ">
-          <div>Documents 2</div>
+          <div>Documents</div>
           <div className="mt-2">
             <button
               className="btn btn-primary btn-sm"
@@ -147,20 +149,27 @@ export const CategoryDocumentAndSubCategoryFolder = () => {
                     <Card.Body className=" px-2 text-dark">
                       <div className=" d-flex">
                         <div className="mb-1">
-                          {item.status === "Pending" ? (
+
+                          {item.admin_status === "Pending" && (
                             <span>
-                              <BsXCircleFill className="mx-1" color="red" />
-                              {item.status}
+                              <AiFillWarning className="mx-1" color="orange" />
+                              {item.admin_status}
                             </span>
-                          ) : (
+                          )}
+                          {item.admin_status === "Active" && (
                             <span>
-                              <BsFillCheckCircleFill
-                                className=" mx-1"
-                                color="green"
-                              />
+                              <BsFillCheckCircleFill className="mx-1" color="green"  />
                               Published
                             </span>
                           )}
+                          {item.admin_status === "Cancel" && (
+                            <span>
+                              <BsXCircleFill className="mx-1" color="red"  />
+                              Canceled
+                            </span>
+                          )}
+
+
                         </div>
                       </div>
 

@@ -25,9 +25,12 @@ import QuickUploadModal from "../Mastersettings/document/QuickUploadModal";
 import NoImage from "../../common/NoImage";
 import Loader from "../../common/Loader";
 import { useSelector } from "react-redux";
+import { AiOutlineCloudServer } from "react-icons/ai";
 
 
 const AdminPage = () => {
+
+
 
   const res = useDashboardPublishDocumentQuery();
   const { data, isFetching, isSuccess, isError } = res;
@@ -51,15 +54,15 @@ const AdminPage = () => {
         />
         <TopBox
           name="Published Documnets"
-          color="red"
-          icon={<ImCross color="red" size={25} />}
+          color="green"
+          icon={<AiOutlineCloudServer  color="green" size={25} />}
           item={data?.publishDoc}
         />
         <TopBox
-          name="Total Applications"
+          name="My Groups"
           color="#FFCC00"
           icon={<GiSandsOfTime color="#FFCC00" size={25} />}
-          // item={data?.data?.count_total}
+          item={data?.myGroup}
         />
 
         <div className="col-xl-3">
@@ -111,7 +114,7 @@ const AdminPage = () => {
         )}
         
    
-      <div class="card border shadow-lg ">
+      <div class="card border shadow-lg mt-3">
         <div class="card-header d-flex justify-content-between border-0">
           <div>Published Document</div>
         </div>

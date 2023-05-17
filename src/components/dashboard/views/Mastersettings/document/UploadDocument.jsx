@@ -1,12 +1,9 @@
 import { useFormik } from "formik";
-import React, { useState ,useRef} from "react";
+import React, { useState, useRef } from "react";
 import { Col, Form, Row } from "react-bootstrap";
 import { toast } from "react-toastify";
-import JoditEditor from 'jodit-react';
-import {
-  useAllCategoryQuery,
-
-} from "../../../../../services/categoryApi";
+import JoditEditor from "jodit-react";
+import { useAllCategoryQuery } from "../../../../../services/categoryApi";
 import PageTopHeader from "../../../common/PageTopHeader";
 import {
   useSubCategoryByCategoryIdQuery,
@@ -16,15 +13,14 @@ import { useUploadeDocumentMutation } from "../../../../../services/documentApi"
 import { useNavigate } from "react-router-dom";
 
 const UploadDocument = ({ handleClose }) => {
-  const navigate=useNavigate()
-
+  const navigate = useNavigate();
 
   const [uploadeDocument, res] = useUploadeDocumentMutation();
 
   const [category, setcategory] = useState(0);
   const [subCategory, setsubCategory] = useState(0);
-    const [description, setDescription] = useState();
-    const editor = useRef(null);
+  const [description, setDescription] = useState();
+  const editor = useRef(null);
   const cateRes = useAllCategoryQuery();
   const subCateRes = useSubCategoryByCategoryIdQuery(category);
   const thirdSubCateRes = useThirdCateBySubCateIdQuery(subCategory);
@@ -40,7 +36,7 @@ const UploadDocument = ({ handleClose }) => {
       catagory_id: "",
       sub_catagory_id: "",
       sub_sub_catagory_id: "",
-    //   description: "",
+      //   description: "",
       file: "",
     },
 
@@ -50,9 +46,9 @@ const UploadDocument = ({ handleClose }) => {
       formData.append("catagory_id", values.catagory_id);
       formData.append("sub_catagory_id", values.sub_catagory_id);
       formData.append("sub_sub_catagory_id", values.sub_sub_catagory_id);
-      formData.append("description",description);
+      formData.append("description", description);
       formData.append("file", values.file);
-        resetForm();
+      resetForm();
 
       try {
         console.log(values);
@@ -63,10 +59,9 @@ const UploadDocument = ({ handleClose }) => {
       }
     },
   });
-  if (res.isSuccess) {
-    navigate(-1);
-    
-    }
+  // if (res.isSuccess) {
+  //   navigate(-1);
+  // }
 
   return (
     <div>
@@ -74,7 +69,6 @@ const UploadDocument = ({ handleClose }) => {
       <div class="card border shadow-lg ">
         <div class="card-header d-flex justify-content-between ">
           <div>Document Uploade</div>
-   
         </div>
 
         <div class="card-body ">
@@ -84,7 +78,7 @@ const UploadDocument = ({ handleClose }) => {
             encType="multipart/form-data"
           >
             <div className="row">
-              <Col md={4}>
+              <Col >
                 <Form.Group controlId="exampleForm.ControlInput1">
                   <Form.Label>Name</Form.Label>
                   <Form.Control
@@ -97,7 +91,7 @@ const UploadDocument = ({ handleClose }) => {
                   />
                 </Form.Group>
               </Col>
-              <Col md={8}>
+              <Col >
                 <Row>
                   <Col>
                     <Form.Label>Category</Form.Label>
@@ -118,7 +112,9 @@ const UploadDocument = ({ handleClose }) => {
                     </select>
                   </Col>
                   <Col
-                  // className={catagory_id === undefined ? "d-none" : "d-block"}
+                    className={
+                      formik.values.catagory_id === "" ? "d-none" : "d-block"
+                    }
                   >
                     <Form.Label>Sub Category</Form.Label>
                     <select
@@ -137,7 +133,13 @@ const UploadDocument = ({ handleClose }) => {
                       ))}
                     </select>
                   </Col>
-                  <Col>
+                  <Col
+                    className={
+                      formik.values.sub_catagory_id === ""
+                        ? "d-none"
+                        : "d-block"
+                    }
+                  >
                     <Form.Label>Third Sub Category</Form.Label>
                     <Form.Control
                       as="select"
@@ -171,8 +173,8 @@ const UploadDocument = ({ handleClose }) => {
               </div>
             </div> */}
 
-            <Form.Label>Description</Form.Label> 
-           <JoditEditor
+            <Form.Label>Description</Form.Label>
+            <JoditEditor
               ref={editor}
               value={description}
               // config={config}
@@ -181,25 +183,21 @@ const UploadDocument = ({ handleClose }) => {
               // onChange={(newContent) => {setDescription(newContent.target.value)}}
             />
 
-    
-
             <div className="form-group row col-12 my-1">
               <label className="col-12 col-form-label">Select Your File</label>
               <div className="col-12">
-                 <input
-                type="file"
-                name="file"
-                accept="image/*,.pdf,.doc,.docx,.ppt,.pptx,.txt,.xlsx,.xls,.csv,"
-                onChange={(e) => {
-                  formik.setFieldValue("file", e.currentTarget.files[0]);
-                  handelImage(e);
-                }}
-                required
-              />
+                <input
+                  type="file"
+                  name="file"
+                  accept="image/*,.pdf,.doc,.docx,.ppt,.pptx,.txt,.xlsx,.xls,.csv,"
+                  onChange={(e) => {
+                    formik.setFieldValue("file", e.currentTarget.files[0]);
+                    handelImage(e);
+                  }}
+                  required
+                />
               </div>
-                      </div>
-
-
+            </div>
 
             <div>
               <img
@@ -211,15 +209,14 @@ const UploadDocument = ({ handleClose }) => {
               />
             </div>
             <div className=" d-flex justify-content-end">
-                  <div className="mx-5">
+              <div className="mx-5">
                 <button type="submit" className="btn btn-success">
                   Submit
                 </button>
               </div>
               <div>
-                <button  className="btn btn-dark" onClick={()=>navigate(-1)}>Close</button>
-              </div>
           
+              </div>
             </div>
           </form>
         </div>
