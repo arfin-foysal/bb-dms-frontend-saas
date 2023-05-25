@@ -94,6 +94,4 @@ export const {
   useYourDocumentQuery,
   useDashboardPublishDocumentQuery,
   useDashboardDetailsQuery
-
-
 } = publishApi;

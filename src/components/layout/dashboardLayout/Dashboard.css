@@ -18,7 +18,7 @@
 
 main {
   padding: 25px;
-  min-height: 90%;
+  /* min-height: 90%; */
   width: 100%;
 }
 
@@ -134,4 +134,8 @@ a {
 
 .pointer{
   cursor: pointer;
+}
+
+.footer {
+  margin-top: auto;
 }
