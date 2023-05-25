@@ -22,7 +22,7 @@ const UploadGroupDocument = ({ handleClose,param }) => {
     const [description, setDescription] = useState();
     const editor = useRef(null);
 
-console.log(param)
+
 
   const [previewImage, setPreviewImage] = useState();
   function handelImage(e) {

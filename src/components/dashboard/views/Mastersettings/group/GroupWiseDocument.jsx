@@ -158,7 +158,9 @@ export const GroupWiseDocument = () => {
                             (authUser?.user_type === "Admin" &&
                               `/dashboard/group-singal-document-view/${item?.id}`) ||
                             (authUser?.user_type === "User" &&
-                              `/dashboard/user/group-singal-document-view/${item?.id}`)
+                              `/dashboard/user/group-singal-document-view/${item?.id}`) ||
+                            (authUser?.user_type === "Superadmin" &&
+                              `/dashboard/superadmin/group-singal-document-view/${item?.id}`)
                           }
                         >
                           <BsFillEyeFill color="blue" size={22} />

@@ -133,7 +133,9 @@ export const SubCategoryDocumentAndThirdSubCategoryFolder = () => {
                       (authUser?.user_type === "Admin" &&
                       `/dashboard/third-sub-category-document/${category.id}`) ||
                       (authUser?.user_type === "User" &&
-                      `/dashboard/user/third-sub-category-document/${category.id}`)
+                        `/dashboard/user/third-sub-category-document/${category.id}`) ||
+                      (authUser?.user_type === "Superadmin" &&
+                        `/dashboard/superadmin/third-sub-category-document/${category.id}`)
                     }
                     className=" m-2 "
                   >
@@ -227,7 +229,9 @@ export const SubCategoryDocumentAndThirdSubCategoryFolder = () => {
                             (authUser?.user_type === "Admin" &&
                             `/dashboard/document-view/${item.id}`) ||
                             (authUser?.user_type === "User" &&
-                            `/dashboard/user/document-view/${item.id}`)
+                              `/dashboard/user/document-view/${item.id}`) ||
+                            (authUser?.user_type === "Superadmin" &&
+                              `/dashboard/superadmin/document-view/${item.id}`)
                           }
                           
                           
@@ -246,7 +250,9 @@ export const SubCategoryDocumentAndThirdSubCategoryFolder = () => {
                             (authUser?.user_type === "Admin" &&
                             `/dashboard/edit-document/${item.id}`) ||
                             (authUser?.user_type === "User" &&
-                            `/dashboard/user/edit-document/${item.id}`)
+                              `/dashboard/user/edit-document/${item.id}`) ||
+                            (authUser?.user_type === "Superadmin" &&
+                              `/dashboard/superadmin/edit-document/${item.id}`)
                           }
 
                           className="px-3"

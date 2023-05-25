@@ -12,6 +12,9 @@ import {
 } from "react-icons/hi";
 
 export const navItem = [
+ 
+
+  //admin route start
   {
     title: "All Publish Documents",
     link: "all-document-list",
@@ -34,7 +37,7 @@ export const navItem = [
         link: "documents",
         role: "admin",
         icon: <BsFolder2 />,
-        // icon: <BsFiletypeDoc />,
+        
       },
     ],
   },
@@ -84,6 +87,84 @@ export const navItem = [
       },
     ],
   },
+//admin route end
+
+ //super admin route start
+ {
+  title: "All Publish Documents",
+  link: "superadmin/all-document-list",
+  role: "superadmin",
+  icon: <AiOutlineCloudServer />,
+},
+{
+  title: "Documents",
+  role: "superadmin",
+  icon: <HiOutlineDocumentDuplicate />,
+  children: [
+    {
+      title: "Upload Documents",
+      link: "superadmin/upload-documents",
+      role: "superadmin",
+      icon: <MdOutlineUploadFile />,
+    },
+    {
+      title: "Folder",
+      link: "superadmin/documents",
+      role: "superadmin",
+      icon: <BsFolder2 />,
+      
+    },
+  ],
+},
+
+{
+  title: "Groups",
+  link: "superadmin/group-list",
+  role: "superadmin",
+  icon: <HiOutlineUserGroup />,
+},
+{
+  title: "Unpublish Documents",
+  link: "superadmin/unpublish-document",
+  role: "superadmin",
+  icon: <HiOutlineDocumentDownload />,
+},
+
+{
+  title: "Master Settings",
+  role: "superadmin",
+  icon: <RiUserSettingsLine />,
+  children: [
+    {
+      title: "Category",
+      link: "superadmin/category-list",
+      role: "superadmin",
+      icon: <BiCategory />,
+    },
+    {
+      title: "Sub Category",
+      link: "superadmin/sub-category-list",
+      role: "superadmin",
+      icon: <BiCategory />,
+    },
+    {
+      title: "Third Sub Category",
+      link: "superadmin/third-sub-category-list",
+      role: "superadmin",
+      icon: <BiCategory />,
+    },
+
+    {
+      title: "User List",
+      link: "superadmin/user-list",
+      role: "superadmin",
+      icon: <AiOutlineUserAdd />,
+    },
+  ],
+},
+
+//Super admin route end
+
 
   //user route start
 
@@ -150,5 +231,29 @@ export const navItem = [
 
     ],
   },
+  //user route end
+
+  {
+    title: "System Settings",
+    role: "systemadmin",
+    icon: <RiUserSettingsLine />,
+    children: [
+      {
+        title: "Company",
+        link: "Company/company-list",
+        role: "systemadmin",
+        icon: <BiCategory />,
+      },
+      {
+        title: "System Admin",
+        link: "superadmin/superadmin-list",
+        role: "systemadmin",
+        icon: <BiCategory />,
+      },
+    ]
+  }
+
+
+
   
 ];

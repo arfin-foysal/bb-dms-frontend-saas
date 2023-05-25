@@ -134,6 +134,104 @@ export const privateRoute = [
     element: <AllDocumentList/>,
     role: "admin",
   },
+  // admin route end
+
+  // super admin route start
+
+
+ {
+  path: "superadmin",
+  element: <DashboardHomePage />,
+  role: "superadmin",
+},
+{
+  path: "superadmin/category-list",
+  element: <CategoryList />,
+  role: "superadmin",
+},
+{
+  path: "superadmin/sub-category-list",
+  element: <SubCategoryList />,
+  role: "superadmin",
+},
+{
+  path: "superadmin/third-sub-category-list",
+  element: <ThirdSubCategoryList />,
+  role: "superadmin",
+},
+{
+  path: "superadmin/user-list",
+  element: <UserList/>,
+  role: "superadmin",
+},
+
+//docs
+{
+  path: "superadmin/upload-documents",
+  element: <UploadDocument/>,
+  role: "superadmin",
+},
+{
+  path: "superadmin/edit-document/:id",
+  element: <EditDocument/>,
+  role: "superadmin",
+},
+{
+  path: "superadmin/documents",
+  element: <Document/>,
+  role: "superadmin",
+},
+{
+  path: "superadmin/category-document-and-sub-category-folder/:id",
+  element: <CategoryDocumentAndSubCategoryFolder/>,
+  role: "superadmin",
+},
+{
+  path: "superadmin/sub-category-document-and-third-sub-category-folder/:id",
+  element: <SubCategoryDocumentAndThirdSubCategoryFolder/>,
+  role: "superadmin",
+},
+{
+  path: "superadmin/third-sub-category-document/:id",
+  element: <ThirdSubCategoryDocument/>,
+  role: "superadmin",
+},
+{
+  path: "superadmin/document-view/:id",
+  element: <DocumentView/>,
+  role: "superadmin",
+},
+{
+  path: "superadmin/unpublish-document",
+  element: <UnpublishDocumentList/>,
+  role: "superadmin",
+},
+{
+  path: "superadmin/group-list",
+  element: <GroupList/>,
+  role: "superadmin",
+},
+{
+  path: "superadmin/group-document",
+  element: <GroupList/>,
+  role: "superadmin",
+},
+{
+  path: "superadmin/group-document-view/:id",
+  element: <GroupWiseDocument/>,
+  role: "superadmin",
+},
+{
+  path: "superadmin/group-singal-document-view/:id",
+  element: <GroupDocumentView/>,
+  role: "superadmin",
+},
+{
+  path: "superadmin/all-document-list",
+  element: <AllDocumentList/>,
+  role: "superadmin",
+},
+  // super admin route end
 
   //user route start
 

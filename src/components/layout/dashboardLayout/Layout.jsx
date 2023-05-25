@@ -10,8 +10,8 @@ import SidebarMenu from "./SidebarMenu";
 import { navItem } from "../../../Nav/NavItem";
 import { user } from "../../../Route/utils";
 import avatar from "../../../../src/assets/images/profile-picture.png";
-import logo from "../../../../src/assets/logo/sm_logo.png";
-import w_logo from "../../../../src/assets/logo/logo_white.png";
+import demo_logo from "../../../../src/assets/logo/demo_logo.png";
+
 import Header from "./Header";
 import Footer from "./Footer";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,6 +20,7 @@ import { logout } from "../../../features/authSlice";
 
 const Layout = () => {
   const authUser = useSelector((state) => state.auth.user);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -29,10 +30,6 @@ const Layout = () => {
     toast.success("Logout Successfully");
     window.location.reload(false);
   };
-
-
-
-
 
   const [isOpen, setIsOpen] = useState(true);
   const toggle = () => setIsOpen(!isOpen);
@@ -77,7 +74,6 @@ const Layout = () => {
               <AnimatePresence>
                 {isOpen && (
                   <motion.div
-                    
                     // variants={showAnimation}
                     initial="hidden"
                     animate="show"
@@ -85,10 +81,26 @@ const Layout = () => {
                     className="logo pt-2"
                   >
                     <Link to="/dashboard">
-                     
-                
-                   <img src={logo} width={30} alt="" className="me-2" />
-                    <img src={w_logo} width={70} alt="" />
+                      {authUser?.company_image ? (
+                        <>
+                          <img
+                            className="img-fluid w-100 "
+                            src={`${import.meta.env.VITE_FILE_URL}${
+                              authUser?.company_image
+                            }`}
+                            alt={authUser?.company_name}
+                          ></img>
+                        </>
+                      ) : (
+                        <img
+                          className="img-fluid w-100 "
+                          src={demo_logo}
+                          alt={authUser?.company_name}
+                        ></img>
+                      )}
+
+                      {/* <img src={logo} width={30} alt="" className="me-2" />
+                    <img src={w_logo} width={70} alt="" /> */}
                     </Link>
                   </motion.div>
                 )}
@@ -148,8 +160,13 @@ const Layout = () => {
                 color: "white",
               }}
               autoHide
-           renderTrackHorizontal={props => <div {...props} className="track-horizontal" style={{display: 'none'}}/>}
-              
+              renderTrackHorizontal={(props) => (
+                <div
+                  {...props}
+                  className="track-horizontal"
+                  style={{ display: "none" }}
+                />
+              )}
             >
               <section className="routes">
                 {navItem.map((route, index) => {
@@ -192,20 +209,20 @@ const Layout = () => {
             </Scrollbars>
             <div>
               <div className="d-flex pointer ">
-                <div className="mt-1 ms-2" >
+                <div className="mt-1 ms-2">
                   <RiLogoutCircleRFill size={20} />
                 </div>
                 <div className="mt-1 ms-2  ">
                   {isOpen && (
-                    <span onClick={()=>handelLogout()}>
-                    <motion.h6
-                      variants={showAnimation}
-                      initial="hidden"
-                      animate="show"
-                      exit="hidden"
-                      className="link_text mt-1 ms-2 fw-lighter"
-                    >
-                      <p>LogOut</p>
+                    <span onClick={() => handelLogout()}>
+                      <motion.h6
+                        variants={showAnimation}
+                        initial="hidden"
+                        animate="show"
+                        exit="hidden"
+                        className="link_text mt-1 ms-2 fw-lighter"
+                      >
+                        <p>LogOut</p>
                       </motion.h6>
                     </span>
                   )}
@@ -215,10 +232,9 @@ const Layout = () => {
           </motion.div>
         </div>
         <div className="contain-wrapper">
-        
           <Header />
           <main>
-            <Outlet  />
+            <Outlet />
           </main>
           <Footer />
         </div>

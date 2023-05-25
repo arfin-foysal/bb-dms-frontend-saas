@@ -7,10 +7,15 @@ export const user = {
 }
 
 const routes = [
+      {
+        path: '/dashboard/superadmin',
+        role: 'superadmin'
+    },
     {
         path: '/dashboard/admin',
         role: 'admin'
     },
+    
     {
         path: '/dashboard/systemadmin',
         role: 'systemadmin'
@@ -19,10 +24,7 @@ const routes = [
         path: '/dashboard/developer',
         role: 'developer'
     },
-    {
-        path: '/dashboard/admin',
-        role: 'admin'
-    },
+  
     {
         path: '/dashboard/user',
         role: 'user'

@@ -6,7 +6,7 @@ import EditGroupDocument from "./EditGroupDocument";
 
 const QuickUploadGroupModal = ({ handleClose, show, clickValue, paramId }) => {
 
-  console.log(paramId)
+
   return (
     <div>
 

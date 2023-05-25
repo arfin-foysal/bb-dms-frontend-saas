@@ -57,7 +57,10 @@ export const Document = () => {
                       (authUser?.user_type === "Admin" &&
                         `/dashboard/category-document-and-sub-category-folder/${category.id} `) ||
                       (authUser?.user_type === "User" &&
-                        `/dashboard/user/category-document-and-sub-category-folder/${category.id}`)
+                        `/dashboard/user/category-document-and-sub-category-folder/${category.id}`) ||
+                      (authUser?.user_type === "Superadmin" &&
+                        `/dashboard/superadmin/category-document-and-sub-category-folder/${category.id} `)
+                      
                     }
                     className=" m-2 "
                   >

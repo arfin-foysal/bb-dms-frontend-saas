@@ -131,7 +131,9 @@ export const CategoryDocumentAndSubCategoryFolder = () => {
                       (authUser?.user_type === "Admin" &&
                         `/dashboard/sub-category-document-and-third-sub-category-folder/${category.id}`) ||
                       (authUser?.user_type === "User" &&
-                        `/dashboard/user/sub-category-document-and-third-sub-category-folder/${category.id}`)
+                        `/dashboard/user/sub-category-document-and-third-sub-category-folder/${category.id}`) ||
+                      (authUser?.user_type === "Superadmin" &&
+                        `/dashboard/superadmin/sub-category-document-and-third-sub-category-folder/${category.id}`)
                     }
                     className=" m-2 "
                   >
@@ -226,7 +228,9 @@ export const CategoryDocumentAndSubCategoryFolder = () => {
                             (authUser?.user_type === "Admin" &&
                               `/dashboard/document-view/${item.id}`) ||
                             (authUser?.user_type === "User" &&
-                              `/dashboard/user/document-view/${item.id}`)
+                              `/dashboard/user/document-view/${item.id}`) ||
+                            (authUser?.user_type === "Superadmin" &&
+                              `/dashboard/superadmin/document-view/${item.id}`)
                           }
                         >
                           <BsFillEyeFill color="blue" size={22} />
@@ -242,7 +246,9 @@ export const CategoryDocumentAndSubCategoryFolder = () => {
                             (authUser?.user_type === "Admin" &&
                               `/dashboard/edit-document/${item.id}`) ||
                             (authUser?.user_type === "User" &&
-                              `/dashboard/user/edit-document/${item.id}`)
+                              `/dashboard/user/edit-document/${item.id}`) ||
+                            (authUser?.user_type === "Superadmin" &&
+                              `/dashboard/superadmin/edit-document/${item.id}`)
                           }
                         >
                           <BsPencilSquare size={18} color="blue" />

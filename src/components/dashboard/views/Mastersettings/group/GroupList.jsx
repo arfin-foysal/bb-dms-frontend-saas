@@ -96,7 +96,9 @@ const GroupList = () => {
                           (authUser?.user_type === "Admin" &&
                             `/dashboard/group-document-view/${item?.group?.id}`) ||
                           (authUser?.user_type === "User" &&
-                            `/dashboard/user/group-document-view/${item?.group?.id}`)
+                            `/dashboard/user/group-document-view/${item?.group?.id}`) ||
+                          (authUser?.user_type === "Superadmin" &&
+                            `/dashboard/superadmin/group-document-view/${item?.group?.id}`) 
                         }
                       >
                         <Card.Img
@@ -146,7 +148,10 @@ const GroupList = () => {
                               (authUser?.user_type === "Admin" &&
                                 `/dashboard/group-document-view/${item?.group?.id}`) ||
                               (authUser?.user_type === "User" &&
-                                `/dashboard/user/group-document-view/${item?.group?.id}`)
+                                `/dashboard/user/group-document-view/${item?.group?.id}`) ||
+                              (authUser?.user_type === "Superadmin" &&
+                                `/dashboard/superadmin/group-document-view/${item?.group?.id}`)
+                              
                             }
                           >
                             <BsFillEyeFill color="blue" size={22} />
