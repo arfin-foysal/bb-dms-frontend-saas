@@ -17,6 +17,10 @@ import { GroupWiseDocument } from "../components/dashboard/views/Mastersettings/
 import GroupDocumentView from "../components/dashboard/views/Mastersettings/group/GroupDocumentView";
 import AllDocumentList from "../components/dashboard/views/Mastersettings/document/AllDocumentList";
 import { ThirdSubCategoryDocument } from './../components/dashboard/views/Mastersettings/document/ThirdSubCategoryDocument';
+import Profile from "../components/dashboard/views/Mastersettings/Profile/Profile";
+import SystemadninPage from "../components/dashboard/views/dashboardHomePage/SystemadninPage";
+import CompanyList from "../components/dashboard/views/Mastersettings/company/CompanyList";
+import SuperadminList from "../components/dashboard/views/Mastersettings/superadmin/SuperadminList";
 
 
 
@@ -134,6 +138,13 @@ export const privateRoute = [
     element: <AllDocumentList/>,
     role: "admin",
   },
+  {
+    path: "admin/profile-view/:id",
+    element: <Profile />,
+    role: "admin",
+  },
+
+
   // admin route end
 
   // super admin route start
@@ -230,7 +241,12 @@ export const privateRoute = [
   path: "superadmin/all-document-list",
   element: <AllDocumentList/>,
   role: "superadmin",
-},
+  },
+  {
+    path: "superadmin/profile-view/:id",
+    element: <Profile />,
+    role: "superadmin",
+  },
   // super admin route end
 
   //user route start
@@ -319,6 +335,35 @@ export const privateRoute = [
     element: <AllDocumentList/>,
     role: "user",
   },
+  {
+    path: "user/profile-view/:id",
+    element: <Profile />,
+    role: "user",
+  },
 
 
+
+  //system admin route start
+  {
+    path: "systemadmin",
+    element: <SystemadninPage />,
+    role: "systemadmin",
+  },
+
+  {
+    path: "systemadmin/company-list",
+    element: <CompanyList />,
+    role: "systemadmin",
+  },
+  {
+    path: "systemadmin/superadmin-list",
+    element: <SuperadminList />,
+    role: "systemadmin",
+  },
+
+  {
+    path: "systemadmin/profile-view/:id",
+    element: <Profile />,
+    role: "systemadmin",
+  },
 ];

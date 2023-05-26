@@ -1,35 +1,36 @@
 import { useFormik } from "formik";
 import React, { useState } from "react";
-import { Form, Modal } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
+import {
+  useCreateUsersMutation,
+  useSuperAdminCreateOrUpdateAndCompanyAssignMutation,
+} from "../../../../../services/userApi";
+import { useCompanyListQuery } from "../../../../../services/companyApi";
 
-import avater from "../../../../../assets/images/image_preview.png";
-import { useUpdateCatagoryMutation } from "../../../../../services/categoryApi";
-import { useUpdateUserMutation } from "../../../../../services/userApi";
+const CreateSuperadmin = ({ handleClose }) => {
+  const [superAdminCreateOrUpdateAndCompanyAssign, res] =
+    useSuperAdminCreateOrUpdateAndCompanyAssignMutation();
 
-const EditUser = ({ handleClose, param }) => {
+  const companyRes = useCompanyListQuery();
 
- 
-
-  const [updateUser, res] = useUpdateUserMutation();
   const [previewImage, setPreviewImage] = useState();
   function handelImage(e) {
     setPreviewImage(URL.createObjectURL(e.target.files[0]));
   }
 
+  const randomstring = Math.random().toString(36).slice(-8);
   const formik = useFormik({
-    enableReinitialize: true,
-
     initialValues: {
-      name: param?.name,
-      email: param?.email,
-      username: param?.username,
-    
-      image: param?.image,
-      gender: param?.gender,
-      number: param?.number,
-      user_type:param?.user_type,
-      status: param?.status,
+      name: "",
+      email: "",
+      username: randomstring,
+      password: "",
+      image: "",
+      gender: "",
+      number: "",
+      company_id: "",
+      status: "",
     },
 
     onSubmit: async (values, { resetForm }) => {
@@ -39,15 +40,17 @@ const EditUser = ({ handleClose, param }) => {
       formData.append("username", values.username);
       formData.append("password", values.password);
       formData.append("gender", values.gender);
-      formData.append("description", values.description);
       formData.append("image", values.image);
       formData.append("number", values.number);
-      formData.append("user_type", values.user_type);
+      formData.append("company_id", values.company_id);
+
       formData.append("status", values.status);
       resetForm();
 
       try {
-        const result = await updateUser({ id: param?.id , data: formData }).unwrap();
+        const result = await superAdminCreateOrUpdateAndCompanyAssign(
+          formData
+        ).unwrap();
         toast.success(result.message);
       } catch (error) {
         toast.warn(error.data.message);
@@ -66,7 +69,7 @@ const EditUser = ({ handleClose, param }) => {
         encType="multipart/form-data"
       >
         <div className="row">
-        <div className="form-group row col-6 my-1">
+          <div className="form-group row col-6 my-1">
             <label className="col-12 col-form-label">Name</label>
             <div className="col-12">
               <input
@@ -122,7 +125,20 @@ const EditUser = ({ handleClose, param }) => {
               />
             </div>
           </div>
- 
+          <div className="form-group row col-6 my-1">
+            <label className="col-12 col-form-label">Password</label>
+            <div className="col-12">
+              <input
+                placeholder="Enter Password"
+                type="password"
+                className="form-control"
+                name="password"
+                onChange={formik.handleChange}
+                value={formik.values.password}
+                required
+              />
+            </div>
+          </div>
           <div className="form-group row col-6 my-1">
             <label className="col-12 col-form-label">Gender</label>
             <div className="col-12">
@@ -131,6 +147,7 @@ const EditUser = ({ handleClose, param }) => {
                 name="gender"
                 onChange={formik.handleChange}
                 value={formik.values.gender}
+                required
               >
                 <option value="">--select--</option>
                 <option value="male">Male</option>
@@ -151,16 +168,12 @@ const EditUser = ({ handleClose, param }) => {
                 <option value="">--select--</option>
                 <option value="Active">Active</option>
                 <option value="Pending">Pending</option>
-            
               </select>
             </div>
           </div>
-  
-          
-
           <div className="form-group row col-6 my-1">
             <label className="col-12 col-form-label">Photo</label>
-            <div className="col-12  ">
+            <div className="col-12">
               <input
                 className="form-control"
                 name="image"
@@ -173,64 +186,48 @@ const EditUser = ({ handleClose, param }) => {
               />
             </div>
           </div>
-
-          <div className="form-group row col-6 my-1">
-            <label className="col-12 col-form-label">User Type</label>
+          <div class="alert alert-primary mt-2" role="alert">
+            <h4> Please Select Company !!</h4>
+          </div>
+          <div className="form-group row col-12 mb-2">
+            <label className="col-12 col-form-label ">Company Assign</label>
             <div className="col-12">
               <select
                 className="form-control"
-                name="user_type"
+                name="company_id"
                 onChange={formik.handleChange}
-                value={formik.values.user_type}
+                value={formik.values.company_id}
+                required
               >
                 <option value="">--select--</option>
-                <option value="Admin">Admin</option>
-                <option value="User">User</option>
+                {companyRes?.data?.map((item) => (
+                  <option key={item.id} value={item.id}>
+                    {item.name}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
-
-     
         </div>
-
         <div>
-          {previewImage ? (
-            <img
-              className="py-2"
-              src={previewImage}
-              width="80px"
-              height="80px"
-              alt=""
-            />
-          ) : (
-            <img
-              className="py-2"
-              src={
-                formik.values.image === null
-                  ? avater
-                  : `${import.meta.env.VITE_FILE_URL}${formik.values.image}`
-              }
-              width="80px"
-              height="80px"
-              alt=""
-            />
-          )}
+          <img
+            className="py-2"
+            src={previewImage}
+            width="80px"
+            height="80px"
+            alt=""
+          />
         </div>
         <Modal.Footer>
           <div className=" d-flex">
+            <div>
+              <button className="btn btn-dark" onClick={handleClose}>
+                Close
+              </button>
+            </div>
             <div className="mx-5">
               <button type="submit" className="btn btn-success">
                 Submit
-              </button>
-            </div>
-
-            <div className="mx-5">
-              <button
-                type="button"
-                className="btn btn-dark"
-                onClick={handleClose}
-              >
-                Close
               </button>
             </div>
           </div>
@@ -240,4 +237,4 @@ const EditUser = ({ handleClose, param }) => {
   );
 };
 
-export default EditUser;
+export default CreateSuperadmin;

@@ -11,14 +11,16 @@ import Loader from "../../../common/Loader";
 import PageTopHeader from "../../../common/PageTopHeader";
 
 
-import CategoryModal from "./UserModal";
+import CategoryModal from "./SuperadminModal";
 
-import { useGetUserListQuery, useSuperAdminDeleteMutation } from "../../../../../services/userApi";
+import { useDeleteUserMutation, useGetUserListQuery, useSuperAdminListQuery } from "../../../../../services/userApi";
 
-const UserList = () => {
+const SuperadminList = () => {
 
-  const res = useGetUserListQuery();
-  const [superAdminDelete] =useSuperAdminDeleteMutation();
+  const res = useSuperAdminListQuery();
+  const [deleteUser] = useDeleteUserMutation();
+  
+  
   
   const { data, isSuccess, isFetching, isError, error } = res;
   const [clickValue, setClickValue] = useState(null);
@@ -36,7 +38,7 @@ const UserList = () => {
   }, []);
 
   const handelDelete = async (id) => {
-    const result = await superAdminDelete(id).unwrap();
+    const result = await deleteUser(id).unwrap();
     toast.success(result.message);
   };
 
@@ -75,16 +77,17 @@ const UserList = () => {
         size: 10,
       },
 
+
       {
         accessorKey: "username", //normal accessorKey
         header: "Username",
         size: 10,
       },
-      // {
-      //   accessorKey: "email", //normal accessorKey
-      //   header: "Email",
-      //   size: 10,
-      // },
+      {
+        accessorKey: "company_name", //normal accessorKey
+        header: "Company Name",
+        size: 10,
+      },
       {
         accessorKey: "user_type", //normal accessorKey
         header: "User Type",
@@ -139,7 +142,7 @@ const UserList = () => {
         <div class="card-body p-0">
           <MaterialReactTable
             columns={columns}
-            data={isSuccess && data}
+            data={isSuccess && data?.data}
             enableRowActions
             enableColumnActions
             positionActionsColumn="last"
@@ -215,4 +218,4 @@ const UserList = () => {
   );
 };
 
-export default UserList;
+export default SuperadminList;

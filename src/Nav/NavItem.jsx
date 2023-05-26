@@ -240,13 +240,13 @@ export const navItem = [
     children: [
       {
         title: "Company",
-        link: "Company/company-list",
+        link: "systemadmin/company-list",
         role: "systemadmin",
         icon: <BiCategory />,
       },
       {
-        title: "System Admin",
-        link: "superadmin/superadmin-list",
+        title: "SuperAdimn List",
+        link: "systemadmin/superadmin-list",
         role: "systemadmin",
         icon: <BiCategory />,
       },

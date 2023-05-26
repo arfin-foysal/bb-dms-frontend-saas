@@ -11,15 +11,17 @@ import Loader from "../../../common/Loader";
 import PageTopHeader from "../../../common/PageTopHeader";
 
 
-import CategoryModal from "./UserModal";
+import CompanyModal from "./CompanyModal";
 
-import { useGetUserListQuery, useSuperAdminDeleteMutation } from "../../../../../services/userApi";
+import { useCompanyListQuery, useDeleteCompanyMutation } from "../../../../../services/companyApi";
 
-const UserList = () => {
+const CompanyList = () => {
+  const res = useCompanyListQuery();
 
-  const res = useGetUserListQuery();
-  const [superAdminDelete] =useSuperAdminDeleteMutation();
-  
+
+
+
+  const [deleteCompany] = useDeleteCompanyMutation();
   const { data, isSuccess, isFetching, isError, error } = res;
   const [clickValue, setClickValue] = useState(null);
   const [paramId, setParamId] = useState(null);
@@ -36,7 +38,7 @@ const UserList = () => {
   }, []);
 
   const handelDelete = async (id) => {
-    const result = await superAdminDelete(id).unwrap();
+    const result = await deleteCompany(id).unwrap();
     toast.success(result.message);
   };
 
@@ -74,20 +76,16 @@ const UserList = () => {
         header: "Name",
         size: 10,
       },
+      
 
       {
-        accessorKey: "username", //normal accessorKey
-        header: "Username",
+        accessorKey: "email", //normal accessorKey
+        header: "Email",
         size: 10,
       },
-      // {
-      //   accessorKey: "email", //normal accessorKey
-      //   header: "Email",
-      //   size: 10,
-      // },
       {
-        accessorKey: "user_type", //normal accessorKey
-        header: "User Type",
+        accessorKey: "number", //normal accessorKey
+        header: "Number",
         size: 10,
       },
 
@@ -104,7 +102,6 @@ const UserList = () => {
 
         id: "Status",
         header: "Status",
-        size: 10,
       },
     ],
     []
@@ -113,25 +110,25 @@ const UserList = () => {
   return (
     <>
       {isFetching && <Loader />}
-      <CategoryModal
+      <CompanyModal
         show={show}
         handleClose={handleClose}
         clickValue={clickValue}
         paramId={paramId}
       />
-      <PageTopHeader title="User List" />
+      <PageTopHeader title="Company" />
       <div class="card border shadow-lg ">
         <div class="card-header d-flex justify-content-between ">
-          <div> User List</div>
+          <div>company List</div>
           <div>
             <button
               className="btn btn-primary btn-sm"
               onClick={() => {
                 handleShow();
-                handelClickValue("Add New User");
+                handelClickValue("Add New Company");
               }}
             >
-              Add New User
+              Add New Company
             </button>
           </div>
         </div>
@@ -176,7 +173,7 @@ const UserList = () => {
                       className="px-2 d-flex align-items-center btn btn-primary btn-sm"
                       onClick={() => {
                         handleShow();
-                        handelClickValue("Edit User");
+                        handelClickValue("Edit Company");
                         setParamId(row?.row?.original);
                       }}
                     >
@@ -215,4 +212,4 @@ const UserList = () => {
   );
 };
 
-export default UserList;
+export default CompanyList;

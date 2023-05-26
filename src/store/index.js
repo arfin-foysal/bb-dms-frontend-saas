@@ -12,6 +12,7 @@ import { thirdSubCategoryApi } from '../services/ThirdSubCategoryApi';
 import { documentApi } from '../services/documentApi';
 import { publishApi } from '../services/publishApi';
 import { groupApi } from '../services/groupApi';
+import { companyApi } from '../services/companyApi';
 
 
 
@@ -31,6 +32,7 @@ const store = configureStore({
     [documentApi.reducerPath]: documentApi.reducer,
     [publishApi.reducerPath]: publishApi.reducer,
     [groupApi.reducerPath]: groupApi.reducer,
+    [companyApi.reducerPath]: companyApi.reducer,
     devTools: true
   },
 
@@ -44,7 +46,8 @@ const store = configureStore({
       thirdSubCategoryApi.middleware,
       documentApi.middleware,
       publishApi.middleware,
-      groupApi.middleware
+      groupApi.middleware,
+      companyApi.middleware,
     ])
 });
 setupListeners(store.dispatch);

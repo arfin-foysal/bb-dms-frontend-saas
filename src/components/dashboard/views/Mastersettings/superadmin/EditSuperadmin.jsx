@@ -1,17 +1,18 @@
 import { useFormik } from "formik";
 import React, { useState } from "react";
-import { Form, Modal } from "react-bootstrap";
+import {  Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
 
 import avater from "../../../../../assets/images/image_preview.png";
-import { useUpdateCatagoryMutation } from "../../../../../services/categoryApi";
-import { useUpdateUserMutation } from "../../../../../services/userApi";
 
-const EditUser = ({ handleClose, param }) => {
+import { useSuperAdminCreateOrUpdateAndCompanyAssignMutation } from "../../../../../services/userApi";
+import { useCompanyListQuery } from "../../../../../services/companyApi";
 
- 
+const EditSuperadmin = ({ handleClose, param }) => {
+  const [superAdminCreateOrUpdateAndCompanyAssign, res] = useSuperAdminCreateOrUpdateAndCompanyAssignMutation();
+  const companyRes = useCompanyListQuery();
 
-  const [updateUser, res] = useUpdateUserMutation();
+
   const [previewImage, setPreviewImage] = useState();
   function handelImage(e) {
     setPreviewImage(URL.createObjectURL(e.target.files[0]));
@@ -21,33 +22,33 @@ const EditUser = ({ handleClose, param }) => {
     enableReinitialize: true,
 
     initialValues: {
+      id: param?.id,
       name: param?.name,
       email: param?.email,
       username: param?.username,
-    
       image: param?.image,
       gender: param?.gender,
       number: param?.number,
-      user_type:param?.user_type,
+      company_id: param?.company_id,
       status: param?.status,
     },
 
     onSubmit: async (values, { resetForm }) => {
       let formData = new FormData();
+      formData.append("id", values.id);
       formData.append("name", values.name);
       formData.append("email", values.email);
       formData.append("username", values.username);
       formData.append("password", values.password);
       formData.append("gender", values.gender);
-      formData.append("description", values.description);
       formData.append("image", values.image);
       formData.append("number", values.number);
-      formData.append("user_type", values.user_type);
+      formData.append("company_id", values.company_id );
       formData.append("status", values.status);
       resetForm();
 
       try {
-        const result = await updateUser({ id: param?.id , data: formData }).unwrap();
+        const result = await superAdminCreateOrUpdateAndCompanyAssign(formData).unwrap();
         toast.success(result.message);
       } catch (error) {
         toast.warn(error.data.message);
@@ -175,17 +176,24 @@ const EditUser = ({ handleClose, param }) => {
           </div>
 
           <div className="form-group row col-6 my-1">
-            <label className="col-12 col-form-label">User Type</label>
+            <label className="col-12 col-form-label ">
+              Company Assign
+            </label>
             <div className="col-12">
               <select
                 className="form-control"
-                name="user_type"
+                name="company_id"
                 onChange={formik.handleChange}
-                value={formik.values.user_type}
+                value={formik.values.company_id }
+                required
               >
                 <option value="">--select--</option>
-                <option value="Admin">Admin</option>
-                <option value="User">User</option>
+                {companyRes?.data?.map((item) => (
+                  <option key={item.id} value={item.id}>
+                    {item.name}
+                  </option>
+                ))}
+
               </select>
             </div>
           </div>
@@ -240,4 +248,4 @@ const EditUser = ({ handleClose, param }) => {
   );
 };
 
-export default EditUser;
+export default EditSuperadmin;

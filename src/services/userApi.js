@@ -16,6 +16,7 @@ export const userApi = createApi({
       }),
       providesTags: ["User"],
     }),
+  
 
     createUsers: builder.mutation({
       query: (body) => {
@@ -29,9 +30,19 @@ export const userApi = createApi({
       invalidatesTags: ["User"],
     }),
 
+
     deleteUser: builder.mutation({
       query: (id) => ({
         url: `/users-delete/${id}`,
+        method: "DELETE",
+        headers,
+      }),
+      invalidatesTags: ["User"],
+    }),
+
+    superAdminDelete: builder.mutation({
+      query: (id) => ({
+        url: `super-admin-delete/${id}`,
         method: "DELETE",
         headers,
       }),
@@ -52,16 +63,47 @@ export const userApi = createApi({
     }),
 
 
-    resetPassword: builder.mutation({
+    passwordChange: builder.mutation({
       query: (body) => {
         return {
-          url: `admin/reset-password`,
+          url: `password-change`,
           method: "POST",
           body: body,
           headers,
         };
       },
       invalidatesTags: ["User"],
+    }),
+
+    
+    userProfile: builder.query({
+      query: (id) => ({
+        url: `users/${id}`,
+        method: "GET",
+        headers,
+      }),
+      // invalidatesTags: ['DocumentData'],
+      invalidatesTags: ["User"],
+    }),
+
+    superAdminCreateOrUpdateAndCompanyAssign : builder.mutation({
+      query: (body) => {
+        return {
+          url: `superadmin-create-or-update-and-company-assign`,
+          method: "POST",
+          body: body,
+          headers,
+        };
+      },
+      invalidatesTags: ["User"],
+    }),
+  superAdminList: builder.query({
+      query: () => ({
+        url: "super-admin-list",
+        method: "GET",
+        headers,
+      }),
+      providesTags: ["User"],
     }),
   }),
 });
@@ -71,4 +113,10 @@ export const {
   useCreateUsersMutation,
   useDeleteUserMutation,
   useUpdateUserMutation,
+  useUserProfileQuery,
+  useSuperAdminCreateOrUpdateAndCompanyAssignMutation,
+  useSuperAdminListQuery,
+  useSuperAdminDeleteMutation,
+  usePasswordChangeMutation
+
 } = userApi;

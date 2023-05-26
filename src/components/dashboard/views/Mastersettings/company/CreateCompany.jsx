@@ -1,46 +1,40 @@
 import { useFormik } from "formik";
 import React, { useState } from "react";
-import { Modal } from "react-bootstrap";
+import {Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
-import { useCreateUsersMutation } from "../../../../../services/userApi";
 
-const CreateUser = ({ handleClose }) => {
-  const [createUsers, res] = useCreateUsersMutation();
+import { useCreateOrUpdateCompanyMutation } from "../../../../../services/companyApi";
+
+
+const CreateCategory = ({ handleClose }) => {
+  const [createOrUpdateCompany, res] = useCreateOrUpdateCompanyMutation();
   const [previewImage, setPreviewImage] = useState();
   function handelImage(e) {
     setPreviewImage(URL.createObjectURL(e.target.files[0]));
   }
 
- const randomstring = Math.random().toString(36).slice(-8);
+
+
   const formik = useFormik({
     initialValues: {
       name: "",
       email: "",
-      username: randomstring,
-      password: "",
-      image: "",
-      gender: "",
       number: "",
-      user_type: "",
       status: "",
+      image: "",
     },
 
     onSubmit: async (values, { resetForm }) => {
       let formData = new FormData();
       formData.append("name", values.name);
       formData.append("email", values.email);
-      formData.append("username", values.username);
-      formData.append("password", values.password);
-      formData.append("gender", values.gender);
-      formData.append("description", values.description);
-      formData.append("image", values.image);
       formData.append("number", values.number);
-      formData.append("user_type", values.user_type);
       formData.append("status", values.status);
+      formData.append("image", values.image);
       resetForm();
 
       try {
-        const result = await createUsers(formData).unwrap();
+        const result = await createOrUpdateCompany(formData).unwrap();
         toast.success(result.message);
       } catch (error) {
         toast.warn(error.data.message);
@@ -52,14 +46,14 @@ const CreateUser = ({ handleClose }) => {
   }
 
   return (
-    <div className="ms-5">
+    <div>
       <form
         className="form-sample"
         onSubmit={formik.handleSubmit}
         encType="multipart/form-data"
       >
         <div className="row">
-          <div className="form-group row col-6 my-1">
+          <div className="form-group row col-12 my-1">
             <label className="col-12 col-form-label">Name</label>
             <div className="col-12">
               <input
@@ -73,25 +67,11 @@ const CreateUser = ({ handleClose }) => {
               />
             </div>
           </div>
-          <div className="form-group row col-6 my-1">
-            <label className="col-12 col-form-label">Username</label>
-            <div className="col-12">
-              <input
-                placeholder="Enter Username"
-                type="text"
-                className="form-control"
-                name="username"
-                onChange={formik.handleChange}
-                value={formik.values.username}
-                required
-              />
-            </div>
-          </div>
-          <div className="form-group row col-6 my-1">
+          <div className="form-group row col-12 my-1">
             <label className="col-12 col-form-label">Email</label>
             <div className="col-12">
               <input
-                placeholder="Enter Username"
+                placeholder="Enter Email"
                 type="email"
                 className="form-control"
                 name="email"
@@ -101,11 +81,11 @@ const CreateUser = ({ handleClose }) => {
               />
             </div>
           </div>
-          <div className="form-group row col-6 my-1">
+          <div className="form-group row col-12 my-1">
             <label className="col-12 col-form-label">Number</label>
             <div className="col-12">
               <input
-                placeholder="Enter Username"
+                placeholder="Enter Number"
                 type="number"
                 className="form-control"
                 name="number"
@@ -116,69 +96,24 @@ const CreateUser = ({ handleClose }) => {
             </div>
           </div>
           <div className="form-group row col-6 my-1">
-            <label className="col-12 col-form-label">Password</label>
-            <div className="col-12">
-              <input
-                placeholder="Enter Password"
-                type="password"
-                className="form-control"
-                name="password"
-                onChange={formik.handleChange}
-                value={formik.values.password}
-                required
-              />
-            </div>
-          </div>
-          <div className="form-group row col-6 my-1">
-            <label className="col-12 col-form-label">Gender</label>
-            <div className="col-12">
-              <select
-                className="form-control"
-                name="gender"
-                onChange={formik.handleChange}
-                value={formik.values.gender}
-                required
-              >
-                <option value="">--select--</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-          </div>
-          <div className="form-group row col-6 my-1">
             <label className="col-12 col-form-label">Status</label>
             <div className="col-12">
               <select
                 className="form-control"
+
                 name="status"
                 onChange={formik.handleChange}
                 value={formik.values.status}
-
-              >
-                <option value="">--select--</option>
-                <option value="Active">Active</option>
-                <option value="Pending">Pending</option>
-            
-              </select>
-            </div>
-          </div>
-          <div className="form-group row col-6 my-1">
-            <label className="col-12 col-form-label">User Type</label>
-            <div className="col-12">
-              <select
-                className="form-control"
-                name="user_type"
-                onChange={formik.handleChange}
-                value={formik.values.user_type}
                 required
               >
-                <option value="">--select--</option>
-                <option value="Admin">Admin</option>
-                <option value="User">User</option>
+                <option >--Select--</option>
+                <option value="Active">Active</option>
+                <option value="Pending">Inactive</option>
               </select>
             </div>
           </div>
+
+
 
           <div className="form-group row col-6 my-1">
             <label className="col-12 col-form-label">Photo</label>
@@ -195,6 +130,8 @@ const CreateUser = ({ handleClose }) => {
               />
             </div>
           </div>
+
+
         </div>
         <div>
           <img
@@ -224,4 +161,4 @@ const CreateUser = ({ handleClose }) => {
   );
 };
 
-export default CreateUser;
+export default CreateCategory;
