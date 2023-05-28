@@ -4,7 +4,7 @@ import MaterialReactTable from "material-react-table";
 
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { confirmHandel } from "../../../../../utils/Alert";
-import avatar from "../../../../../assets/images/profile-picture.png";
+import dammy_com from "../../../../../assets/logo/dammy_com.png";
 import { toast } from "react-toastify";
 import Loader from "../../../common/Loader";
 
@@ -61,7 +61,7 @@ const CompanyList = () => {
             <img
               className="img-fluid rounded-circle shadow"
               style={{ width: "40px", height: "40px" }}
-              src={avatar}
+              src={dammy_com}
               alt=""
             ></img>
           ),
@@ -75,6 +75,13 @@ const CompanyList = () => {
         accessorKey: "name", //access nested data with dot notation
         header: "Name",
         size: 10,
+      },
+
+      {
+        accessorKey: "unique_id", //normal accessorKey
+        header: "Unique Id",
+        size: 10,
+
       },
       
 

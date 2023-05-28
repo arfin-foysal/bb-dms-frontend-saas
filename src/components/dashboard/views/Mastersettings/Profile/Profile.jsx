@@ -16,10 +16,10 @@ const Profile = () => {
           <Card.Title as="h5">Profile</Card.Title>
         </Card.Header>
         <Card.Body>
-          <Row>
-            <div class="col-md-4 col-12 py-3">
+          <Row className=" border ">
+            <div className=" text-center">
               <img
-                class="img-fluid rounded-circle "
+                className="img-fluid rounded-circle "
                 style={{ width: "200px", height: "200px" }}
                 src={
                   profileRes?.data?.data?.image
@@ -29,49 +29,48 @@ const Profile = () => {
                 alt=""
               />
             </div>
-            <div class="col-md-4 col-12 py-3">
+            <div className=" text-center">
               <p>
                 Name:
-                <span class="font-weight-bold text-primary ">
+                <span className="font-weight-bold text-primary ">
                   {profileRes?.data?.data?.name}
                 </span>
               </p>
               <p>
                 Email:
-                <span class="font-weight-bold text-primary ">
+                <span className="font-weight-bold text-primary ">
                   {profileRes?.data?.data?.email}{" "}
                 </span>
               </p>
               <p>
                 Username:
-                <span class="font-weight-bold text-primary ">
+                <span className="font-weight-bold text-primary ">
                   {profileRes?.data?.data?.username}{" "}
                 </span>
               </p>
 
               <p>
                 Number:
-                <span class="font-weight-bold text-primary">
+                <span className="font-weight-bold text-primary">
                   {profileRes?.data?.data?.number}
                 </span>
               </p>
               <p>
                 Gender:
-                <span class="font-weight-bold text-primary">
+                <span className="font-weight-bold text-primary">
                   {profileRes?.data?.data?.gender}{" "}
                 </span>
               </p>
-            </div>
-            <div class="col-md-4 col-12 py-3">
               <p>
                 company name :
-                <span class="font-weight-bold text-primary">
+                <span className="font-weight-bold text-primary">
                   {profileRes?.data?.data?.company_name}
                 </span>
               </p>
-              <p>
-                Updated at :<span class="font-weight-bold text-primary"></span>
-              </p>
+            </div>
+            <div className="col-md-4 col-12 py-3">
+          
+        
             </div>
           </Row>
         </Card.Body>

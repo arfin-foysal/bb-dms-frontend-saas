@@ -80,11 +80,11 @@ const UserList = () => {
         header: "Username",
         size: 10,
       },
-      // {
-      //   accessorKey: "email", //normal accessorKey
-      //   header: "Email",
-      //   size: 10,
-      // },
+      {
+        accessorKey: "email", //normal accessorKey
+        header: "Email",
+        size: 10,
+      },
       {
         accessorKey: "user_type", //normal accessorKey
         header: "User Type",

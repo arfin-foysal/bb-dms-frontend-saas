@@ -59,7 +59,7 @@ const EditUser = ({ handleClose, param }) => {
   }
 
   return (
-    <div className="ms-5">
+    <div >
       <form
         className="form-sample"
         onSubmit={formik.handleSubmit}

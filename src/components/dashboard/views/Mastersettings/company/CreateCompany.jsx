@@ -14,7 +14,7 @@ const CreateCategory = ({ handleClose }) => {
   }
 
 
-
+  const randomstring = Math.random().toString(36).slice(-8);
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -22,6 +22,12 @@ const CreateCategory = ({ handleClose }) => {
       number: "",
       status: "",
       image: "",
+      unique_id: randomstring,
+      country: "",
+      address: "",
+
+      
+      
     },
 
     onSubmit: async (values, { resetForm }) => {
@@ -31,12 +37,16 @@ const CreateCategory = ({ handleClose }) => {
       formData.append("number", values.number);
       formData.append("status", values.status);
       formData.append("image", values.image);
+      formData.append("unique_id", values.unique_id);
+      formData.append("country", values.country);
+      formData.append("address", values.address);
       resetForm();
 
       try {
         const result = await createOrUpdateCompany(formData).unwrap();
         toast.success(result.message);
       } catch (error) {
+ 
         toast.warn(error.data.message);
       }
     },
@@ -46,14 +56,14 @@ const CreateCategory = ({ handleClose }) => {
   }
 
   return (
-    <div>
+    <div >
       <form
         className="form-sample"
         onSubmit={formik.handleSubmit}
         encType="multipart/form-data"
       >
         <div className="row">
-          <div className="form-group row col-12 my-1">
+          <div className="form-group row col-6 my-1">
             <label className="col-12 col-form-label">Name</label>
             <div className="col-12">
               <input
@@ -67,7 +77,21 @@ const CreateCategory = ({ handleClose }) => {
               />
             </div>
           </div>
-          <div className="form-group row col-12 my-1">
+          <div className="form-group row col-6 my-1">
+            <label className="col-12 col-form-label">Unique Id </label>
+            <div className="col-12">
+              <input
+                placeholder="Enter Unique Id"
+                type="text"
+                className="form-control"
+                name="unique_id"
+                onChange={formik.handleChange}
+                value={formik.values.unique_id}
+                required
+              />
+            </div>
+          </div>
+          <div className="form-group row col-6 my-1">
             <label className="col-12 col-form-label">Email</label>
             <div className="col-12">
               <input
@@ -81,7 +105,8 @@ const CreateCategory = ({ handleClose }) => {
               />
             </div>
           </div>
-          <div className="form-group row col-12 my-1">
+
+          <div className="form-group row col-6 my-1">
             <label className="col-12 col-form-label">Number</label>
             <div className="col-12">
               <input
@@ -91,6 +116,20 @@ const CreateCategory = ({ handleClose }) => {
                 name="number"
                 onChange={formik.handleChange}
                 value={formik.values.number}
+                required
+              />
+            </div>
+          </div>
+          <div className="form-group row col-6 my-1">
+            <label className="col-12 col-form-label">Country</label>
+            <div className="col-12">
+              <input
+                placeholder="Enter Country"
+                type="text"
+                className="form-control"
+                name="country"
+                onChange={formik.handleChange}
+                value={formik.values.country}
                 required
               />
             </div>
@@ -112,10 +151,25 @@ const CreateCategory = ({ handleClose }) => {
               </select>
             </div>
           </div>
+          <div className="form-group row col-12 my-1">
+            <label className="col-12 col-form-label">Address</label>
+            <div className="col-12">
+              <textarea
+                placeholder="Enter Address"
+                type="text"
+                className="form-control"
+                name="address"
+                onChange={formik.handleChange}
+                value={formik.values.address}
+                required
+              />
+            </div>
+          </div>
 
 
 
-          <div className="form-group row col-6 my-1">
+
+          <div className="form-group row col-12 ">
             <label className="col-12 col-form-label">Photo</label>
             <div className="col-12">
               <input
@@ -132,8 +186,8 @@ const CreateCategory = ({ handleClose }) => {
           </div>
 
 
-        </div>
-        <div>
+        </div >
+        <div  className="px-4">
           <img
             className="py-2"
             src={previewImage}

@@ -62,7 +62,7 @@ const CreateSuperadmin = ({ handleClose }) => {
   }
 
   return (
-    <div className="ms-5">
+    <div >
       <form
         className="form-sample"
         onSubmit={formik.handleSubmit}
@@ -101,7 +101,7 @@ const CreateSuperadmin = ({ handleClose }) => {
             <label className="col-12 col-form-label">Email</label>
             <div className="col-12">
               <input
-                placeholder="Enter Username"
+                placeholder="Enter Email"
                 type="email"
                 className="form-control"
                 name="email"
@@ -115,7 +115,7 @@ const CreateSuperadmin = ({ handleClose }) => {
             <label className="col-12 col-form-label">Number</label>
             <div className="col-12">
               <input
-                placeholder="Enter Username"
+                placeholder="Enter Number"
                 type="number"
                 className="form-control"
                 name="number"
@@ -186,7 +186,7 @@ const CreateSuperadmin = ({ handleClose }) => {
               />
             </div>
           </div>
-          <div class="alert alert-primary mt-2" role="alert">
+          <div class=" mt-4 text-danger " role="alert">
             <h4> Please Select Company !!</h4>
           </div>
           <div className="form-group row col-12 mb-2">
@@ -202,14 +202,14 @@ const CreateSuperadmin = ({ handleClose }) => {
                 <option value="">--select--</option>
                 {companyRes?.data?.map((item) => (
                   <option key={item.id} value={item.id}>
-                    {item.name}
+                    {`${item.name} (${item?.unique_id})`}
                   </option>
                 ))}
               </select>
             </div>
           </div>
         </div>
-        <div>
+        <div className="mx-4">
           <img
             className="py-2"
             src={previewImage}

@@ -122,19 +122,19 @@ const SuperadminList = () => {
         clickValue={clickValue}
         paramId={paramId}
       />
-      <PageTopHeader title="User List" />
+      <PageTopHeader title="Super Admin List" />
       <div class="card border shadow-lg ">
         <div class="card-header d-flex justify-content-between ">
-          <div> User List</div>
+          <div> Super Admin List</div>
           <div>
             <button
               className="btn btn-primary btn-sm"
               onClick={() => {
                 handleShow();
-                handelClickValue("Add New User");
+                handelClickValue("Add New Super Admin");
               }}
             >
-              Add New User
+              Add New Super Admin
             </button>
           </div>
         </div>
@@ -179,7 +179,7 @@ const SuperadminList = () => {
                       className="px-2 d-flex align-items-center btn btn-primary btn-sm"
                       onClick={() => {
                         handleShow();
-                        handelClickValue("Edit User");
+                        handelClickValue("Edit Super Admin");
                         setParamId(row?.row?.original);
                       }}
                     >

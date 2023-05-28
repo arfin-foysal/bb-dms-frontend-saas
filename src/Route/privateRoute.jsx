@@ -66,11 +66,11 @@ export const privateRoute = [
     element: <ThirdSubCategoryList />,
     role: "admin",
   },
-  {
-    path: "user-list",
-    element: <UserList/>,
-    role: "admin",
-  },
+  // {
+  //   path: "user-list",
+  //   element: <UserList/>,
+  //   role: "admin",
+  // },
 
   //docs
   {

@@ -23,10 +23,10 @@ const UserModal = ({ handleClose, show, clickValue, paramId }) => {
           <Modal.Title>{clickValue}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {clickValue === "Add New User" && (
+          {clickValue === "Add New Super Admin" && (
             <CreateSuperadmin handleClose={handleClose} />
           )}
-          {clickValue === "Edit User" && (
+          {clickValue === "Edit Super Admin" && (
             <EditSuperadmin  handleClose={handleClose} param={paramId} />
           )}
         </Modal.Body>

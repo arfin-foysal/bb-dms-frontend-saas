@@ -7,7 +7,7 @@ import { useCreateOrUpdateCompanyMutation } from "../../../../../services/compan
 
 const EditCompnay = ({ handleClose, param }) => {
 
- console.log(param)
+
 
   const [createOrUpdateCompany, res] = useCreateOrUpdateCompanyMutation();
   const [previewImage, setPreviewImage] = useState();
@@ -25,6 +25,12 @@ const EditCompnay = ({ handleClose, param }) => {
       email: param?.email,
       number: param?.number,
       status: param?.status,
+      unique_id: param?.unique_id,
+      country: param?.country,
+      address: param?.address,
+
+    
+
     },
 
     onSubmit: async (values, { resetForm }) => {
@@ -35,6 +41,9 @@ const EditCompnay = ({ handleClose, param }) => {
       formData.append("email", values.email);
       formData.append("number", values.number);
       formData.append("status", values.status);
+      formData.append("unique_id", values.unique_id);
+      formData.append("country", values.country);
+      formData.append("address", values.address);
       resetForm();
 
       try {
@@ -57,7 +66,7 @@ const EditCompnay = ({ handleClose, param }) => {
         encType="multipart/form-data"
       >
         <div className="row">
-          <div className="form-group row col-12 my-1">
+        <div className="form-group row col-6 my-1">
             <label className="col-12 col-form-label">Name</label>
             <div className="col-12">
               <input
@@ -71,7 +80,21 @@ const EditCompnay = ({ handleClose, param }) => {
               />
             </div>
           </div>
-          <div className="form-group row col-12 my-1">
+          <div className="form-group row col-6 my-1">
+            <label className="col-12 col-form-label">Unique Id </label>
+            <div className="col-12">
+              <input
+                placeholder="Enter Unique Id"
+                type="text"
+                className="form-control"
+                name="unique_id"
+                onChange={formik.handleChange}
+                value={formik.values.unique_id}
+                required
+              />
+            </div>
+          </div>
+          <div className="form-group row col-6 my-1">
             <label className="col-12 col-form-label">Email</label>
             <div className="col-12">
               <input
@@ -85,7 +108,8 @@ const EditCompnay = ({ handleClose, param }) => {
               />
             </div>
           </div>
-          <div className="form-group row col-12 my-1">
+
+          <div className="form-group row col-6 my-1">
             <label className="col-12 col-form-label">Number</label>
             <div className="col-12">
               <input
@@ -95,6 +119,20 @@ const EditCompnay = ({ handleClose, param }) => {
                 name="number"
                 onChange={formik.handleChange}
                 value={formik.values.number}
+                required
+              />
+            </div>
+          </div>
+          <div className="form-group row col-6 my-1">
+            <label className="col-12 col-form-label">Country</label>
+            <div className="col-12">
+              <input
+                placeholder="Enter Country"
+                type="text"
+                className="form-control"
+                name="country"
+                onChange={formik.handleChange}
+                value={formik.values.country}
                 required
               />
             </div>
@@ -116,10 +154,23 @@ const EditCompnay = ({ handleClose, param }) => {
               </select>
             </div>
           </div>
+          <div className="form-group row col-12 my-1">
+            <label className="col-12 col-form-label">Address</label>
+            <div className="col-12">
+              <textarea
+                placeholder="Enter Address"
+                type="text"
+                className="form-control"
+                name="address"
+                onChange={formik.handleChange}
+                value={formik.values.address}
+                required
+              />
+            </div>
+          </div>
 
 
-
-          <div className="form-group row col-6 my-1">
+          <div className="form-group row col-12 my-1">
             <label className="col-12 col-form-label">Photo</label>
             <div className="col-12">
               <input
@@ -137,7 +188,7 @@ const EditCompnay = ({ handleClose, param }) => {
 
 
         </div>
-        <div>
+        <div className="mx-4">
           {previewImage ? (
             <img
               className="py-2"
@@ -161,15 +212,17 @@ const EditCompnay = ({ handleClose, param }) => {
           )}
         </div>
         <Modal.Footer>
-          <div className=" d-flex">
-            <div>
-              <button className="btn btn-dark" onClick={handleClose}>
-                Close
-              </button>
-            </div>
-            <div className="mx-5">
+          <div className="row">
+        
+            <div className="col">
               <button type="submit" className="btn btn-success">
                 Submit
+              </button>
+            </div>
+            <div className="col">
+              
+              <button type="reset"  className="btn btn-dark" onClick={handleClose}>
+                Close
               </button>
             </div>
           </div>

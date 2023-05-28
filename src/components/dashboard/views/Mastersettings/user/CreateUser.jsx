@@ -52,7 +52,7 @@ const CreateUser = ({ handleClose }) => {
   }
 
   return (
-    <div className="ms-5">
+    <div >
       <form
         className="form-sample"
         onSubmit={formik.handleSubmit}

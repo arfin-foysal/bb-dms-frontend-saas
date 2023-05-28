@@ -60,7 +60,7 @@ const EditSuperadmin = ({ handleClose, param }) => {
   }
 
   return (
-    <div className="ms-5">
+    <div className="">
       <form
         className="form-sample"
         onSubmit={formik.handleSubmit}
@@ -99,7 +99,7 @@ const EditSuperadmin = ({ handleClose, param }) => {
             <label className="col-12 col-form-label">Email</label>
             <div className="col-12">
               <input
-                placeholder="Enter Username"
+                placeholder="Enter Email"
                 type="email"
                 className="form-control"
                 name="email"
@@ -113,7 +113,7 @@ const EditSuperadmin = ({ handleClose, param }) => {
             <label className="col-12 col-form-label">Number</label>
             <div className="col-12">
               <input
-                placeholder="Enter Username"
+                placeholder="Enter Number"
                 type="number"
                 className="form-control"
                 name="number"

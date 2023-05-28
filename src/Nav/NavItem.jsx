@@ -79,12 +79,12 @@ export const navItem = [
         icon: <BiCategory />,
       },
 
-      {
-        title: "User List",
-        link: "user-list",
-        role: "admin",
-        icon: <AiOutlineUserAdd />,
-      },
+      // {
+      //   title: "User List",
+      //   link: "user-list",
+      //   role: "admin",
+      //   icon: <AiOutlineUserAdd />,
+      // },
     ],
   },
 //admin route end
