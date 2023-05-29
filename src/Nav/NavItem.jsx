@@ -253,7 +253,15 @@ export const navItem = [
         icon: <BiCategory />,
       },
     ]
-  }
+  },
+  {
+    title: "Client Info List",
+    link: "systemadmin/client-info-list",
+    role: "systemadmin",
+    icon: <HiOutlineUserGroup />,
+  },
+
+ 
 
 
 

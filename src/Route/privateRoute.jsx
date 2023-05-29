@@ -21,6 +21,7 @@ import Profile from "../components/dashboard/views/Mastersettings/Profile/Profil
 import SystemadninPage from "../components/dashboard/views/dashboardHomePage/SystemadninPage";
 import CompanyList from "../components/dashboard/views/Mastersettings/company/CompanyList";
 import SuperadminList from "../components/dashboard/views/Mastersettings/superadmin/SuperadminList";
+import ClientList from "../components/dashboard/views/Mastersettings/superadmin/ClientList";
 
 
 
@@ -364,6 +365,11 @@ export const privateRoute = [
   {
     path: "systemadmin/profile-view/:id",
     element: <Profile />,
+    role: "systemadmin",
+  },
+  {
+    path: "systemadmin/client-info-list",
+    element: <ClientList />,
     role: "systemadmin",
   },
 ];

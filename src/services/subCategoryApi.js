@@ -6,7 +6,7 @@ export const subCategoryApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_API_URL,
   }),
-  tagTypes: ["Auth"],
+  tagTypes: ["SubCategory"],
   endpoints: (builder) => ({
      allSubCategory: builder.query({
       query: () => ({

@@ -13,6 +13,7 @@ import { documentApi } from '../services/documentApi';
 import { publishApi } from '../services/publishApi';
 import { groupApi } from '../services/groupApi';
 import { companyApi } from '../services/companyApi';
+import { clientInfoApi } from '../services/clientInfoApi';
 
 
 
@@ -33,6 +34,7 @@ const store = configureStore({
     [publishApi.reducerPath]: publishApi.reducer,
     [groupApi.reducerPath]: groupApi.reducer,
     [companyApi.reducerPath]: companyApi.reducer,
+    [clientInfoApi.reducerPath]: clientInfoApi.reducer,
     devTools: true
   },
 
@@ -48,6 +50,7 @@ const store = configureStore({
       publishApi.middleware,
       groupApi.middleware,
       companyApi.middleware,
+      clientInfoApi.middleware,
     ])
 });
 setupListeners(store.dispatch);

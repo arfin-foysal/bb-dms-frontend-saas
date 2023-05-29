@@ -6,7 +6,7 @@ export const categoryApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_API_URL,
   }),
-  tagTypes: ["Auth"],
+  tagTypes: ["Category"],
   endpoints: (builder) => ({
      allCategory: builder.query({
       query: () => ({

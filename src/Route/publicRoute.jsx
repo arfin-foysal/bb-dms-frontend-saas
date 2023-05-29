@@ -10,27 +10,35 @@ import Error from "../components/pages/commonViews/Error";
 import NotAccess from "../components/pages/commonViews/NotAccess";
 import Layout from "../components/layout/clientLayout/Layout";
 import Purchase from '../components/client/Purchase';
+import ClientMasterLayout from '../components/layout/clientLayout/ClientMasterLayout';
 
 
 export const publicRoute = [
   {
     path: "",
+    element: <ClientMasterLayout />,
+    children: [
+      // {
+      //   path: "/",
+      //   element: <Home />,
+      // },
+     
+    ],
+  },
+  {
+    path: "dms",
     element: <Layout />,
     children: [
       {
-        path: "/",
+        path: "/dms",
         element: <Home />,
       },
       {
-        path: "/",
-        element: <Home />,
-      },
-      {
-        path: "/purchase",
+        path: "/dms/purchase",
         element: <Purchase />,
       },
       {
-        path: "/contact",
+        path: "/dms/contact",
         element: <Contact />,
       },
      

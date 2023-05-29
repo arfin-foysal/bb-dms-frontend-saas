@@ -6,7 +6,7 @@ export const documentApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_API_URL,
   }),
-  tagTypes: ["Auth"],
+  tagTypes: ["Document"],
   endpoints: (builder) => ({
     allCategory: builder.query({
       query: () => ({
