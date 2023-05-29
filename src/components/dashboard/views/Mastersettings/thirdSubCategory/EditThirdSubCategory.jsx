@@ -121,7 +121,7 @@ const EditThirdSubCategory = ({ handleClose, param }) => {
           </div>
         </div>
 
-        <div>
+        <div className="mx-4">
           {previewImage ? (
             <img
               className="py-2"

@@ -1,57 +1,31 @@
 import { useFormik } from "formik";
 import React, { useState } from "react";
-import { Form, Modal } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
 import Select from "react-select";
-import avater from "../../../../../assets/images/image_preview.png";
-import { useUpdateCatagoryMutation } from "../../../../../services/categoryApi";
+import preview from "../../../../../assets/images/image_preview.png";
 import { useAllUserforGroupQuery, useSingalGroupQuery, useUpdateGroupMutation } from "../../../../../services/groupApi";
-import axios from "axios";
-import { headers } from "../../../../../utils/ApiHeaders";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
+
 
 const EditGroup = ({ handleClose, param }) => {
 
-
-  const [user, setUser] = useState([]);
   const [member, setMember] = useState([]);
-  const [defaultMember, setDefaultMember] = useState([]);
-
   const { data, isFetching, isSuccess, isLoading } = useSingalGroupQuery(
     param?.group?.id
   );
 
   const allUserRse=useAllUserforGroupQuery()
-
-
-
   const [updateGroup, res] = useUpdateGroupMutation()
-   
-
+  
   const [previewImage, setPreviewImage] = useState();
   function handelImage(e) {
     setPreviewImage(URL.createObjectURL(e.target.files[0]));
   }
 
-  const addUserMember = (e) => {
-    axios({
-      url: `${import.meta.env.VITE_API_URL}all_user_for_group`,
-      method: "GET",
-      headers,
-    }).then((res) => {
-      setUser(res.data);
-    });
-  };
 
-  // console.log(defaultMember);
 
-  useEffect(() => {
-    // addUserMember();
-    if (isSuccess) {
-      setDefaultMember(data?.data?.user);
-    }
-  }, [isSuccess]);
+
+
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -80,18 +54,16 @@ const EditGroup = ({ handleClose, param }) => {
         formData.append('member', memberArr);
         console.log(memberArr)
       } else {
-        allUserRse?.data.map((item) => {
+        data?.data?.user?.map((item) => {
           arr.push(item.id);
 
         })
 
         const memberArr = JSON.stringify(arr);
         formData.append('member', memberArr);
-            // console.log(memberArr)
+   
       }
 
-  
-  
 
       try {
 
@@ -149,7 +121,8 @@ const EditGroup = ({ handleClose, param }) => {
                 getOptionValue={(option) => `${option["id"]}`}
                 getOptionLabel={(option) => `${option["username"]}`}
                 options={isSuccess && allUserRse?.data}
-                defaultValue={isSuccess && data?.data?.user}
+                  defaultValue={isSuccess && data?.data?.user}
+                  isLoading={isFetching}
                
               />
               )
@@ -174,7 +147,7 @@ const EditGroup = ({ handleClose, param }) => {
             </div>
           </div>
 
-          <div className="form-group row col-6 my-1">
+          <div className="form-group row col-12 my-1">
             <label className="col-12 col-form-label">Photo</label>
             <div className="col-12  ">
               <input
@@ -193,7 +166,7 @@ const EditGroup = ({ handleClose, param }) => {
     
         </div>
 
-        <div>
+        <div className="mx-4">
           {previewImage ? (
             <img
               className="py-2"
@@ -207,7 +180,7 @@ const EditGroup = ({ handleClose, param }) => {
               className="py-2"
               src={
                 formik.values.image === null
-                  ? avater
+                  ? preview
                   : `${import.meta.env.VITE_FILE_URL}${formik.values.image}`
               }
               width="80px"

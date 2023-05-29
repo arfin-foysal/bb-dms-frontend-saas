@@ -48,7 +48,7 @@ const Login = () => {
         {/* <!-- Outer Row --> */}
         <div className="row justify-content-center my-5">
           <div className="col-12 col-md-4 pt-5">
-            <div className="card o-hidden border-0 shadow-lg my-5">
+            <div className="card o-hidden border shadow-lg my-5">
               <div className="card-body p-0">
                 <div className="row">
                   <div className="col">
@@ -119,7 +119,7 @@ const Login = () => {
                           </button>
                         </div>
                       </form>
-                      <hr />
+                      {/* <hr /> */}
                       {/* <div className="text-center ">
                         <Link
                           className="small text-dark"
@@ -129,9 +129,9 @@ const Login = () => {
                         </Link>
                       </div> */}
                       <div className="text-center">
-                      <Link className="small text-dark" to="/signup">
+                      {/* <Link className="small text-dark" to="/signup">
                         Create an Account!
-                      </Link>
+                      </Link> */}
                     </div>
                     </div>
                   </div>

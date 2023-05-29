@@ -12,7 +12,7 @@ const QuickUploadModal = ({show, handleClose}) => {
             className=" text-white"
             style={{ backgroundColor: "#3f4d67" }}
           >
-            <Modal.Title>Quick Uploade</Modal.Title>
+            <Modal.Title>Quick Upload</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <UploadDocument handleClose={handleClose} />

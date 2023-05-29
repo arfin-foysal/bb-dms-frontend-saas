@@ -11,9 +11,8 @@ import {
   BsStack,
   BsXCircleFill,
 } from "react-icons/bs";
-import { GiSandsOfTime } from "react-icons/gi";
-import { ImCross } from "react-icons/im";
 
+import {HiOutlineUserGroup} from "react-icons/hi"
 import { Link } from "react-router-dom";
 import { Button, Card } from "react-bootstrap";
 import {
@@ -47,13 +46,13 @@ const AdminPage = () => {
 
       <div className="row">
         <TopBox
-          name="My Documnets"
+          name="My Documents"
           color="blue"
           icon={<BsStack color="blue" size={25} />}
           item={data?.myDoc}
         />
         <TopBox
-          name="Published Documnets"
+          name="Published Documents"
           color="green"
           icon={<AiOutlineCloudServer  color="green" size={25} />}
           item={data?.publishDoc}
@@ -61,7 +60,7 @@ const AdminPage = () => {
         <TopBox
           name="My Groups"
           color="#FFCC00"
-          icon={<GiSandsOfTime color="#FFCC00" size={25} />}
+          icon={<HiOutlineUserGroup color="#FFCC00" size={25} />}
           item={data?.myGroup}
         />
 
@@ -70,7 +69,7 @@ const AdminPage = () => {
             <Card.Body>
               <div className="row align-items-center justify-content-center">
                 <div className="col">
-                  <p className="m-0">UPLOADE DOCUMENT</p>
+                  <p className="m-0">UPLOAD DOCUMENT</p>
                 </div>
 
                 <div className="col-auto"></div>
@@ -84,7 +83,7 @@ const AdminPage = () => {
                         handleShow();
                       }}
                     >
-                      <span>UPLOADE</span>
+                      <span>UPLOAD</span>
                       <BsFillArrowUpCircleFill
                         className="mx-2 mb-1"
                         size={15}
@@ -164,7 +163,9 @@ const AdminPage = () => {
                           (authUser?.user_type === "Admin" &&
                           `/dashboard/document-view/${item.id}`) ||
                           (authUser?.user_type === "User" &&
-                          `/dashboard/user/document-view/${item.id}`)
+                            `/dashboard/user/document-view/${item.id}`) ||
+                          (authUser?.user_type === "Superadmin" &&
+                            `/dashboard/superadmin/document-view/${item.id}`) 
                         }
 
                       
@@ -182,6 +183,7 @@ const AdminPage = () => {
                 {/* </Link> */}
               </div>
             ))}
+
         </div>
         {data?.dashboardPublishDoc?.data?.length > 9 && (
           <div className="text-end mr-3">

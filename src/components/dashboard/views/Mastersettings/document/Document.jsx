@@ -29,7 +29,7 @@ export const Document = () => {
                 handleShow();
               }}
             >
-              Uploade Document
+              Upload Document
             </button>
           </div>
         </div>

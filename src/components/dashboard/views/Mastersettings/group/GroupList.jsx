@@ -133,7 +133,7 @@ const GroupList = () => {
                  }
                 alt=""
               />
-                        {item?.group?.group_creator?.name}
+                        {item?.group?.group_creator?.name.slice(0, 10)}
                       </Card.Text>
                     </div>
 

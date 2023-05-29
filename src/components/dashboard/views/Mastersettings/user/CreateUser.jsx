@@ -196,7 +196,7 @@ const CreateUser = ({ handleClose }) => {
             </div>
           </div>
         </div>
-        <div>
+        <div className="mx-4">
           <img
             className="py-2"
             src={previewImage}

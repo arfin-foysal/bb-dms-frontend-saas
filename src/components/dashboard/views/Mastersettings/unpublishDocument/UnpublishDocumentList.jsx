@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import MaterialReactTable from "material-react-table";
 import Loader from "../../../common/Loader";
 import PageTopHeader from "../../../common/PageTopHeader";
-
+import {IoSyncCircleSharp} from "react-icons/io5"
 
 import {
   useAdminDocumentPublishMutation,
@@ -12,14 +12,21 @@ import { BsFillEyeFill, BsXCircleFill } from "react-icons/bs";
 import { FcCancel } from "react-icons/fc";
 import { Link } from "react-router-dom";
 import { DocumentPublish, cancelHandel } from "../../../../../utils/Document";
-import { useLazyAdminCancelDocumnetQuery } from "../../../../../services/documentApi";
+import { useLazyAdminCancelDocumentQuery } from "../../../../../services/documentApi";
 import { RiUploadCloud2Fill } from "react-icons/ri";
+import { useSelector } from "react-redux";
 
 const UnpublishDocumentList = () => {
+  const authUser = useSelector((state) => state.auth.user);
   const res = useAdminUnpublishDocumentListQuery();
-  const [adminCancelDocumnet,ress]=useLazyAdminCancelDocumnetQuery() 
+  const [adminCancelDocument, ress] = useLazyAdminCancelDocumentQuery();
   const [adminDocumentPublish] = useAdminDocumentPublishMutation();
   const { data, isSuccess, isFetching, isError, error } = res;
+
+
+  const refatchClick = () => {
+    res.refetch();
+  };
 
   const columns = useMemo(
     () => [
@@ -97,9 +104,20 @@ const UnpublishDocumentList = () => {
       )}
 
       <PageTopHeader title="Unpublish Document List" />
+
+      
       <div class="card border shadow-lg ">
         <div class="card-header d-flex justify-content-between ">
           <div>Unpublish Document List</div>
+
+          <div className="mt-1">
+                <IoSyncCircleSharp
+                  className="pointer "
+                  color="black"
+                  size={25}
+                  onClick={() => refatchClick()}
+                />
+              </div>
         </div>
 
         <div class="card-body p-0">
@@ -121,7 +139,12 @@ const UnpublishDocumentList = () => {
                   <div className="mr-1">
                     <td>
                       <Link
-                        to={`/dashboard/document-view/${row?.row?.original?.id}`}
+                        to={
+                          (authUser?.user_type === "Admin" &&
+                            `/dashboard/document-view/${row?.row?.original?.id}`) ||
+                          (authUser?.user_type === "Superadmin" &&
+                            `/dashboard/superadmin/document-view/${row?.row?.original?.id}`)
+                        }
                       >
                         <BsFillEyeFill color="black" size={20} />
                       </Link>
@@ -130,7 +153,10 @@ const UnpublishDocumentList = () => {
                         className=" btn btn-outline-none"
                         style={{ "border-style": "none" }}
                         onClick={() =>
-                          cancelHandel(adminCancelDocumnet, row?.row?.original?.id)
+                          cancelHandel(
+                            adminCancelDocument,
+                            row?.row?.original?.id
+                          )
                         }
                       >
                         <FcCancel color="red" size={20} />

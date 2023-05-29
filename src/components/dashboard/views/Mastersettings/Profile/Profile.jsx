@@ -7,7 +7,7 @@ const Profile = () => {
   const { id } = useParams();
   const profileRes = useUserProfileQuery(id);
 
-  console.log(profileRes);
+
 
   return (
     <div>
@@ -23,7 +23,7 @@ const Profile = () => {
                 style={{ width: "200px", height: "200px" }}
                 src={
                   profileRes?.data?.data?.image
-                    ? `${process.env.REACT_APP_IMAGE_URL}${profileRes?.data?.data?.image}`
+                    ? `${import.meta.env.VITE_FILE_URL}${profileRes?.data?.data?.image}`
                     : avatar
                 }
                 alt=""

@@ -99,7 +99,7 @@ export const ThirdSubCategoryDocument = () => {
                 handleShow();
               }}
             >
-              Uploade Document
+              Upload Document
             </button>
           </div>
         </div>

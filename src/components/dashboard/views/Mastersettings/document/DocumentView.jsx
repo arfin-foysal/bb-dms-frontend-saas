@@ -88,7 +88,7 @@ const DocumentView = () => {
         <Modal.Header closeButton>
           <Modal.Title id="example-modal-sizes-title-xs">
             <img width={35} src={shere_ic} alt="" />
-            Share Documnet
+            Share Document
           </Modal.Title>
         </Modal.Header>
 
@@ -100,7 +100,7 @@ const DocumentView = () => {
               name="group_id"
               onChange={(e) => setGroupId(e.target.value)}
             >
-              <option>Selact Group</option>
+              <option>Select Group</option>
               {userSuccess &&
                 userData.data?.map((item, i) => (
                   <option key={i} value={item?.group?.id}>
@@ -125,7 +125,7 @@ const DocumentView = () => {
         <Card.Header>
           <div className="d-flex justify-content-between">
             <div>
-              <Card.Title as="h5">Documnet </Card.Title>
+              <Card.Title as="h5">Document </Card.Title>
             </div>
 
             <div>

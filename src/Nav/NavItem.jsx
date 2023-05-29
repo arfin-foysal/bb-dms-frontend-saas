@@ -22,6 +22,12 @@ export const navItem = [
     icon: <AiOutlineCloudServer />,
   },
   {
+    title: "Unpublished Documents",
+    link: "unpublish-document",
+    role: "admin",
+    icon: <HiOutlineDocumentDownload />,
+  },
+  {
     title: "Documents",
     role: "admin",
     icon: <HiOutlineDocumentDuplicate />,
@@ -48,12 +54,7 @@ export const navItem = [
     role: "admin",
     icon: <HiOutlineUserGroup />,
   },
-  {
-    title: "Unpublish Documents",
-    link: "unpublish-document",
-    role: "admin",
-    icon: <HiOutlineDocumentDownload />,
-  },
+
 
   {
     title: "Master Settings",
@@ -95,7 +96,13 @@ export const navItem = [
   link: "superadmin/all-document-list",
   role: "superadmin",
   icon: <AiOutlineCloudServer />,
-},
+  },
+  {
+    title: "Unpublished Documents",
+    link: "superadmin/unpublish-document",
+    role: "superadmin",
+    icon: <HiOutlineDocumentDownload />,
+  },
 {
   title: "Documents",
   role: "superadmin",
@@ -123,12 +130,7 @@ export const navItem = [
   role: "superadmin",
   icon: <HiOutlineUserGroup />,
 },
-{
-  title: "Unpublish Documents",
-  link: "superadmin/unpublish-document",
-  role: "superadmin",
-  icon: <HiOutlineDocumentDownload />,
-},
+
 
 {
   title: "Master Settings",

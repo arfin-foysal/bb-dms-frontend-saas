@@ -7,7 +7,7 @@ import axios from "axios";
 import { headers } from "../../../../../utils/ApiHeaders";
 import { useEffect } from "react";
 import { useCreateGroupMutation } from "../../../../../services/groupApi";
-
+import preview from "../../../../../assets/images/image_preview.png";
 const CreateGroup = ({ handleClose }) => {
   const [createGroup, res] = useCreateGroupMutation();
   const [previewImage, setPreviewImage] = useState();
@@ -146,10 +146,10 @@ const CreateGroup = ({ handleClose }) => {
 
 
         </div>
-        <div>
+        <div className="mx-4">
           <img
             className="py-2"
-            src={previewImage}
+            src={previewImage?previewImage:preview}
             width="80px"
             height="80px"
             alt=""

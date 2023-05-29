@@ -53,6 +53,7 @@ const AllDocumentList = () => {
         )}
 
         <div class="card-body ">
+      
           <div className="d-flex flex-wrap justify-content-center justify-content-md-start">
             {isSuccess &&
               data?.map((item, i) => (
@@ -97,7 +98,8 @@ const AllDocumentList = () => {
                             (authUser?.user_type === "Admin" &&
                               `/dashboard/document-view/${item.id}`) ||
                             (authUser?.user_type === "User" &&
-                              `/dashboard/user/document-view/${item.id}`) || (authUser?.user_type === "Superadmin" &&
+                              `/dashboard/user/document-view/${item.id}`) ||
+                            (authUser?.user_type === "Superadmin" &&
                               `/dashboard/superadmin/document-view/${item.id}`)
                           }
                         >
@@ -111,6 +113,7 @@ const AllDocumentList = () => {
                       </div>
                     </div>
                   </Card>
+                  
                   {/* </Link> */}
                 </div>
               ))}

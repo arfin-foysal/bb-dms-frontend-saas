@@ -60,17 +60,16 @@ const UploadDocument = ({ handleClose }) => {
     },
   });
 
-
   // if (res.isSuccess) {
   //   handleClose()
   // }
 
   return (
     <div>
-      <PageTopHeader title="Document Uploade" />
+      <PageTopHeader title="Document Upload" />
       <div class="card border shadow-lg ">
         <div class="card-header d-flex justify-content-between ">
-          <div>Document Uploade</div>
+          <div>Document Upload</div>
         </div>
 
         <div class="card-body ">
@@ -80,7 +79,7 @@ const UploadDocument = ({ handleClose }) => {
             encType="multipart/form-data"
           >
             <div className="row">
-              <Col >
+              <Col>
                 <Form.Group controlId="exampleForm.ControlInput1">
                   <Form.Label>Name</Form.Label>
                   <Form.Control
@@ -93,7 +92,7 @@ const UploadDocument = ({ handleClose }) => {
                   />
                 </Form.Group>
               </Col>
-              <Col >
+              <Col>
                 <Row>
                   <Col>
                     <Form.Label>Category</Form.Label>
@@ -107,9 +106,11 @@ const UploadDocument = ({ handleClose }) => {
                       }}
                       value={formik.values.catagory_id}
                     >
-                      <option>--Selact--</option>
-                      {cateRes.data?.map((item,i) => (
-                        <option key={i} value={item.id}>{item.name}</option>
+                      <option>--select--</option>
+                      {cateRes.data?.map((item, i) => (
+                        <option key={i} value={item.id}>
+                          {item.name}
+                        </option>
                       ))}
                     </select>
                   </Col>
@@ -129,9 +130,11 @@ const UploadDocument = ({ handleClose }) => {
                       }}
                       value={formik.values.sub_catagory_id}
                     >
-                      <option>--Selact--</option>
-                      {subCateRes.data?.map((item,i) => (
-                        <option key={i} value={item.id}>{item.name}</option>
+                      <option>--select--</option>
+                      {subCateRes.data?.map((item, i) => (
+                        <option key={i} value={item.id}>
+                          {item.name}
+                        </option>
                       ))}
                     </select>
                   </Col>
@@ -151,9 +154,11 @@ const UploadDocument = ({ handleClose }) => {
                       onChange={formik.handleChange}
                       value={formik.values.sub_sub_catagory_id}
                     >
-                      <option>--Selact--</option>
-                      {thirdSubCateRes.data?.map((item,i) => (
-                        <option key={i} value={item.id}>{item.name}</option>
+                      <option>--select--</option>
+                      {thirdSubCateRes.data?.map((item, i) => (
+                        <option key={i} value={item.id}>
+                          {item.name}
+                        </option>
                       ))}
                     </Form.Control>
                   </Col>
@@ -201,7 +206,7 @@ const UploadDocument = ({ handleClose }) => {
               </div>
             </div>
 
-            <div>
+            <div className="mx-3">
               <img
                 className="py-2"
                 src={previewImage}
@@ -216,9 +221,7 @@ const UploadDocument = ({ handleClose }) => {
                   Submit
                 </button>
               </div>
-              <div>
-          
-              </div>
+              <div></div>
             </div>
           </form>
         </div>

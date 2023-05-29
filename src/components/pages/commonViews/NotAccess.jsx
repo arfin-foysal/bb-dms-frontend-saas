@@ -7,9 +7,9 @@ const NotAccess = () => {
     <>
       <div className='text-center p-5'>
         <div>
-          <img width="500px" src={forbidden} alt="" />
+          <img width="400px" src={forbidden} alt="" />
       </div >
-      <Link to="/dashboard" className="btn btn-dark btn-sm">&larr; Back to Dashborad</Link>
+      <Link to="/dashboard" className="btn btn-dark btn-sm">&larr; Back to Dashboard</Link>
   </div>
     </>
   )

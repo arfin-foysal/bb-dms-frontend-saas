@@ -103,7 +103,7 @@ export const SubCategoryDocumentAndThirdSubCategoryFolder = () => {
                 handleShow();
               }}
             >
-              Uploade Document
+              Upload Document
             </button>
           </div>
         </div>

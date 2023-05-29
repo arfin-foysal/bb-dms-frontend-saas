@@ -11,7 +11,7 @@ const Error = () => {
       <div className="container-fluid">
         {/* <!-- 404 Error Text --> */}
         <div className="text-center">
-          <img width="500px" src={error} alt="" />
+          <img width="400px" src={error} alt="" />
         </div>
 
         <div className="text-center ">

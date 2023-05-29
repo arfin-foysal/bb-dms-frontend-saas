@@ -166,7 +166,7 @@ export const documentApi = createApi({
           ? [...result.map(({ id }) => ({ type: "Document", id })), "Document"]
           : ["Document"],
     }),
-    adminCancelDocumnet: builder.query({
+    adminCancelDocument: builder.query({
       query: (id) => ({
         url: `admin-cancel-document/${id}`,
         method: "GET",
@@ -192,5 +192,6 @@ export const {
   useThirdSubCategoryFolderBySubCategoryIdQuery,
   useSubcategoryDocumentBySubCategoryIdQuery,
   useThirdSubCategoryDocumentByThirdSubCategoryIdQuery,
-  useLazyAdminCancelDocumnetQuery,
+  useLazyAdminCancelDocumentQuery,
+
 } = documentApi;

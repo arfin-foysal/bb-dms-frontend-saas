@@ -159,7 +159,7 @@ const CreateThirdSubCategory = ({ handleClose }) => {
 
 
         </div>
-        <div>
+        <div className="mx-4">
           <img
             className="py-2"
             src={previewImage}
