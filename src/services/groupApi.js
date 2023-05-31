@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import Cookies from 'js-cookie';
 import { headers } from "../utils/ApiHeaders";
 export const groupApi = createApi({
   reducerPath: 'groupApi',

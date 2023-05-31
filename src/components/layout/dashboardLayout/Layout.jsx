@@ -85,7 +85,7 @@ const Layout = () => {
                         <>
                           <img
                             className="img-fluid "
-                            width={isOpen ? "40px" : "40px"}
+                            width={isOpen ? "110px" : "40px"}
                             src={`${import.meta.env.VITE_FILE_URL}${
                               authUser?.company_image
                             }`}
@@ -94,7 +94,7 @@ const Layout = () => {
                         </>
                       ) : (
                         <img
-                          className="img-fluid w-100 "
+                          width={isOpen ? "110px" : "40px"}
                           src={demo_logo}
                           alt={authUser?.company_name}
                         ></img>

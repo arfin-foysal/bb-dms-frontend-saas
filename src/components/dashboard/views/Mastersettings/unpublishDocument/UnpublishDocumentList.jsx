@@ -103,12 +103,12 @@ const UnpublishDocumentList = () => {
         </div>
       )}
 
-      <PageTopHeader title="Unpublish Document List" />
+      <PageTopHeader title="Unpublished Document List" />
 
       
       <div class="card border shadow-lg ">
         <div class="card-header d-flex justify-content-between ">
-          <div>Unpublish Document List</div>
+          <div>Unpublished Document List</div>
 
           <div className="mt-1">
                 <IoSyncCircleSharp

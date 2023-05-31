@@ -1,20 +1,11 @@
 import React from "react";
 import { Card, Col, Row } from "react-bootstrap";
-import {
-  BsArrowLeftCircleFill,
-  BsFillCheckCircleFill,
-  BsFillInfoCircleFill,
-  BsXCircleFill,
-} from "react-icons/bs";
-import {
-  useDocumentpublishMutation,
-  useViewDocumentQuery,
-} from "../../../../../services/documentApi";
+import { BsArrowLeftCircleFill, BsFillInfoCircleFill } from "react-icons/bs";
+
 import { useParams } from "react-router-dom";
 import downloade from "./../../../../../assets/images/File/download.png";
-import shareDoc from "./../../../../../assets/images/File/shere_ic.png";
-import cloud from "./../../../../../assets/images/File/cloud.png";
-import { DocumentPublish, download, groupdownload } from "../../../../../utils/Document";
+
+import { download, groupdownload } from "../../../../../utils/Document";
 import { useGroupSingalDocumnetQuery } from "../../../../../services/groupApi";
 import Loader from "../../../common/Loader";
 
@@ -23,14 +14,10 @@ const GroupDocumentView = () => {
   const res = useGroupSingalDocumnetQuery(id);
   const { data, isFetching, isSuccess, isError } = res;
 
-
-
-
+  console.log(data);
 
   return (
     <>
-      
-
       <Card>
         <Card.Header>
           <div className="d-flex justify-content-between">
@@ -50,18 +37,18 @@ const GroupDocumentView = () => {
           </div>
         </Card.Header>
         <Card.Body>
-        {isFetching && <Loader />}
+          {isFetching && <Loader />}
 
-{data?.length === 0 && (
-  <div className="d-flex justify-content-center">
-    <p className="text-center">No Data Found :)</p>
-  </div>
-)}
-{isError && (
-  <div className="d-flex justify-content-center">
-    <p> Something went wrong (:</p>
-  </div>
-)}
+          {data?.length === 0 && (
+            <div className="d-flex justify-content-center">
+              <p className="text-center">No Data Found :)</p>
+            </div>
+          )}
+          {isError && (
+            <div className="d-flex justify-content-center">
+              <p> Something went wrong (:</p>
+            </div>
+          )}
           {isSuccess && (
             <Row>
               <Col>
@@ -71,15 +58,13 @@ const GroupDocumentView = () => {
                       <div className="d-flex flex-wrap justify-content-start">
                         <div>
                           <img
-                            onClick={(e) => groupdownload(e, data)}
+                            onClick={(e) => groupdownload(e, data&&data)}
                             className="btn"
                             width={60}
                             src={downloade}
                             alt=""
                           />
                         </div>
-
-
                       </div>
 
                       <div className=" mx-1 ">
@@ -131,24 +116,25 @@ const GroupDocumentView = () => {
                   <Col md={9}>
                     <Card width="1000px" height="500px">
                       <div>
-                      {data?.data?.file?.split(".").pop().includes("docx") ||
-                        data?.data?.file?.split(".").pop().includes("xls") ||
-                        data?.data?.file?.split(".").pop().includes("xlsx") ||
-                          data?.data?.file?.split(".").pop().includes("csv") ||
-                          data?.data?.file?.split(".").pop().includes("ppt") ||
-                          data?.data?.file?.split(".").pop().includes("pptx") ||
-                          data?.data?.file?.split(".").pop().includes("doc") ||
-                          data?.data?.file?.split(".").pop().includes("xlx")   ? (
+                        {data?.file?.split(".").pop().includes("docx") ||
+                        data?.file?.split(".").pop().includes("xls") ||
+                        data?.file?.split(".").pop().includes("xlsx") ||
+                        data?.file?.split(".").pop().includes("csv") ||
+                        data?.file?.split(".").pop().includes("ppt") ||
+                        data?.file?.split(".").pop().includes("pptx") ||
+                        data?.file?.split(".").pop().includes("doc") ||
+                        data?.file?.split(".").pop().includes("xlx") ? (
                           <div class="alert alert-warning" role="alert">
-                          This Document is Not Viewable, Please Download this Document 👉<img
-                        onClick={(e) => download(e, data?.data)}
-                        className="btn"
-                        width={50}
-                        src={downloade}
-                        alt=""
-                      />
-                    
-                      </div>
+                            This Document is Not Viewable, Please Download this
+                            Document 👉
+                            <img
+                              onClick={(e) => download(e, data)}
+                              className="btn"
+                              width={50}
+                              src={downloade}
+                              alt=""
+                            />
+                          </div>
                         ) : (
                           <embed
                             width="100%"
