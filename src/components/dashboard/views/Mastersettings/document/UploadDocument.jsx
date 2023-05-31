@@ -1,6 +1,7 @@
 import { useFormik } from "formik";
 import React, { useState, useRef } from "react";
 import { Col, Form, Row } from "react-bootstrap";
+import * as Yup from "yup";
 import { toast } from "react-toastify";
 import JoditEditor from "jodit-react";
 import { useAllCategoryQuery } from "../../../../../services/categoryApi";
@@ -31,6 +32,12 @@ const UploadDocument = ({ handleClose }) => {
   }
 
   const formik = useFormik({
+    validationSchema: Yup.object({
+      name: Yup.string().required("Required"),
+      catagory_id: Yup.string().required("Required"),
+      file: Yup.string().required("Required ! Please Upload Your Document"),
+    }),
+
     initialValues: {
       name: "",
       catagory_id: "",
@@ -79,25 +86,32 @@ const UploadDocument = ({ handleClose }) => {
             encType="multipart/form-data"
           >
             <div className="row">
-              <Col>
-                <Form.Group controlId="exampleForm.ControlInput1">
-                  <Form.Label>Name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Name"
-                    name="name"
-                    onChange={formik.handleChange}
-                    value={formik.values.name}
-                    required
-                  />
-                </Form.Group>
-              </Col>
-              <Col>
-                <Row>
-                  <Col>
+              <div className="col ">
+                <label className="mb-2">Name</label>
+                <input
+                  type="text"
+                  placeholder="Name"
+                  name="name"
+                  onChange={formik.handleChange}
+                  value={formik.values.name}
+                  onBlur={formik.handleBlur}
+                  className={
+                    formik.errors.name && formik.touched.name
+                      ? "form-control form-control-user is-invalid  shadow"
+                      : "form-control form-control-user shadow"
+                  }
+                />
+
+                {formik.errors.name && formik.touched.name ? (
+                  <div className="invalid-feedback">{formik.errors.name}</div>
+                ) : null}
+              </div>
+              <div className="col">
+                <div className="row">
+                  <div className="col">
                     <Form.Label>Category</Form.Label>
                     <select
-                      className=" form-control form-select mb-3"
+                   
                       name="catagory_id"
                       required
                       onChange={(e) => {
@@ -105,6 +119,12 @@ const UploadDocument = ({ handleClose }) => {
                         setcategory(e.target.value);
                       }}
                       value={formik.values.catagory_id}
+                      onBlur={formik.handleBlur}
+                      className={
+                        formik.errors.catagory_id && formik.touched.catagory_id
+                          ? "form-control form-select shadow is-invalid"
+                          : "form-control form-select shadow"
+                      }
                     >
                       <option>--select--</option>
                       {cateRes.data?.map((item, i) => (
@@ -113,15 +133,24 @@ const UploadDocument = ({ handleClose }) => {
                         </option>
                       ))}
                     </select>
-                  </Col>
-                  <Col
+                    {formik.errors.catagory_id && formik.touched.catagory_id ? (
+                      <div className="invalid-feedback">
+                        {formik.errors.catagory_id}
+                      </div>
+                    ) : null}
+
+                        
+                  </div>
+                  <div
                     className={
-                      formik.values.catagory_id === "" ? "d-none" : "d-block"
+                      formik.values.catagory_id === ""
+                        ? "d-none"
+                        : "d-block col "
                     }
                   >
                     <Form.Label>Sub Category</Form.Label>
                     <select
-                      className="mb-3 form-control form-select"
+                      className="mb-3 form-control form-select shadow "
                       name="sub_catagory_id"
                       required
                       onChange={(e) => {
@@ -137,18 +166,18 @@ const UploadDocument = ({ handleClose }) => {
                         </option>
                       ))}
                     </select>
-                  </Col>
-                  <Col
+                  </div>
+                  <div
                     className={
                       formik.values.sub_catagory_id === ""
                         ? "d-none"
-                        : "d-block"
+                        : "d-block col "
                     }
                   >
                     <Form.Label>3rd Category</Form.Label>
                     <Form.Control
                       as="select"
-                      className="mb-3 form-select"
+                      className="mb-3 form-select shadow"
                       name="sub_sub_catagory_id"
                       required
                       onChange={formik.handleChange}
@@ -161,34 +190,23 @@ const UploadDocument = ({ handleClose }) => {
                         </option>
                       ))}
                     </Form.Control>
-                  </Col>
-                </Row>
-              </Col>
-            </div>
-            {/* <div className="form-group row col-12 my-1">
-              <label className="col-12 col-form-label">Description</label>
-              <div className="col-12">
-                <textarea
-                  placeholder="Enter description"
-                  type="text"
-                  className="form-control"
-                  name="description"
-                  onChange={formik.handleChange}
-                  value={formik.values.description}
-                  required
-                />
+                  </div>
+                </div>
               </div>
-            </div> */}
+            </div>
 
-            <Form.Label>Description</Form.Label>
-            <JoditEditor
-              ref={editor}
-              value={description}
-              // config={config}
-              tabIndex={1} // tabIndex of textarea
-              onBlur={(newContent) => setDescription(newContent)} // preferred to use only this option to update the content for performance reasons
-              // onChange={(newContent) => {setDescription(newContent.target.value)}}
-            />
+            <div className="form-group row col-12 my-1">
+              <label className="mb-2">Description</label>
+              <JoditEditor
+                ref={editor}
+                value={description}
+                // config={config}
+                tabIndex={1} // tabIndex of textarea
+                onBlur={(newContent) => setDescription(newContent)} // preferred to use only this option to update the content for performance reasons
+                // onChange={(newContent) => {setDescription(newContent.target.value)}}
+              
+              />
+            </div>
 
             <div className="form-group row col-12 my-1">
               <label className="col-12 col-form-label">Select Your File</label>
@@ -202,7 +220,17 @@ const UploadDocument = ({ handleClose }) => {
                     handelImage(e);
                   }}
                   required
+                  onBlur={formik.handleBlur}
+                  className={
+                    formik.errors.file && formik.touched.file
+                      ? "form-control form-control-user is-invalid  shadow"
+                      : "form-control form-control-user shadow"
+                  }
                 />
+                {formik.errors.file && formik.touched.file ? (
+                  <div className="invalid-feedback">{formik.errors.file}</div>
+                ) : null}
+
               </div>
             </div>
 

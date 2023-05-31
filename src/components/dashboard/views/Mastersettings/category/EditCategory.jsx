@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import React, { useState } from "react";
 import { Form, Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
-
+import * as Yup from "yup";
 import avater from "../../../../../assets/images/image_preview.png";
 import { useUpdateCatagoryMutation } from "../../../../../services/categoryApi";
 
@@ -17,6 +17,10 @@ const EditCategory = ({ handleClose, param }) => {
   }
 
   const formik = useFormik({
+    validationSchema: Yup.object({
+      name: Yup.string().required("Required"),
+      description: Yup.string().required("Required"),
+    }),
     enableReinitialize: true,
 
     initialValues: {
@@ -61,12 +65,20 @@ const EditCategory = ({ handleClose, param }) => {
               <input
                 placeholder="Enter Name"
                 type="text"
-                className="form-control"
+                onBlur={formik.handleBlur}
+                className={
+                  formik.errors.name && formik.touched.name
+                    ? "form-control form-control-user is-invalid  shadow"
+                    : "form-control form-control-user shadow"
+                }
                 name="name"
                 onChange={formik.handleChange}
                 value={formik.values.name}
                 required
               />
+                 {formik.errors.name && formik.touched.name ? (
+                <div className="invalid-feedback">{formik.errors.name}</div>
+              ) : null}
             </div>
           </div>
 
@@ -78,12 +90,22 @@ const EditCategory = ({ handleClose, param }) => {
               <textarea
                 placeholder="Enter description"
                 type="text"
-                className="form-control"
+                onBlur={formik.handleBlur}
+                className={
+                  formik.errors.description && formik.touched.description
+                    ? "form-control form-control-user is-invalid  shadow"
+                    : "form-control form-control-user shadow"
+                }
                 name="description"
                 onChange={formik.handleChange}
                 value={formik.values.description}
                 required
               />
+                      {formik.errors.description && formik.touched.description ? (
+                <div className="invalid-feedback">
+                  {formik.errors.description}
+                </div>
+              ) : null}
             </div>
           </div>
 
@@ -91,7 +113,7 @@ const EditCategory = ({ handleClose, param }) => {
             <label className="col-12 col-form-label">Photo</label>
             <div className="col-12  ">
               <input
-                className="form-control"
+                className="form-control shadow "
                 name="image"
                 type="file"
                 accept="image/*"
@@ -108,7 +130,7 @@ const EditCategory = ({ handleClose, param }) => {
           <div className="form-group row col-6 my-2">
             <label className="col-6 col-form-label">Status</label>
             <div >
-              <select className="form-control" name="status" required
+              <select className="form-control shadow" name="status" required
                 onChange={formik.handleChange}
                 value={formik.values.status}
                 

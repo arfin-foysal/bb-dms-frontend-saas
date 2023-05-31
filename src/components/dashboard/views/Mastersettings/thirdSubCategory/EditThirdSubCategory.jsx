@@ -1,16 +1,13 @@
 import { useFormik } from "formik";
 import React, { useState } from "react";
-import { Form, Modal } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
-
-import avater from "../../../../../assets/images/image_preview.png";
+import * as Yup from "yup";
+import avater from "../../../../../assets/images/File/noimg.png";
 
 import { useUpdateThirdSubCatagoryMutation } from "../../../../../services/ThirdSubCategoryApi";
 
 const EditThirdSubCategory = ({ handleClose, param }) => {
-
- 
-
   const [updateThirdSubCatagory, res] = useUpdateThirdSubCatagoryMutation();
   const [previewImage, setPreviewImage] = useState();
   function handelImage(e) {
@@ -18,8 +15,11 @@ const EditThirdSubCategory = ({ handleClose, param }) => {
   }
 
   const formik = useFormik({
+    validationSchema: Yup.object({
+      name: Yup.string().required("Required"),
+      description: Yup.string().required("Required"),
+    }),
     enableReinitialize: true,
-
     initialValues: {
       name: param?.name,
       image: param?.image,
@@ -36,7 +36,10 @@ const EditThirdSubCategory = ({ handleClose, param }) => {
       resetForm();
 
       try {
-        const result = await updateThirdSubCatagory({ id: param?.id , data: formData }).unwrap();
+        const result = await updateThirdSubCatagory({
+          id: param?.id,
+          data: formData,
+        }).unwrap();
         toast.success(result.message);
       } catch (error) {
         toast.warn(error.data.message);
@@ -61,16 +64,22 @@ const EditThirdSubCategory = ({ handleClose, param }) => {
               <input
                 placeholder="Enter Name"
                 type="text"
-                className="form-control"
                 name="name"
                 onChange={formik.handleChange}
                 value={formik.values.name}
                 required
+                onBlur={formik.handleBlur}
+                className={
+                  formik.errors.name && formik.touched.name
+                    ? "form-control form-control-user is-invalid  shadow"
+                    : "form-control form-control-user shadow"
+                }
               />
+              {formik.errors.name && formik.touched.name ? (
+                <div className="invalid-feedback">{formik.errors.name}</div>
+              ) : null}
             </div>
           </div>
-
-    
 
           <div className="form-group row col-12 my-1">
             <label className="col-12 col-form-label">Description</label>
@@ -78,12 +87,25 @@ const EditThirdSubCategory = ({ handleClose, param }) => {
               <textarea
                 placeholder="Enter description"
                 type="text"
-                className="form-control"
+              
                 name="description"
+                
                 onChange={formik.handleChange}
                 value={formik.values.description}
+                onBlur={formik.handleBlur}
+                className={
+                  formik.errors.description && formik.touched.description
+                    ? "form-control form-control-user is-invalid  shadow"
+                    : "form-control form-control-user shadow"
+                }
                 required
               />
+              {formik.errors.description && formik.touched.description ? (
+                <div className="invalid-feedback">
+                  {formik.errors.description}
+                </div>
+              ) : null}
+
             </div>
           </div>
 
@@ -91,7 +113,7 @@ const EditThirdSubCategory = ({ handleClose, param }) => {
             <label className="col-12 col-form-label">Photo</label>
             <div className="col-12  ">
               <input
-                className="form-control"
+                className="form-control shadow"
                 name="image"
                 type="file"
                 accept="image/*"
@@ -103,20 +125,19 @@ const EditThirdSubCategory = ({ handleClose, param }) => {
             </div>
           </div>
 
-
-
           <div className="form-group row col-6 my-2">
             <label className="col-6 col-form-label">Status</label>
-            <div >
-              <select className="form-control" name="status" required
+            <div>
+              <select
+                className="form-control shadow"
+                name="status"
+                required
                 onChange={formik.handleChange}
                 value={formik.values.status}
-                
               >
                 <option value="Active">Active</option>
                 <option value="Pending">Pending</option>
               </select>
-         
             </div>
           </div>
         </div>

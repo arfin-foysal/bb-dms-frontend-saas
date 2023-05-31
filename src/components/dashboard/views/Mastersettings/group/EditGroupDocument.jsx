@@ -4,7 +4,7 @@ import { Col, Form } from "react-bootstrap";
 import { toast } from "react-toastify";
 import JoditEditor from "jodit-react";
 import PageTopHeader from "../../../common/PageTopHeader";
-
+import * as Yup from "yup";
 import { useGroupDocumentUpdateMutation } from "../../../../../services/groupApi";
 
 const EditGroupDocument = ({handleClose, param }) => {
@@ -26,6 +26,11 @@ const EditGroupDocument = ({handleClose, param }) => {
   }, [param]);
 
   const formik = useFormik({
+    validationSchema: Yup.object({
+      name: Yup.string().required("Required"),
+      status: Yup.string().required("Required"),
+    }),
+
     enableReinitialize: true,
     initialValues: {
       name: param?.name,
@@ -56,10 +61,10 @@ const EditGroupDocument = ({handleClose, param }) => {
 
   return (
     <div>
-      <PageTopHeader title="Category" />
+      <PageTopHeader title="Edit Document" />
       <div class="card border shadow-lg ">
         <div class="card-header d-flex justify-content-between ">
-          <div> Category List</div>
+          <div>Edit Document</div>
         </div>
 
         <div class="card-body ">
@@ -69,35 +74,52 @@ const EditGroupDocument = ({handleClose, param }) => {
             encType="multipart/form-data"
           >
             <div className="row">
-              <Col md={6}>
-                <Form.Group controlId="exampleForm.ControlInput1">
-                  <Form.Label>Name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Name"
-                    name="name"
-                    onChange={formik.handleChange}
-                    value={formik.values.name}
-                    required
-                  />
-                </Form.Group>
-              </Col>
-              <Col md={6}>
-                <Form.Group controlId="exampleForm.ControlInput1">
-                  <Form.Label>Publish</Form.Label>
+            <div className="col-6 ">
+                <label >Name</label>
+                <input
+                  type="text"
+                  placeholder="Name"
+                  name="name"
+                  onChange={formik.handleChange}
+                  value={formik.values.name}
+                  onBlur={formik.handleBlur}
+                  className={
+                    formik.errors.name && formik.touched.name
+                      ? "form-control form-control-user is-invalid  shadow"
+                      : "form-control form-control-user shadow"
+                  }
+                />
+
+                {formik.errors.name && formik.touched.name ? (
+                  <div className="invalid-feedback">{formik.errors.name}</div>
+                ) : null}
+              </div>
+              <div className="col-6">
+              
+                  <label>Published</label>
                   <select
-                    className="form-control"
+                  
                     name="status"
                     onChange={formik.handleChange}
                     value={formik.values.status}
-                    required
+                  required
+
+                  className={
+                    formik.errors.status && formik.touched.status
+                      ? "form-control form-control-user is-invalid  shadow"
+                      : "form-control form-control-user shadow"
+                  }
                   >
                     <option>--Select--</option>
                     <option value="Active">Active</option>
                     <option value="Dactive">Dactive</option>
-                  </select>
-                </Form.Group>
-              </Col>
+                </select>
+                {formik.errors.status && formik.touched.status ? (
+                  <div className="invalid-feedback">{formik.errors.status}</div>
+                ) : null}
+
+               
+              </div>
             </div>
             {/* <div className="form-group row col-12 my-1">
               <label className="col-12 col-form-label">Description</label>
@@ -114,29 +136,41 @@ const EditGroupDocument = ({handleClose, param }) => {
               </div>
             </div> */}
 
-            <Form.Label>Description</Form.Label>
-            <JoditEditor
-              ref={editor}
-              value={description}
-              // config={config}
-              tabIndex={1} // tabIndex of textarea
-              onBlur={(newContent) => setDescription(newContent)} // preferred to use only this option to update the content for performance reasons
-              // onChange={(newContent) => {setDescription(newContent.target.value)}}
-            />
-
+<div className="form-group row col-12 my-3">
+              <label className="mb-2">Description</label>
+              <JoditEditor
+                ref={editor}
+                value={description}
+                // config={config}
+                tabIndex={1} // tabIndex of textarea
+                onBlur={(newContent) => setDescription(newContent)} // preferred to use only this option to update the content for performance reasons
+                // onChange={(newContent) => {setDescription(newContent.target.value)}}
+              
+              />
+            </div>
             <div className="form-group row col-12 my-1">
               <label className="col-12 col-form-label">Select Your File</label>
               <div className="col-12">
                 <input
                   type="file"
                   name="file"
-                  accept="image/png ,image/jpg,image/jpeg , image/svg+xml ,application/pdf,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.slideshow,application/vnd.openxmlformats-officedocument.presentationml.presentation/application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document/application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet/application/vnd.oasis.opendocument.text/application/vnd.oasis.opendocument.spreadsheet/application/vnd.oasis.opendocument.presentation"
+                  accept="image/*,.pdf,.doc,.docx,.ppt,.pptx,.txt,.xlsx,.xls,.csv,"
                   onChange={(e) => {
                     formik.setFieldValue("file", e.currentTarget.files[0]);
                     handelImage(e);
                   }}
-                  // required
+                  required
+                  onBlur={formik.handleBlur}
+                  className={
+                    formik.errors.file && formik.touched.file
+                      ? "form-control form-control-user is-invalid  shadow"
+                      : "form-control form-control-user shadow"
+                  }
                 />
+                {formik.errors.file && formik.touched.file ? (
+                  <div className="invalid-feedback">{formik.errors.file}</div>
+                ) : null}
+
               </div>
             </div>
 
@@ -165,7 +199,7 @@ const EditGroupDocument = ({handleClose, param }) => {
             </div>
             <div className=" d-flex justify-content-end">
               <div>
-                <button className="btn btn-dark">Close</button>
+                <button onClick={()=>handleClose()} className="btn btn-dark">Close</button>
               </div>
               <div className="mx-5">
                 <button type="submit" className="btn btn-success">

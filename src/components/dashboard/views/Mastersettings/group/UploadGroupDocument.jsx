@@ -3,16 +3,12 @@ import React, { useState ,useRef} from "react";
 import { Col, Form, Row } from "react-bootstrap";
 import { toast } from "react-toastify";
 import JoditEditor from 'jodit-react';
-import {
-  useAllCategoryQuery,
-
-} from "../../../../../services/categoryApi";
 import PageTopHeader from "../../../common/PageTopHeader";
 import {
-  useSubCategoryByCategoryIdQuery,
-  useThirdCateBySubCateIdQuery,
+
 } from "../../../../../services/ThirdSubCategoryApi";
 
+import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useAddGroupDocumentMutation, useGroupDocumentUpdateMutation } from "../../../../../services/groupApi";
 
@@ -30,6 +26,10 @@ const UploadGroupDocument = ({ handleClose,param }) => {
   }
 
   const formik = useFormik({
+    validationSchema: Yup.object({
+      name: Yup.string().required("Required"),
+      file: Yup.string().required("Required ! Please Upload Your Document"),
+    }),
     initialValues: {
       name: "",
       group_id: "",
@@ -54,7 +54,7 @@ const UploadGroupDocument = ({ handleClose,param }) => {
     },
   });
   if (res.isSuccess) {
-    navigate(-1);
+    handleClose()
     
     }
 
@@ -74,19 +74,26 @@ const UploadGroupDocument = ({ handleClose,param }) => {
             encType="multipart/form-data"
           >
             <div className="row">
-              <Col md={12}>
-                <Form.Group controlId="exampleForm.ControlInput1">
-                  <Form.Label>Name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Name"
-                    name="name"
-                    onChange={formik.handleChange}
-                    value={formik.values.name}
-                    required
-                  />
-                </Form.Group>
-              </Col>
+            <div className="col-12 ">
+                <label className="mb-2">Name</label>
+                <input
+                  type="text"
+                  placeholder="Name"
+                  name="name"
+                  onChange={formik.handleChange}
+                  value={formik.values.name}
+                  onBlur={formik.handleBlur}
+                  className={
+                    formik.errors.name && formik.touched.name
+                      ? "form-control form-control-user is-invalid  shadow"
+                      : "form-control form-control-user shadow"
+                  }
+                />
+
+                {formik.errors.name && formik.touched.name ? (
+                  <div className="invalid-feedback">{formik.errors.name}</div>
+                ) : null}
+              </div>
               <Col md={8}>
                 <Row>
                 </Row>
@@ -94,37 +101,49 @@ const UploadGroupDocument = ({ handleClose,param }) => {
             </div>
 
 
-            <Form.Label>Description</Form.Label> 
-           <JoditEditor
-              ref={editor}
-              value={description}
-              // config={config}
-              tabIndex={1} // tabIndex of textarea
-              onBlur={(newContent) => setDescription(newContent)} // preferred to use only this option to update the content for performance reasons
-              // onChange={(newContent) => {setDescription(newContent.target.value)}}
-            />
+            <div className="form-group row col-12 my-3">
+              <label className="mb-2">Description</label>
+              <JoditEditor
+                ref={editor}
+                value={description}
+                // config={config}
+                tabIndex={1} // tabIndex of textarea
+                onBlur={(newContent) => setDescription(newContent)} // preferred to use only this option to update the content for performance reasons
+                // onChange={(newContent) => {setDescription(newContent.target.value)}}
+              
+              />
+            </div>
 
     
-
             <div className="form-group row col-12 my-1">
               <label className="col-12 col-form-label">Select Your File</label>
               <div className="col-12">
-                 <input
-                type="file"
-                name="file"
-                accept="image/*,.pdf,.doc,.docx,.ppt,.pptx,.txt,.xlsx,.xls,.csv,"
-                onChange={(e) => {
-                  formik.setFieldValue("file", e.currentTarget.files[0]);
-                  handelImage(e);
-                }}
-                required
-              />
+                <input
+                  type="file"
+                  name="file"
+                  accept="image/*,.pdf,.doc,.docx,.ppt,.pptx,.txt,.xlsx,.xls,.csv,"
+                  onChange={(e) => {
+                    formik.setFieldValue("file", e.currentTarget.files[0]);
+                    handelImage(e);
+                  }}
+                  required
+                  onBlur={formik.handleBlur}
+                  className={
+                    formik.errors.file && formik.touched.file
+                      ? "form-control form-control-user is-invalid  shadow"
+                      : "form-control form-control-user shadow"
+                  }
+                />
+                {formik.errors.file && formik.touched.file ? (
+                  <div className="invalid-feedback">{formik.errors.file}</div>
+                ) : null}
+
               </div>
-                      </div>
+            </div>
 
 
 
-            <div>
+            <div className="mx-3 m">
               <img
                 className="py-2"
                 src={previewImage}
@@ -140,7 +159,7 @@ const UploadGroupDocument = ({ handleClose,param }) => {
                 </button>
               </div>
               <div>
-                <button  className="btn btn-dark" onClick={()=>navigate(-1)}>Close</button>
+                <button  className="btn btn-dark" onClick={()=>handleClose()}>Close</button>
               </div>
           
             </div>

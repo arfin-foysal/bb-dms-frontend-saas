@@ -4,7 +4,7 @@ import { Col, Form } from "react-bootstrap";
 import { toast } from "react-toastify";
 import JoditEditor from "jodit-react";
 import PageTopHeader from "../../../common/PageTopHeader";
-
+import * as Yup from "yup";
 import {
   useEditDocumentMutation,
   useViewDocumentQuery,
@@ -29,6 +29,12 @@ const EditDocument = () => {
   }, [id, docRes.isSuccess, docRes]);
 
   const formik = useFormik({
+    validationSchema: Yup.object({
+      name: Yup.string().required("Required"),
+      status: Yup.string().required("Required"),
+      file: Yup.string().required("Required ! Please Upload Your Document"),
+    }),
+
     enableReinitialize: true,
     initialValues: {
       name: docRes?.data?.data?.name,
@@ -45,7 +51,6 @@ const EditDocument = () => {
       resetForm();
 
       try {
-        
         const result = await EditDocument({ id: id, data: formData }).unwrap();
         toast.success(result.message);
       } catch (error) {
@@ -59,10 +64,10 @@ const EditDocument = () => {
 
   return (
     <div>
-      <PageTopHeader title="Category" />
+      <PageTopHeader title="Edit Document" />
       <div class="card border shadow-lg ">
         <div class="card-header d-flex justify-content-between ">
-          <div> Category List</div>
+          <div> Edit Document</div>
         </div>
 
         <div class="card-body ">
@@ -72,62 +77,57 @@ const EditDocument = () => {
             encType="multipart/form-data"
           >
             <div className="row">
-              <Col md={6}>
-                <Form.Group controlId="exampleForm.ControlInput1">
-                  <Form.Label>Name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Name"
-                    name="name"
-                    onChange={formik.handleChange}
-                    value={formik.values.name}
-                    required
-                  />
-                </Form.Group>
-              </Col>
-              <Col md={6}>
-                <Form.Group controlId="exampleForm.ControlInput1">
-                  <Form.Label>Publish</Form.Label>
-                  <select
-                    className="form-control"
-                    name="status"
-                    onChange={formik.handleChange}
-                    value={formik.values.status}
-                    required
-                  >
-                    <option>--Select--</option>
-                    <option value="Active">Active</option>
-                    <option value="Pending">Pending</option>
-                  </select>
-                </Form.Group>
-              </Col>
-            </div>
-            {/* <div className="form-group row col-12 my-1">
-              <label className="col-12 col-form-label">Description</label>
-              <div className="col-12">
-                <textarea
-                  placeholder="Enter description"
+              <div className="col ">
+                <label>Name</label>
+                <input
                   type="text"
-                  className="form-control"
-                  name="description"
+                  placeholder="Name"
+                  name="name"
                   onChange={formik.handleChange}
-                  value={formik.values.description}
+                  value={formik.values.name}
                   required
+                  onBlur={formik.handleBlur}
+                  className={
+                    formik.errors.name && formik.touched.name
+                      ? "form-control form-control-user is-invalid  shadow"
+                      : "form-control form-control-user shadow"
+                  }
                 />
+
+                {formik.errors.name && formik.touched.name ? (
+                  <div className="invalid-feedback">{formik.errors.name}</div>
+                ) : null}
               </div>
-            </div> */}
 
-            <Form.Label>Description</Form.Label>
-            <JoditEditor
-              ref={editor}
-              value={description}
-              // config={config}
-              tabIndex={1} // tabIndex of textarea
-              onBlur={(newContent) => setDescription(newContent)} // preferred to use only this option to update the content for performance reasons
-              // onChange={(newContent) => {setDescription(newContent.target.value)}}
-            />
+              <div className="col">
+                <label>Public share</label>
+                <select
+                  className="form-control shadow form-select "
+                  name="status"
+                  onChange={formik.handleChange}
+                  value={formik.values.status}
+                  required
+                >
+                  <option>--Select--</option>
+                  <option value="Active">Yes</option>
+                  <option value="Pending">No</option>
+                </select>
+              </div>
+          
 
-            <div className="form-group row col-12 my-1">
+            <div className="col-12 mt-3">
+              <label>Description</label>
+              <JoditEditor
+                ref={editor}
+                value={description}
+                // config={config}
+                tabIndex={1} // tabIndex of textarea
+                onBlur={(newContent) => setDescription(newContent)} // preferred to use only this option to update the content for performance reasons
+                // onChange={(newContent) => {setDescription(newContent.target.value)}}
+              />
+            </div>
+
+            <div className="col-12 my-1">
               <label className="col-12 col-form-label">Select Your File</label>
               <div className="col-12">
                 <input
@@ -138,11 +138,22 @@ const EditDocument = () => {
                     formik.setFieldValue("file", e.currentTarget.files[0]);
                     handelImage(e);
                   }}
-                  // required
-                />
+                    onBlur={formik.handleBlur}
+                    className={
+                      formik.errors.file && formik.touched.file
+                        ? "form-control form-control-user is-invalid  shadow"
+                        : "form-control form-control-user shadow"
+                    }
+                  />
+                  {formik.errors.file && formik.touched.file ? (
+                    <div className="invalid-feedback">
+                      {formik.errors.file}
+
+                    </div>
+                  ) : null}
               </div>
             </div>
-
+            </div>
             <div>
               {previewImage ? (
                 <img
@@ -158,7 +169,9 @@ const EditDocument = () => {
                   src={
                     formik.values.image === null
                       ? "https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg"
-                      : `${import.meta.env.VITE_DOC_FILE_URL}${formik.values.file}`
+                      : `${import.meta.env.VITE_DOC_FILE_URL}${
+                          formik.values.file
+                        }`
                   }
                   width="80px"
                   height="80px"
@@ -167,9 +180,7 @@ const EditDocument = () => {
               )}
             </div>
 
-
             <div className=" d-flex justify-content-end">
-         
               <div className="mx-5">
                 <button type="submit" className="btn btn-success">
                   Submit

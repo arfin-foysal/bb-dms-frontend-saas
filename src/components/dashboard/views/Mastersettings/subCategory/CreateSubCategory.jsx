@@ -1,25 +1,27 @@
 import { useFormik } from "formik";
 import React, { useState } from "react";
-import {Modal } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
+import * as Yup from "yup";
 
 import { useAllCategoryQuery } from "../../../../../services/categoryApi";
 
 import { useCreateSubCategoryMutation } from "../../../../../services/subCategoryApi";
 
-
 const CreateSubCategory = ({ handleClose }) => {
   const [createSubCategory, res] = useCreateSubCategoryMutation();
-  const categoryRes= useAllCategoryQuery();
+  const categoryRes = useAllCategoryQuery();
   const [previewImage, setPreviewImage] = useState();
   function handelImage(e) {
     setPreviewImage(URL.createObjectURL(e.target.files[0]));
   }
 
-
-
-
   const formik = useFormik({
+    validationSchema: Yup.object({
+      name: Yup.string().required("Required"),
+      catagory_id: Yup.string().required("Required"),
+      description: Yup.string().required("Required"),
+    }),
     initialValues: {
       name: "",
       catagory_id: "",
@@ -61,33 +63,49 @@ const CreateSubCategory = ({ handleClose }) => {
               <input
                 placeholder="Enter Name"
                 type="text"
-                className="form-control"
                 name="name"
                 onChange={formik.handleChange}
                 value={formik.values.name}
                 required
+                onBlur={formik.handleBlur}
+                className={
+                  formik.errors.name && formik.touched.name
+                    ? "form-control form-control-user is-invalid  shadow"
+                    : "form-control form-control-user shadow"
+                }
               />
+              {formik.errors.name && formik.touched.name ? (
+                <div className="invalid-feedback">{formik.errors.name}</div>
+              ) : null}
             </div>
           </div>
           <div className="form-group row col-12 my-1">
             <label className="col-12 col-form-label">Category</label>
             <div className="col-12">
-
-              <select 
-
-                className="form-control"
+              <select
                 name="catagory_id"
                 onChange={formik.handleChange}
                 value={formik.values.catagory_id}
                 required
+                onBlur={formik.handleBlur}
+                className={
+                  formik.errors.catagory_id && formik.touched.catagory_id
+                    ? "form-control form-control-user is-invalid  shadow"
+                    : "form-control form-control-user shadow"
+                }
               >
                 <option value="">Select Category</option>
                 {categoryRes?.data?.map((item) => (
                   <option value={item.id}>{item.name}</option>
                 ))}
-              </select>
 
-         
+            
+              </select>
+              {formik.errors.catagory_id && formik.touched.catagory_id ? (
+                  <div className="invalid-feedback">
+                    {formik.errors.catagory_id}
+                  </div>
+                ) : null}
             </div>
           </div>
 
@@ -97,12 +115,26 @@ const CreateSubCategory = ({ handleClose }) => {
               <textarea
                 placeholder="Enter description"
                 type="text"
-                className="form-control"
+            
                 name="description"
                 onChange={formik.handleChange}
                 value={formik.values.description}
                 required
+                onBlur={formik.handleBlur}
+                className={
+                  formik.errors.description && formik.touched.description
+                    ? "form-control form-control-user is-invalid  shadow"
+                    : "form-control form-control-user shadow"
+                }
+
               />
+              {formik.errors.description && formik.touched.description ? (
+                <div className="invalid-feedback">
+                  {formik.errors.description}</div>
+              ) : null}
+
+
+
             </div>
           </div>
 
@@ -110,7 +142,7 @@ const CreateSubCategory = ({ handleClose }) => {
             <label className="col-12 col-form-label">Photo</label>
             <div className="col-12">
               <input
-                className="form-control"
+                className="form-control shadow"
                 name="image"
                 type="file"
                 accept="image/*"
@@ -121,8 +153,6 @@ const CreateSubCategory = ({ handleClose }) => {
               />
             </div>
           </div>
-
-
         </div>
         <div className="mx-4">
           <img

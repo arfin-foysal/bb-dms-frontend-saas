@@ -5,13 +5,13 @@ import "./Dashboard.css";
 const Footer = () => {
   const year = new Date().getFullYear();
   return (
-    <div className="py-2 shadow-lg d-flex justify-content-between px-3 footer">
-      <div>
+    <div className="py-2 shadow-lg row px-3 footer">
+      <div className="col text-center">
         <p style={{ fontSize: "13px" }} className="p-0 m-0   ">
           <span className="text-info ">BacBon Limited </span> © {year}.
         </p>
       </div>
-      <div>
+      {/* <div className="col text-e">
         <p style={{ fontSize: "13px" }} className="p-0 m-0 fw-bold ">
           Developed by
           <Link
@@ -23,7 +23,7 @@ const Footer = () => {
             BacBon Limited.
           </Link>
         </p>
-      </div>
+      </div> */}
     </div>
   );
 };

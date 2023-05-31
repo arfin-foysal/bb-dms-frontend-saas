@@ -1,40 +1,42 @@
 import { useFormik } from "formik";
 import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
+import * as Yup from "yup";
 import { toast } from "react-toastify";
 import Select from "react-select";
 import preview from "../../../../../assets/images/image_preview.png";
-import { useAllUserforGroupQuery, useSingalGroupQuery, useUpdateGroupMutation } from "../../../../../services/groupApi";
-
+import {
+  useAllUserforGroupQuery,
+  useSingalGroupQuery,
+  useUpdateGroupMutation,
+} from "../../../../../services/groupApi";
 
 const EditGroup = ({ handleClose, param }) => {
-
   const [member, setMember] = useState([]);
   const { data, isFetching, isSuccess, isLoading } = useSingalGroupQuery(
     param?.group?.id
   );
 
-  const allUserRse=useAllUserforGroupQuery()
-  const [updateGroup, res] = useUpdateGroupMutation()
-  
+  const allUserRse = useAllUserforGroupQuery();
+  const [updateGroup, res] = useUpdateGroupMutation();
+
   const [previewImage, setPreviewImage] = useState();
   function handelImage(e) {
     setPreviewImage(URL.createObjectURL(e.target.files[0]));
   }
 
-
-
-
-
-
   const formik = useFormik({
+    validationSchema: Yup.object({
+      name: Yup.string().required("Required"),
+      description: Yup.string().required("Required"),
+    }),
+
     enableReinitialize: true,
 
     initialValues: {
       name: param?.group?.name,
       image: param?.group?.image,
       description: param?.group?.description,
-
     },
 
     onSubmit: async (values, { resetForm }) => {
@@ -49,25 +51,20 @@ const EditGroup = ({ handleClose, param }) => {
         member.map((item) => {
           arr.push(item.id);
         });
-        
+
         const memberArr = JSON.stringify(arr);
-        formData.append('member', memberArr);
-        console.log(memberArr)
+        formData.append("member", memberArr);
+        console.log(memberArr);
       } else {
         data?.data?.user?.map((item) => {
           arr.push(item.id);
-
-        })
+        });
 
         const memberArr = JSON.stringify(arr);
-        formData.append('member', memberArr);
-   
+        formData.append("member", memberArr);
       }
 
-
       try {
-
-        
         const result = await updateGroup({
           id: param?.group?.id,
           data: formData,
@@ -96,12 +93,20 @@ const EditGroup = ({ handleClose, param }) => {
               <input
                 placeholder="Enter Name"
                 type="text"
-                className="form-control"
                 name="name"
                 onChange={formik.handleChange}
                 value={formik.values.name}
                 required
+                onBlur={formik.handleBlur}
+                className={
+                  formik.errors.name && formik.touched.name
+                    ? "form-control form-control-user is-invalid  shadow"
+                    : "form-control form-control-user shadow"
+                }
               />
+              {formik.errors.name ? (
+                <div className="invalid-feedback">{formik.errors.name}</div>
+              ) : null}
             </div>
           </div>
 
@@ -109,26 +114,23 @@ const EditGroup = ({ handleClose, param }) => {
             <label className="col-12 col-form-label">Select User</label>
 
             {isLoading && <p>Loading...</p>}
-       
-            <div className="col-12">
 
+            <div className="col-12">
               {isSuccess && (
-                  <Select
-                isMulti
-                placeholder="Select Member"
-                classNamePrefix="balance-setup"
-                onChange={(e) => setMember(e)}
-                getOptionValue={(option) => `${option["id"]}`}
-                getOptionLabel={(option) => `${option["username"]}`}
-                options={isSuccess && allUserRse?.data}
+                <Select
+                  isMulti
+                  className="basic-multi-select shadow"
+                  placeholder="Select Member"
+                  classNamePrefix="balance-setup"
+                  onChange={(e) => setMember(e)}
+                  getOptionValue={(option) => `${option["id"]}`}
+                  getOptionLabel={(option) => `${option["username"]}`}
+                  options={isSuccess && allUserRse?.data}
                   defaultValue={isSuccess && data?.data?.user}
                   isLoading={isFetching}
-               
-              />
-              )
-              }
-              
-            
+                  required
+                />
+              )}
             </div>
           </div>
 
@@ -138,12 +140,22 @@ const EditGroup = ({ handleClose, param }) => {
               <textarea
                 placeholder="Enter description"
                 type="text"
-                className="form-control"
                 name="description"
                 onChange={formik.handleChange}
                 value={formik.values.description}
                 required
+                onBlur={formik.handleBlur}
+                className={
+                  formik.errors.description && formik.touched.description
+                    ? "form-control form-control-user is-invalid  shadow"
+                    : "form-control form-control-user shadow"
+                }
               />
+              {formik.errors.description ? (
+                <div className="invalid-feedback">
+                  {formik.errors.description}
+                </div>
+              ) : null}
             </div>
           </div>
 
@@ -151,7 +163,7 @@ const EditGroup = ({ handleClose, param }) => {
             <label className="col-12 col-form-label">Photo</label>
             <div className="col-12  ">
               <input
-                className="form-control"
+                className="form-control shadow"
                 name="image"
                 type="file"
                 accept="image/*"
@@ -162,8 +174,6 @@ const EditGroup = ({ handleClose, param }) => {
               />
             </div>
           </div>
-
-    
         </div>
 
         <div className="mx-4">

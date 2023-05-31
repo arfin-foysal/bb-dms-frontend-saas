@@ -31,7 +31,7 @@ const Layout = () => {
     window.location.reload(false);
   };
 
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
 
   const showAnimation = {
@@ -51,16 +51,25 @@ const Layout = () => {
     },
   };
 
+  
+
   return (
     <>
       <div className="main-container">
         <div className="sidebar-wrapper">
           <motion.div
+
+
+    
+            
+
+
             animate={{
               width: isOpen ? "230px" : "55px",
               padding: isOpen ? "17px 17px" : "17px 7px",
 
               height: "100vh",
+              overflow: "hidden",
 
               transition: {
                 duration: 0.5,
@@ -84,7 +93,7 @@ const Layout = () => {
                       {authUser?.company_image ? (
                         <>
                           <img
-                            className="img-fluid "
+                            height={isOpen ? "30px" : "30px"}
                             width={isOpen ? "110px" : "40px"}
                             src={`${import.meta.env.VITE_FILE_URL}${
                               authUser?.company_image
@@ -95,6 +104,7 @@ const Layout = () => {
                       ) : (
                         <img
                           width={isOpen ? "110px" : "40px"}
+                          height={isOpen ? "30px" : "30px"}
                           src={demo_logo}
                           alt={authUser?.company_name}
                         ></img>

@@ -2,15 +2,11 @@ import { useFormik } from "formik";
 import React, { useState } from "react";
 import { Form, Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
-
+import * as Yup from "yup";
 import avater from "../../../../../assets/images/image_preview.png";
-import { useUpdateCatagoryMutation } from "../../../../../services/categoryApi";
 import { useUpdateUserMutation } from "../../../../../services/userApi";
 
 const EditUser = ({ handleClose, param }) => {
-
- 
-
   const [updateUser, res] = useUpdateUserMutation();
   const [previewImage, setPreviewImage] = useState();
   function handelImage(e) {
@@ -18,17 +14,27 @@ const EditUser = ({ handleClose, param }) => {
   }
 
   const formik = useFormik({
+    validationSchema: Yup.object({
+      name: Yup.string().required("Required"),
+      email: Yup.string().required("Required"),
+      username: Yup.string().required("Required"),
+      number: Yup.string().required("Required"),
+      user_type: Yup.string().required("Required"),
+      status: Yup.string().required("Required"),
+      gender: Yup.string().required("Gender is required"),
+
+    }),
     enableReinitialize: true,
 
     initialValues: {
       name: param?.name,
       email: param?.email,
       username: param?.username,
-    
+
       image: param?.image,
       gender: param?.gender,
       number: param?.number,
-      user_type:param?.user_type,
+      user_type: param?.user_type,
       status: param?.status,
     },
 
@@ -47,7 +53,10 @@ const EditUser = ({ handleClose, param }) => {
       resetForm();
 
       try {
-        const result = await updateUser({ id: param?.id , data: formData }).unwrap();
+        const result = await updateUser({
+          id: param?.id,
+          data: formData,
+        }).unwrap();
         toast.success(result.message);
       } catch (error) {
         toast.warn(error.data.message);
@@ -59,39 +68,55 @@ const EditUser = ({ handleClose, param }) => {
   }
 
   return (
-    <div >
+    <div>
       <form
         className="form-sample"
         onSubmit={formik.handleSubmit}
         encType="multipart/form-data"
       >
         <div className="row">
-        <div className="form-group row col-6 my-1">
+          <div className="form-group row col-6 my-1">
             <label className="col-12 col-form-label">Name</label>
             <div className="col-12">
               <input
                 placeholder="Enter Name"
                 type="text"
-                className="form-control"
                 name="name"
                 onChange={formik.handleChange}
                 value={formik.values.name}
                 required
+                onBlur={formik.handleBlur}
+                className={
+                  formik.errors.name && formik.touched.name
+                    ? "form-control form-control-user is-invalid  shadow"
+                    : "form-control form-control-user shadow"
+                }
               />
+              {formik.errors.name && formik.touched.name ? (
+                <small className="text-danger">{formik.errors.name}</small>
+              ) : null}
             </div>
           </div>
           <div className="form-group row col-6 my-1">
             <label className="col-12 col-form-label">Username</label>
             <div className="col-12">
               <input
-                placeholder="Enter Username"
                 type="text"
-                className="form-control"
+                placeholder="Enter Username"
                 name="username"
                 onChange={formik.handleChange}
                 value={formik.values.username}
                 required
+                onBlur={formik.handleBlur}
+                className={
+                  formik.errors.username && formik.touched.username
+                    ? "form-control form-control-user is-invalid  shadow"
+                    : "form-control form-control-user shadow"
+                }
               />
+              {formik.errors.username && formik.touched.username ? (
+                <small className="text-danger">{formik.errors.username}</small>
+              ) : null}
             </div>
           </div>
           <div className="form-group row col-6 my-1">
@@ -100,12 +125,21 @@ const EditUser = ({ handleClose, param }) => {
               <input
                 placeholder="Enter Username"
                 type="email"
-                className="form-control"
                 name="email"
                 onChange={formik.handleChange}
                 value={formik.values.email}
                 required
+                onBlur={formik.handleBlur}
+                className={
+                  formik.errors.email && formik.touched.email
+                    ? "form-control form-control-user is-invalid  shadow"
+                    : "form-control form-control-user shadow"
+                }
               />
+              {formik.errors.email && formik.touched.email ? (
+                <small className="text-danger">{formik.errors.email}</small>
+              ) : null}
+
             </div>
           </div>
           <div className="form-group row col-6 my-1">
@@ -114,55 +148,80 @@ const EditUser = ({ handleClose, param }) => {
               <input
                 placeholder="Enter Username"
                 type="number"
-                className="form-control"
                 name="number"
                 onChange={formik.handleChange}
                 value={formik.values.number}
                 required
+                onBlur={formik.handleBlur}
+                className={
+                  formik.errors.number && formik.touched.number
+                    ? "form-control form-control-user is-invalid  shadow"
+                    : "form-control form-control-user shadow"
+                }
+
               />
             </div>
           </div>
- 
+
           <div className="form-group row col-6 my-1">
             <label className="col-12 col-form-label">Gender</label>
             <div className="col-12">
               <select
-                className="form-control"
+               
                 name="gender"
                 onChange={formik.handleChange}
                 value={formik.values.gender}
+                onBlur={formik.handleBlur}
+                className={
+                  formik.errors.gender && formik.touched.gender
+                    ? "form-control form-control-user is-invalid  shadow"
+                    : "form-control form-control-user shadow"
+                }
+
+
               >
                 <option value="">--select--</option>
                 <option value="male">Male</option>
                 <option value="female">Female</option>
                 <option value="other">Other</option>
               </select>
+              {formik.errors.gender && formik.touched.gender ? (
+                <div className="invalid-feedback">{formik.errors.gender}</div>
+              ) : null}
             </div>
           </div>
           <div className="form-group row col-6 my-1">
             <label className="col-12 col-form-label">Status</label>
             <div className="col-12">
               <select
-                className="form-control"
+ 
                 name="status"
                 onChange={formik.handleChange}
                 value={formik.values.status}
+                onBlur={formik.handleBlur}
+                className={
+                  formik.errors.status && formik.touched.status
+                    ? "form-control form-control-user is-invalid  shadow"
+                    : "form-control form-control-user shadow"
+                }
+
               >
                 <option value="">--select--</option>
                 <option value="Active">Active</option>
                 <option value="Pending">Pending</option>
-            
               </select>
+              {formik.errors.status && formik.touched.status ? (
+                <div className="invalid-feedback">{formik.errors.status}</div>
+              ) : null}
+
             </div>
           </div>
-  
-          
 
           <div className="form-group row col-6 my-1">
             <label className="col-12 col-form-label">Photo</label>
             <div className="col-12  ">
               <input
-                className="form-control"
+           
                 name="image"
                 type="file"
                 accept="image/*"
@@ -170,7 +229,11 @@ const EditUser = ({ handleClose, param }) => {
                   formik.setFieldValue("image", e.currentTarget.files[0]);
                   handelImage(e);
                 }}
+               className="form-control form-control-user shadow"
+       
               />
+    
+
             </div>
           </div>
 
@@ -178,22 +241,38 @@ const EditUser = ({ handleClose, param }) => {
             <label className="col-12 col-form-label">User Type</label>
             <div className="col-12">
               <select
-                className="form-control"
+         
                 name="user_type"
                 onChange={formik.handleChange}
                 value={formik.values.user_type}
+                onBlur={formik.handleBlur}
+                className={
+                  formik.errors.user_type && formik.touched.user_type
+                    ? "form-control form-control-user is-invalid  shadow"
+                    : "form-control form-control-user shadow"
+                }
               >
                 <option value="">--select--</option>
                 <option value="Admin">Admin</option>
                 <option value="User">User</option>
+
+
               </select>
+
+              {formik.errors.user_type && formik.touched.user_type ? (
+                <div className="invalid-feedback">
+                  {formik.errors.user_type}
+                </div>
+              ) : null}
+                  
+                  
+
+
             </div>
           </div>
-
-     
         </div>
 
-        <div>
+        <div className="mx-4">
           {previewImage ? (
             <img
               className="py-2"

@@ -2,7 +2,7 @@ import React from "react";
 import { Card, Col, Row } from "react-bootstrap";
 import { BsArrowLeftCircleFill, BsFillInfoCircleFill } from "react-icons/bs";
 
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import downloade from "./../../../../../assets/images/File/download.png";
 
 import { download, groupdownload } from "../../../../../utils/Document";
@@ -10,11 +10,11 @@ import { useGroupSingalDocumnetQuery } from "../../../../../services/groupApi";
 import Loader from "../../../common/Loader";
 
 const GroupDocumentView = () => {
+  const navigate=useNavigate();
   const { id } = useParams();
   const res = useGroupSingalDocumnetQuery(id);
   const { data, isFetching, isSuccess, isError } = res;
 
-  console.log(data);
 
   return (
     <>
@@ -28,7 +28,7 @@ const GroupDocumentView = () => {
             <div>
               <span className="me-auto pointer">
                 <div
-                //   nClick={() => history.goBack()}
+                  onClick={() => navigate(-1)}
                 >
                   <BsArrowLeftCircleFill color="black" size={"20px"} />
                 </div>

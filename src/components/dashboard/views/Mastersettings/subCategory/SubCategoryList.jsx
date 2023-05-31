@@ -4,7 +4,7 @@ import MaterialReactTable from "material-react-table";
 
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { confirmHandel } from "../../../../../utils/Alert";
-import avatar from "../../../../../assets/images/profile-picture.png";
+import avatar from "../../../../../assets/images/File/noimg.png";
 import { toast } from "react-toastify";
 import Loader from "../../../common/Loader";
 

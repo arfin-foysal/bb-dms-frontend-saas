@@ -2,6 +2,7 @@ import { useFormik } from "formik";
 import React, { useState } from "react";
 import {Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
+import * as Yup from "yup";
 import Select from "react-select";
 import axios from "axios";
 import { headers } from "../../../../../utils/ApiHeaders";
@@ -37,6 +38,11 @@ const CreateGroup = ({ handleClose }) => {
 
 
   const formik = useFormik({
+    validationSchema: Yup.object({
+      name: Yup.string().required("Required"),
+      description: Yup.string().required("Required"),
+
+    }),
     initialValues: {
       name: "",
       description: "",
@@ -90,12 +96,23 @@ const CreateGroup = ({ handleClose }) => {
               <input
                 placeholder="Enter Name"
                 type="text"
-                className="form-control"
+         
                 name="name"
                 onChange={formik.handleChange}
                 value={formik.values.name}
                 required
+                onBlur={formik.handleBlur}
+                className={
+                  formik.errors.name && formik.touched.name
+                    ? "form-control form-control-user is-invalid  shadow"
+                    : "form-control form-control-user shadow"
+                }
+
+
               />
+             {formik.errors.name && formik.touched.name ? (
+                <div className="invalid-feedback">{formik.errors.name}</div>
+              ) : null}
             </div>
           </div>
           <div className="form-group row col-12 my-1">
@@ -103,12 +120,15 @@ const CreateGroup = ({ handleClose }) => {
             <div className="col-12">
               <Select
                 isMulti
-                    placeholder="Select Member"
+                placeholder="Select Member"
+                className="basic-multi-select shadow"
                     classNamePrefix="balance-setup"
                     onChange={(e) => setMember(e)}
                     getOptionValue={(option) => `${option["id"]}`}
                     getOptionLabel={(option) => `${option["username"]}`}
-                    options={user&&user}
+                options={user && user}
+                required={true}
+                
                   />
             </div>
           </div>
@@ -119,12 +139,25 @@ const CreateGroup = ({ handleClose }) => {
               <textarea
                 placeholder="Enter description"
                 type="text"
-                className="form-control"
+            
                 name="description"
                 onChange={formik.handleChange}
                 value={formik.values.description}
                 required
+                onBlur={formik.handleBlur}
+                className={
+                  formik.errors.description && formik.touched.description
+                    ? "form-control form-control-user is-invalid  shadow"
+                    : "form-control form-control-user shadow"
+                }
+
               />
+              {formik.errors.description && formik.touched.description ? (
+                <div className="invalid-feedback">
+                  {formik.errors.description}
+                </div>
+              ) : null}
+
             </div>
           </div>
 
@@ -132,7 +165,7 @@ const CreateGroup = ({ handleClose }) => {
             <label className="col-12 col-form-label">Photo</label>
             <div className="col-12">
               <input
-                className="form-control"
+                className="form-control form-control-user shadow"
                 name="image"
                 type="file"
                 accept="image/*"

@@ -2,36 +2,28 @@ import { useFormik } from "formik";
 import React, { useState } from "react";
 import {Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
+import * as Yup from "yup";
 
-import { useCreateSubCategoryMutation } from "../../../../../services/subCategoryApi";
 import { useAllCategoryQuery } from "../../../../../services/categoryApi";
 import { useCreateThirdSubCategoryMutation, useSubCategoryByCategoryIdQuery } from "../../../../../services/ThirdSubCategoryApi";
-
-
-
-const CreateThirdSubCategory = ({ handleClose }) => {
-
-  const [categoryId, setcategoryId] = useState(1);
-
-
-  const [createSubCategory, res] = useCreateThirdSubCategoryMutation();
-
-  const subCategoryRes = useSubCategoryByCategoryIdQuery(categoryId);
+const CreateThirdSubCategory = ({ handleClose }) => { 
+const [categoryId, setcategoryId] = useState(1);
+const [createSubCategory, res] = useCreateThirdSubCategoryMutation();
+const subCategoryRes = useSubCategoryByCategoryIdQuery(categoryId);
   
-  
-
-
-
   const categoryRes= useAllCategoryQuery();
   const [previewImage, setPreviewImage] = useState();
   function handelImage(e) {
     setPreviewImage(URL.createObjectURL(e.target.files[0]));
   }
 
-
-
-
   const formik = useFormik({
+    validationSchema: Yup.object({
+      name: Yup.string().required("Required"),
+      catagory_id: Yup.string().required("Required"),
+      sub_catagory_id: Yup.string().required("Required"),
+      description: Yup.string().required("Required"),
+    }),
     initialValues: {
       name: "",
       catagory_id: "",
@@ -75,12 +67,23 @@ const CreateThirdSubCategory = ({ handleClose }) => {
               <input
                 placeholder="Enter Name"
                 type="text"
-                className="form-control"
+
                 name="name"
                 onChange={formik.handleChange}
                 value={formik.values.name}
                 required
+                onBlur={formik.handleBlur}
+                className={
+                  formik.errors.name && formik.touched.name
+                    ? "form-control form-control-user is-invalid  shadow"
+                    : "form-control form-control-user shadow"
+                }
+                
               />
+              {formik.errors.name ? (
+                <div className="invalid-feedback">{formik.errors.name}</div>
+              ) : null}
+
             </div>
           </div>
           <div className="form-group row col-12 my-1">
@@ -88,12 +91,17 @@ const CreateThirdSubCategory = ({ handleClose }) => {
             <div className="col-12">
 
               <select 
-
-                className="form-control"
                 name="catagory_id"
                 onChange={(e) => { formik.handleChange (e); setcategoryId(e.target.value)}}
                 value={formik.values.catagory_id}
                 required
+                onBlur={formik.handleBlur}
+                className={
+                  formik.errors.catagory_id && formik.touched.catagory_id
+                    ? "form-control form-control-user is-invalid  shadow"
+                    : "form-control form-control-user shadow"
+                }
+
               >
                 <option value="">Select Category</option>
                 {categoryRes?.data?.map((item) => (
@@ -101,7 +109,9 @@ const CreateThirdSubCategory = ({ handleClose }) => {
                 ))}
               </select>
 
-         
+              {formik.errors.catagory_id ? (
+                <div className="invalid-feedback">{formik.errors.catagory_id}</div>
+              ) : null}
             </div>
           </div>
           <div className="form-group row col-12 my-1">
@@ -109,12 +119,17 @@ const CreateThirdSubCategory = ({ handleClose }) => {
             <div className="col-12">
 
               <select 
-
-                className="form-control"
+           
                 name="sub_catagory_id"
                 onChange={formik.handleChange}
                 value={formik.values.sub_catagory_id}
                 required
+                onBlur={formik.handleBlur}
+                className={
+                  formik.errors.sub_catagory_id && formik.touched.sub_catagory_id
+                    ? "form-control form-control-user is-invalid  shadow"
+                    : "form-control form-control-user shadow"
+                }
               >
                 <option value="">Select Sub Category</option>
                 {subCategoryRes?.data?.map((item) => (
@@ -122,7 +137,10 @@ const CreateThirdSubCategory = ({ handleClose }) => {
                 ))}
               </select>
 
-         
+              {formik.errors.sub_catagory_id? (
+                <div className="invalid-feedback">{formik.errors.sub_catagory_id}</div>
+              ) : null}
+
             </div>
           </div>
 
@@ -132,20 +150,28 @@ const CreateThirdSubCategory = ({ handleClose }) => {
               <textarea
                 placeholder="Enter description"
                 type="text"
-                className="form-control"
                 name="description"
                 onChange={formik.handleChange}
                 value={formik.values.description}
                 required
+                onBlur={formik.handleBlur}
+                className={
+                  formik.errors.description && formik.touched.description
+                    ? "form-control form-control-user is-invalid  shadow"
+                    : "form-control form-control-user shadow"
+                }
               />
+              {formik.errors.description ? (
+                <div className="invalid-feedback">{formik.errors.description}</div>
+              ) : null}
             </div>
           </div>
-
+          
           <div className="form-group row col-12 my-1">
             <label className="col-12 col-form-label">Photo</label>
             <div className="col-12">
               <input
-                className="form-control"
+                className="form-control form-control-user shadow"
                 name="image"
                 type="file"
                 accept="image/*"
@@ -156,8 +182,6 @@ const CreateThirdSubCategory = ({ handleClose }) => {
               />
             </div>
           </div>
-
-
         </div>
         <div className="mx-4">
           <img
