@@ -7,10 +7,6 @@ import EditCategory from "./EditCategory";
 
 const CategoryModal = ({ handleClose, show, clickValue, paramId }) => {
 
-  
-
-
-
   return (
     <>
       <Modal show={show} onHide={handleClose} size="md">

@@ -194,14 +194,14 @@ const subCategoryRes = useSubCategoryByCategoryIdQuery(categoryId);
         </div>
         <Modal.Footer>
           <div className=" d-flex">
-            <div>
-              <button className="btn btn-dark" onClick={handleClose}>
-                Close
-              </button>
-            </div>
-            <div className="mx-5">
+            <div className="me-2">
               <button type="submit" className="btn btn-success">
                 Submit
+              </button>   
+            </div>
+            <div >
+           <button className="btn btn-dark" onClick={handleClose}>
+                Close
               </button>
             </div>
           </div>

@@ -108,7 +108,7 @@ const DocumentView = () => {
                   </option>
                 ))}
             </Form.Control>
-            <div className="text-right">
+            <div className="text-end">
               <Button
                 onClick={() => shareHandler()}
                 type="submit"

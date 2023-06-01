@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
 import React, { useState } from "react";
-import { Form, Modal } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
 import avater from "../../../../../assets/images/image_preview.png";
 import { useCreateOrUpdateCompanyMutation } from "../../../../../services/companyApi";

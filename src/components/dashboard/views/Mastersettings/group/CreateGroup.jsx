@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
 import React, { useState } from "react";
-import {Modal } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 import Select from "react-select";
@@ -16,32 +16,27 @@ const CreateGroup = ({ handleClose }) => {
     setPreviewImage(URL.createObjectURL(e.target.files[0]));
   }
 
-  const [user,setUser]=useState([]);
+  const [user, setUser] = useState([]);
   const [member, setMember] = useState([]);
-
-  
 
   const addUserMember = (e) => {
     axios({
       url: `${import.meta.env.VITE_API_URL}all_user_for_group`,
-      method: 'GET',
-      headers
+      method: "GET",
+      headers,
     }).then((res) => {
       setUser(res.data);
     });
   };
 
-    useEffect(() => {
+  useEffect(() => {
     addUserMember();
   }, []);
-
-
 
   const formik = useFormik({
     validationSchema: Yup.object({
       name: Yup.string().required("Required"),
       description: Yup.string().required("Required"),
-
     }),
     initialValues: {
       name: "",
@@ -55,18 +50,18 @@ const CreateGroup = ({ handleClose }) => {
       formData.append("description", values.description);
       formData.append("image", values.image);
       if (member.length <= 0) {
-        toast.error('Please select member');
+        toast.error("Please select member");
       }
-  
+
       if (member.length > 0) {
         const arr = [];
         member.map((item) => {
           arr.push(item.id);
         });
         const memberArr = JSON.stringify(arr);
-        console.log(memberArr)
-        
-        formData.append('member', memberArr);
+        console.log(memberArr);
+
+        formData.append("member", memberArr);
       }
       resetForm();
 
@@ -96,7 +91,6 @@ const CreateGroup = ({ handleClose }) => {
               <input
                 placeholder="Enter Name"
                 type="text"
-         
                 name="name"
                 onChange={formik.handleChange}
                 value={formik.values.name}
@@ -107,10 +101,8 @@ const CreateGroup = ({ handleClose }) => {
                     ? "form-control form-control-user is-invalid  shadow"
                     : "form-control form-control-user shadow"
                 }
-
-
               />
-             {formik.errors.name && formik.touched.name ? (
+              {formik.errors.name && formik.touched.name ? (
                 <div className="invalid-feedback">{formik.errors.name}</div>
               ) : null}
             </div>
@@ -122,14 +114,13 @@ const CreateGroup = ({ handleClose }) => {
                 isMulti
                 placeholder="Select Member"
                 className="basic-multi-select shadow"
-                    classNamePrefix="balance-setup"
-                    onChange={(e) => setMember(e)}
-                    getOptionValue={(option) => `${option["id"]}`}
-                    getOptionLabel={(option) => `${option["username"]}`}
+                classNamePrefix="balance-setup"
+                onChange={(e) => setMember(e)}
+                getOptionValue={(option) => `${option["id"]}`}
+                getOptionLabel={(option) => `${option["username"]}`}
                 options={user && user}
                 required={true}
-                
-                  />
+              />
             </div>
           </div>
 
@@ -139,7 +130,6 @@ const CreateGroup = ({ handleClose }) => {
               <textarea
                 placeholder="Enter description"
                 type="text"
-            
                 name="description"
                 onChange={formik.handleChange}
                 value={formik.values.description}
@@ -150,14 +140,12 @@ const CreateGroup = ({ handleClose }) => {
                     ? "form-control form-control-user is-invalid  shadow"
                     : "form-control form-control-user shadow"
                 }
-
               />
               {formik.errors.description && formik.touched.description ? (
                 <div className="invalid-feedback">
                   {formik.errors.description}
                 </div>
               ) : null}
-
             </div>
           </div>
 
@@ -176,13 +164,11 @@ const CreateGroup = ({ handleClose }) => {
               />
             </div>
           </div>
-
-
         </div>
         <div className="mx-4">
           <img
             className="py-2"
-            src={previewImage?previewImage:preview}
+            src={previewImage ? previewImage : preview}
             width="80px"
             height="80px"
             alt=""
@@ -190,14 +176,14 @@ const CreateGroup = ({ handleClose }) => {
         </div>
         <Modal.Footer>
           <div className=" d-flex">
-            <div>
-              <button className="btn btn-dark" onClick={handleClose}>
-                Close
-              </button>
-            </div>
-            <div className="mx-5">
+            <div className="me-2">
               <button type="submit" className="btn btn-success">
                 Submit
+              </button>
+            </div>
+            <div >
+              <button className="btn btn-dark" onClick={handleClose}>
+                Close
               </button>
             </div>
           </div>

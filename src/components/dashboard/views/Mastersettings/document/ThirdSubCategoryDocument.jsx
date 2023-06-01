@@ -43,7 +43,6 @@ export const ThirdSubCategoryDocument = () => {
     isError: cateDocIsError,
   } = cateDocRes;
 
-  
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -75,10 +74,9 @@ export const ThirdSubCategoryDocument = () => {
 
   // search Functionality end
 
-
   return (
     <>
-       <QuickUploadModal show={show} handleClose={handleClose} />
+      <QuickUploadModal show={show} handleClose={handleClose} />
       <PageTopHeader title="Documents" />
       <div class="card border shadow-lg ">
         <div class="card-header d-flex justify-content-between ">
@@ -105,7 +103,7 @@ export const ThirdSubCategoryDocument = () => {
         </div>
 
         <div class="card-body ">
-        {cateDocIsFetching && <Loader />}
+          {cateDocIsFetching && <Loader />}
 
           {cateDocData?.data?.length === 0 && (
             <div className="d-flex justify-content-center">
@@ -122,17 +120,23 @@ export const ThirdSubCategoryDocument = () => {
             {cateDocIsSuccess &&
               filteredData?.map((item, i) => (
                 <div className="mx-1 m-2 " key={i}>
-                  {/* <Link
-                    // to={`/documents/document_category_view/${category.id}`}
-                    className=" "
-                  > */}
+                  <Link
+                    to={
+                      (authUser?.user_type === "Admin" &&
+                        `/dashboard/document-view/${item.id}`) ||
+                      (authUser?.user_type === "User" &&
+                        `/dashboard/user/document-view/${item.id}`) ||
+                      (authUser?.user_type === "Superadmin" &&
+                        `/dashboard/superadmin/document-view/${item.id}`)
+                    }
+                  >
+                    <NoImage item={item} />
+                  </Link>
                   <Card style={{ width: "15rem" }} className=" border-0">
-                  <NoImage item={item}/>
                     <Card.Body className=" px-2 text-dark">
                       <div className=" d-flex">
                         <div className="mb-1">
-
-                           {item.admin_status === "Pending" && (
+                          {item.admin_status === "Pending" && (
                             <span>
                               <AiFillWarning className="mx-1" color="orange" />
                               {item.admin_status}
@@ -140,13 +144,16 @@ export const ThirdSubCategoryDocument = () => {
                           )}
                           {item.admin_status === "Active" && (
                             <span>
-                              <BsFillCheckCircleFill className="mx-1" color="green"  />
+                              <BsFillCheckCircleFill
+                                className="mx-1"
+                                color="green"
+                              />
                               Published
                             </span>
                           )}
                           {item.admin_status === "Cancel" && (
                             <span>
-                              <BsXCircleFill className="mx-1" color="red"  />
+                              <BsXCircleFill className="mx-1" color="red" />
                               Canceled
                             </span>
                           )}
@@ -167,21 +174,15 @@ export const ThirdSubCategoryDocument = () => {
                     <div className="text-center  py-2 shadow text-dark ">
                       <div>
                         <Link
-                  
-
                           to={
                             (authUser?.user_type === "Admin" &&
-                            `/dashboard/document-view/${item.id}`) ||
+                              `/dashboard/document-view/${item.id}`) ||
                             (authUser?.user_type === "User" &&
                               `/dashboard/user/document-view/${item.id}`) ||
                             (authUser?.user_type === "Superadmin" &&
                               `/dashboard/superadmin/document-view/${item.id}`)
-                            
                           }
-                        
                         >
-
-
                           <BsFillEyeFill color="blue" size={22} />
                         </Link>
                         <span className="pointer ml-3 ms-3">
@@ -190,18 +191,14 @@ export const ThirdSubCategoryDocument = () => {
                           />
                         </span>
                         <Link
-                    
-
                           to={
                             (authUser?.user_type === "Admin" &&
-                            `/dashboard/edit-document/${item.id}`) ||
+                              `/dashboard/edit-document/${item.id}`) ||
                             (authUser?.user_type === "User" &&
                               `/dashboard/user/edit-document/${item.id}`) ||
                             (authUser?.user_type === "Superadmin" &&
                               `/dashboard/superadmin/edit-document/${item.id}`)
-                            
                           }
-
                           className="px-3"
                         >
                           <BsPencilSquare size={18} color="blue" />
@@ -210,14 +207,13 @@ export const ThirdSubCategoryDocument = () => {
                           className="pointer mx-1"
                           color="red"
                           size={17}
-                          onClick={() => deleteHandel(deleteDocument,item.id)}
+                          onClick={() => deleteHandel(deleteDocument, item.id)}
                         />
                         {item.status === "Pending" && (
                           <RiUploadCloud2Fill
                             className="pointer mx-1  "
                             color="Teal"
                             size={22}
-                         
                             onClick={(e) =>
                               DocumentPublish(documentpublish, item.id)
                             }

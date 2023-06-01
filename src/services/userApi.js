@@ -75,6 +75,20 @@ export const userApi = createApi({
       invalidatesTags: ["User"],
     }),
 
+    profileUpdate: builder.mutation({
+      query: (body) => {
+        return {
+          url: `profile-update`,
+          method: "POST",
+          body: body,
+          headers,
+        };
+      },
+
+      invalidatesTags: ["User"],
+    
+    }),
+
     
     userProfile: builder.query({
       query: (id) => ({
@@ -82,8 +96,8 @@ export const userApi = createApi({
         method: "GET",
         headers,
       }),
-      // invalidatesTags: ['DocumentData'],
-      invalidatesTags: ["User"],
+
+      providesTags: ["User"],
     }),
 
     superAdminCreateOrUpdateAndCompanyAssign : builder.mutation({
@@ -117,6 +131,7 @@ export const {
   useSuperAdminCreateOrUpdateAndCompanyAssignMutation,
   useSuperAdminListQuery,
   useSuperAdminDeleteMutation,
-  usePasswordChangeMutation
+  usePasswordChangeMutation,
+  useProfileUpdateMutation,
 
 } = userApi;

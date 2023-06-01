@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
 import {
-  useCreateUsersMutation,
   useSuperAdminCreateOrUpdateAndCompanyAssignMutation,
 } from "../../../../../services/userApi";
 import { useCompanyListQuery } from "../../../../../services/companyApi";

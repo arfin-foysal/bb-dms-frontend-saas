@@ -1,24 +1,19 @@
 import { useFormik } from "formik";
-import React, { useState ,useRef} from "react";
-import { Col, Form, Row } from "react-bootstrap";
+import React, { useState, useRef } from "react";
+import { Col, Row } from "react-bootstrap";
 import { toast } from "react-toastify";
-import JoditEditor from 'jodit-react';
+import JoditEditor from "jodit-react";
 import PageTopHeader from "../../../common/PageTopHeader";
-import {
-
-} from "../../../../../services/ThirdSubCategoryApi";
+import {} from "../../../../../services/ThirdSubCategoryApi";
 
 import * as Yup from "yup";
-import { useNavigate } from "react-router-dom";
-import { useAddGroupDocumentMutation, useGroupDocumentUpdateMutation } from "../../../../../services/groupApi";
 
-const UploadGroupDocument = ({ handleClose,param }) => {
-  const navigate=useNavigate()
+import { useAddGroupDocumentMutation } from "../../../../../services/groupApi";
+
+const UploadGroupDocument = ({ handleClose, param }) => {
   const [addGroupDocument, res] = useAddGroupDocumentMutation();
-    const [description, setDescription] = useState();
-    const editor = useRef(null);
-
-
+  const [description, setDescription] = useState();
+  const editor = useRef(null);
 
   const [previewImage, setPreviewImage] = useState();
   function handelImage(e) {
@@ -40,9 +35,9 @@ const UploadGroupDocument = ({ handleClose,param }) => {
       let formData = new FormData();
       formData.append("name", values.name);
       formData.append("group_id", param);
-      formData.append("description",description);
+      formData.append("description", description);
       formData.append("file", values.file);
-        resetForm();
+      resetForm();
 
       try {
         console.log(values);
@@ -54,17 +49,15 @@ const UploadGroupDocument = ({ handleClose,param }) => {
     },
   });
   if (res.isSuccess) {
-    handleClose()
-    
-    }
+    handleClose();
+  }
 
   return (
     <div>
-      <PageTopHeader title="Document Uploade" />
+      <PageTopHeader title="Document Upload" />
       <div class="card border shadow-lg ">
         <div class="card-header d-flex justify-content-between ">
-          <div>Document Uploade</div>
-   
+          <div>Document Upload</div>
         </div>
 
         <div class="card-body ">
@@ -74,7 +67,7 @@ const UploadGroupDocument = ({ handleClose,param }) => {
             encType="multipart/form-data"
           >
             <div className="row">
-            <div className="col-12 ">
+              <div className="col-12 ">
                 <label className="mb-2">Name</label>
                 <input
                   type="text"
@@ -95,11 +88,9 @@ const UploadGroupDocument = ({ handleClose,param }) => {
                 ) : null}
               </div>
               <Col md={8}>
-                <Row>
-                </Row>
+                <Row></Row>
               </Col>
             </div>
-
 
             <div className="form-group row col-12 my-3">
               <label className="mb-2">Description</label>
@@ -110,11 +101,9 @@ const UploadGroupDocument = ({ handleClose,param }) => {
                 tabIndex={1} // tabIndex of textarea
                 onBlur={(newContent) => setDescription(newContent)} // preferred to use only this option to update the content for performance reasons
                 // onChange={(newContent) => {setDescription(newContent.target.value)}}
-              
               />
             </div>
 
-    
             <div className="form-group row col-12 my-1">
               <label className="col-12 col-form-label">Select Your File</label>
               <div className="col-12">
@@ -137,11 +126,8 @@ const UploadGroupDocument = ({ handleClose,param }) => {
                 {formik.errors.file && formik.touched.file ? (
                   <div className="invalid-feedback">{formik.errors.file}</div>
                 ) : null}
-
               </div>
             </div>
-
-
 
             <div className="mx-3 m">
               <img
@@ -153,15 +139,16 @@ const UploadGroupDocument = ({ handleClose,param }) => {
               />
             </div>
             <div className=" d-flex justify-content-end">
-                  <div className="mx-5">
+              <div className="me-2">
                 <button type="submit" className="btn btn-success">
                   Submit
                 </button>
               </div>
               <div>
-                <button  className="btn btn-dark" onClick={()=>handleClose()}>Close</button>
+                <button className="btn btn-dark" onClick={() => handleClose()}>
+                  Close
+                </button>
               </div>
-          
             </div>
           </form>
         </div>

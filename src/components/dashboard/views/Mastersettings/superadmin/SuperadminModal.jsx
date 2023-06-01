@@ -8,10 +8,6 @@ import EditSuperadmin from "./EditSuperadmin";
 
 const UserModal = ({ handleClose, show, clickValue, paramId }) => {
 
-  
-
-
-
   return (
     <>
       <Modal show={show} onHide={handleClose} size="lg">

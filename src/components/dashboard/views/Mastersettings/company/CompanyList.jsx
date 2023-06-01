@@ -7,20 +7,12 @@ import { confirmHandel } from "../../../../../utils/Alert";
 import dammy_com from "../../../../../assets/logo/dammy_com.png";
 import { toast } from "react-toastify";
 import Loader from "../../../common/Loader";
-
 import PageTopHeader from "../../../common/PageTopHeader";
-
-
 import CompanyModal from "./CompanyModal";
-
 import { useCompanyListQuery, useDeleteCompanyMutation } from "../../../../../services/companyApi";
 
 const CompanyList = () => {
   const res = useCompanyListQuery();
-
-
-
-
   const [deleteCompany] = useDeleteCompanyMutation();
   const { data, isSuccess, isFetching, isError, error } = res;
   const [clickValue, setClickValue] = useState(null);

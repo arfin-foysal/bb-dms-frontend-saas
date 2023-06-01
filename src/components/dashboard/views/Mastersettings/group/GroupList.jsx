@@ -98,7 +98,7 @@ const GroupList = () => {
                           (authUser?.user_type === "User" &&
                             `/dashboard/user/group-document-view/${item?.group?.id}`) ||
                           (authUser?.user_type === "Superadmin" &&
-                            `/dashboard/superadmin/group-document-view/${item?.group?.id}`) 
+                            `/dashboard/superadmin/group-document-view/${item?.group?.id}`)
                         }
                       >
                         <Card.Img
@@ -124,66 +124,68 @@ const GroupList = () => {
                       </Card.Title>
                       <Card.Text>
                         <img
-                className=" rounded-circle mb-1 mr-1"
-                width={15}
-                 src={
-                   item?.group?.group_creator?.image
-                    ? `${import.meta.env.VITE_FILE_UR}${item?.group?.group_creator?.image}`
-                    : `${avatar}`
-                 }
-                alt=""
-              />
+                          className=" rounded-circle mb-1 mr-1"
+                          width={15}
+                          src={
+                            item?.group?.group_creator?.image
+                              ? `${import.meta.env.VITE_FILE_UR}${
+                                  item?.group?.group_creator?.image
+                                }`
+                              : `${avatar}`
+                          }
+                          alt=""
+                        />
                         {item?.group?.group_creator?.name.slice(0, 10)}
                       </Card.Text>
                     </div>
 
-                    <div>
-                      <div
-                        className=" text-center p-2  my-3  px-4 "
-                        style={{ width: "200px" }}
+                    {/* <div
+                      className=" text-center p-2  my-3  px-4 "
+                      style={{ width: "200px" }}
+                    > */}
+                    <div className="row text-center  " style={{ margin:"30px"}}>
+                      <Link
+                        className="col-12 col-md-4 "
+                        to={
+                          (authUser?.user_type === "Admin" &&
+                            `/dashboard/group-document-view/${item?.group?.id}`) ||
+                          (authUser?.user_type === "User" &&
+                            `/dashboard/user/group-document-view/${item?.group?.id}`) ||
+                          (authUser?.user_type === "Superadmin" &&
+                            `/dashboard/superadmin/group-document-view/${item?.group?.id}`)
+                        }
                       >
-                        <div>
-                          <Link
-                            to={
-                              (authUser?.user_type === "Admin" &&
-                                `/dashboard/group-document-view/${item?.group?.id}`) ||
-                              (authUser?.user_type === "User" &&
-                                `/dashboard/user/group-document-view/${item?.group?.id}`) ||
-                              (authUser?.user_type === "Superadmin" &&
-                                `/dashboard/superadmin/group-document-view/${item?.group?.id}`)
-                              
-                            }
-                          >
-                            <BsFillEyeFill color="blue" size={22} />
-                          </Link>
-                          {auth.id === item?.group?.group_creator?.id && (
-                            <Link
-                              to="#"
-                              className="px-3"
-                              onClick={() => {
-                                handleShow();
-                                handelClickValue("Edit Group");
-                                setParamId(item);
-                              }}
-                            >
-                              <BsPencilSquare color="green" size={18} />
-                            </Link>
-                          )}
-                          {auth.id === item?.group?.group_creator?.id && (
-                            <Link
-                              to="#"
-                              style={{ "border-style": "none" }}
-                              onClick={() =>
-                                deleteHandel(deleteGroup, item.group.id)
-                              }
-                            >
-                              <BsFillTrashFill color="red" size={17} />
-                            </Link>
-                          )}
-                        </div>
-                      </div>
+                        <BsFillEyeFill color="blue" size={22} />
+                      </Link>
+                      {auth.id === item?.group?.group_creator?.id && (
+                        <Link
+                          to="#"
+                          className="px-3 col-12 col-md-4"
+                          onClick={() => {
+                            handleShow();
+                            handelClickValue("Edit Group");
+                            setParamId(item);
+                          }}
+                        >
+                          <BsPencilSquare color="green" size={18} />
+                        </Link>
+                      )}
+                      {auth.id === item?.group?.group_creator?.id && (
+                        <Link
+                          className="col-12 col-md-4"
+                          to="#"
+                          style={{ "border-style": "none" }}
+                          onClick={() =>
+                            deleteHandel(deleteGroup, item.group.id)
+                          }
+                        >
+                          <BsFillTrashFill color="red" size={17} />
+                        </Link>
+                      )}
                     </div>
                   </div>
+
+                  {/* </div> */}
                 </Card>
               ))}
           </div>

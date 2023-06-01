@@ -1,9 +1,5 @@
 import React, { useCallback, useMemo, useState } from "react";
-
 import MaterialReactTable from "material-react-table";
-
-import { FaEdit, FaTrash } from "react-icons/fa";
-import { confirmHandel } from "../../../../../utils/Alert";
 import avatar from "../../../../../assets/images/profile-picture.png";
 import { toast } from "react-toastify";
 import Loader from "../../../common/Loader";
@@ -20,7 +16,7 @@ const ClientList = () => {
 
   const res = useAllClientListQuery();
   const [deleteUser] = useDeleteUserMutation();
-  const { data, isSuccess, isFetching, isError, error } = res;
+  const { data, isSuccess, isFetching, isError } = res;
   const [clickValue, setClickValue] = useState(null);
   const [paramId, setParamId] = useState(null);
   const [show, setShow] = useState(false);

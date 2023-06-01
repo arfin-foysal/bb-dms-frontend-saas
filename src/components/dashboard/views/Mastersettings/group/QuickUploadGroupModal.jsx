@@ -19,10 +19,10 @@ const QuickUploadGroupModal = ({ handleClose, show, clickValue, paramId }) => {
           <Modal.Title>{clickValue}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {clickValue === "Add New Documnet" && (
+          {clickValue === "Add New Document" && (
             <UploadGroupDocument handleClose={handleClose} param={paramId}/>
           )}
-          {clickValue === "Edit Documnet" && (
+          {clickValue === "Edit Document" && (
             <EditGroupDocument  handleClose={handleClose} param={paramId} />
           )}
         </Modal.Body>

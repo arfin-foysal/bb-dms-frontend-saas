@@ -10,24 +10,20 @@ import Loader from "../../../common/Loader";
 
 import PageTopHeader from "../../../common/PageTopHeader";
 
-
 import CategoryModal from "./CategoryModal";
-import { useAllCategoryQuery, useDeleteCategoryMutation } from "../../../../../services/categoryApi";
+import {
+  useAllCategoryQuery,
+  useDeleteCategoryMutation,
+} from "../../../../../services/categoryApi";
 
 const CategoryList = () => {
   const res = useAllCategoryQuery();
 
-
-
-
   const [deleteCategory] = useDeleteCategoryMutation();
-  const { data, isSuccess, isFetching, isError, error } = res;
+  const { data, isSuccess, isFetching, isError } = res;
   const [clickValue, setClickValue] = useState(null);
   const [paramId, setParamId] = useState(null);
   const [show, setShow] = useState(false);
-
-
-
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -45,14 +41,12 @@ const CategoryList = () => {
     () => [
       {
         accessorFn: (row) =>
-          row?.image
-          ? (
+          row?.image ? (
             <>
               <img
                 className="img-fluid rounded-circle shadow"
                 style={{ width: "40px", height: "40px" }}
-                src={`${import.meta.env.VITE_FILE_URL}${row?.image
-                }`}
+                src={`${import.meta.env.VITE_FILE_URL}${row?.image}`}
                 alt=""
               ></img>
             </>

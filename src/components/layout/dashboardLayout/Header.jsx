@@ -1,6 +1,7 @@
 import React from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import avatar from "../../../../src/assets/images/profile-picture.png";
+import reset from "../../../../src/assets/images/reset.png";
 import { BiLogOut, BiUser } from "react-icons/bi";
 import { RiSettings2Fill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
@@ -27,6 +28,10 @@ const Header = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  // <-------------refresh page----------->
+  const refresh = () => {
+    window.location.reload(false);
+  };
 
 
   return (
@@ -36,7 +41,18 @@ const Header = () => {
         handleClose={handleClose}
       />
       <div className="py-2 shadow-lg d-flex justify-content-end  px-3">
+
+     
+          <span className="cursor reset ms-auto mt-2 pointer" onClick={refresh}>
+                <img src={reset} alt="" width={22} />
+              </span>
+        <span className=" d-none d-md-block fw-bold mt-2">Refresh</span>
+     
+      
+        
+
         <div className="ms-auto d-flex">
+          
           <div>
             <p className="p-0 m-0 " style={{ fontSize: "14px" }}>
               <strong className="text-capitalize">{authUser?.name}</strong>
@@ -48,6 +64,8 @@ const Header = () => {
               {authUser?.user_type}
             </p>
           </div>
+
+          
 
           <Dropdown>
             <Dropdown.Toggle

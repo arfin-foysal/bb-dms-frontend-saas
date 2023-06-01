@@ -233,7 +233,7 @@ const Layout = () => {
                         exit="hidden"
                         className="link_text mt-1 ms-2 fw-lighter"
                       >
-                        <p>LogOut</p>
+                        <p>Logout</p>
                       </motion.h6>
                     </span>
                   )}

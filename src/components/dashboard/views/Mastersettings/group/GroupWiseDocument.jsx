@@ -34,10 +34,8 @@ export const GroupWiseDocument = () => {
   const res = useGroupDocumentQuery(id);
 
   const authUser = useSelector((state) => state.auth.user);
-
   const [groupDeleteDocument] = useGroupDeleteDocumentMutation();
   const [documentpublish] = useDocumentpublishMutation();
-
   const { data, isFetching, isSuccess, isError } = res;
   const { data: singalData, isSuccess: singalDataSuccess } =
     useSingalGroupQuery(id);
@@ -60,7 +58,7 @@ export const GroupWiseDocument = () => {
         clickValue={clickValue}
         paramId={paramId}
       />
-      <PageTopHeader title="Documnet" />
+      <PageTopHeader title="Document" />
       <div className="card border shadow-lg ">
         <div className="card-header d-flex justify-content-between">
           <div>
@@ -87,11 +85,11 @@ export const GroupWiseDocument = () => {
             className="btn btn-primary btn-sm"
             onClick={() => {
               handleShow();
-              handelClickValue("Add New Documnet");
+              handelClickValue("Add New Document");
               setParamId(id);
             }}
           >
-            Add New Documnet
+            Add New Document
           </button>
         </div>
 
@@ -113,12 +111,21 @@ export const GroupWiseDocument = () => {
             {isSuccess &&
               data?.map((item, i) => (
                 <div className="mx-1 m-2 " key={i}>
-                  {/* <Link
-                    // to={`/documents/document_category_view/${category.id}`}
-                    className=" "
-                  > */}
                   <Card style={{ width: "15rem" }} className=" border-0">
-                    <NoImage item={item} />
+                    <Link
+                      className="mx-2"
+                      to={
+                        (authUser?.user_type === "Admin" &&
+                          `/dashboard/group-singal-document-view/${item?.id}`) ||
+                        (authUser?.user_type === "User" &&
+                          `/dashboard/user/group-singal-document-view/${item?.id}`) ||
+                        (authUser?.user_type === "Superadmin" &&
+                          `/dashboard/superadmin/group-singal-document-view/${item?.id}`)
+                      }
+                    >
+                      <NoImage item={item} />
+                    </Link>
+
                     <Card.Body className=" px-2 text-dark">
                       <div className=" d-flex">
                         <div className="mb-1">
@@ -178,7 +185,7 @@ export const GroupWiseDocument = () => {
                               to="#"
                               onClick={() => {
                                 handleShow();
-                                handelClickValue("Edit Documnet");
+                                handelClickValue("Edit Document");
                                 setParamId(item);
                               }}
                               className="px-2"

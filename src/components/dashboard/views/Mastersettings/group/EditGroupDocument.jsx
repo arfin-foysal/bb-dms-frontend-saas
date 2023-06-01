@@ -1,6 +1,5 @@
 import { useFormik } from "formik";
 import React, { useState, useRef, useEffect } from "react";
-import { Col, Form } from "react-bootstrap";
 import { toast } from "react-toastify";
 import JoditEditor from "jodit-react";
 import PageTopHeader from "../../../common/PageTopHeader";
@@ -9,7 +8,6 @@ import { useGroupDocumentUpdateMutation } from "../../../../../services/groupApi
 
 const EditGroupDocument = ({handleClose, param }) => {
   
-
   const [groupDocumentUpdate, res] = useGroupDocumentUpdateMutation();
 
   const [description, setDescription] = useState();
@@ -20,7 +18,6 @@ const EditGroupDocument = ({handleClose, param }) => {
   }
 
   useEffect(() => {
- 
       setDescription(param?.description);
     
   }, [param]);
@@ -174,7 +171,7 @@ const EditGroupDocument = ({handleClose, param }) => {
               </div>
             </div>
 
-            <div>
+            <div className="mx-2">
               {previewImage ? (
                 <img
                   className="py-2"
@@ -198,13 +195,14 @@ const EditGroupDocument = ({handleClose, param }) => {
               )}
             </div>
             <div className=" d-flex justify-content-end">
-              <div>
-                <button onClick={()=>handleClose()} className="btn btn-dark">Close</button>
-              </div>
-              <div className="mx-5">
-                <button type="submit" className="btn btn-success">
+              <div className="me-2">
+                
+                  <button type="submit" className="btn btn-success">
                   Submit
                 </button>
+              </div>
+              <div >
+              <button onClick={() => handleClose()} className="btn btn-dark">Close</button>
               </div>
             </div>
           </form>

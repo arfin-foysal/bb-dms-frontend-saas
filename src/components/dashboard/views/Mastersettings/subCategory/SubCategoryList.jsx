@@ -7,29 +7,22 @@ import { confirmHandel } from "../../../../../utils/Alert";
 import avatar from "../../../../../assets/images/File/noimg.png";
 import { toast } from "react-toastify";
 import Loader from "../../../common/Loader";
-
 import PageTopHeader from "../../../common/PageTopHeader";
-
-
-
-
-import { useAllSubCategoryQuery, useDeleteSubCategoryMutation } from "../../../../../services/subCategoryApi";
+import {
+  useAllSubCategoryQuery,
+  useDeleteSubCategoryMutation,
+} from "../../../../../services/subCategoryApi";
 import SubCategoryModal from "./SubCategoryModal";
 
 const SubCategoryList = () => {
   const res = useAllSubCategoryQuery();
 
-
-
   const [deleteSubCategory] = useDeleteSubCategoryMutation();
-  
-  const { data, isSuccess, isFetching, isError, error } = res;
+
+  const { data, isSuccess, isFetching, isError } = res;
   const [clickValue, setClickValue] = useState(null);
   const [paramId, setParamId] = useState(null);
   const [show, setShow] = useState(false);
-
-
-
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -47,14 +40,12 @@ const SubCategoryList = () => {
     () => [
       {
         accessorFn: (row) =>
-          row?.image
-          ? (
+          row?.image ? (
             <>
               <img
                 className="img-fluid rounded-circle shadow"
                 style={{ width: "40px", height: "40px" }}
-                src={`${import.meta.env.VITE_FILE_URL}${row?.image
-                }`}
+                src={`${import.meta.env.VITE_FILE_URL}${row?.image}`}
                 alt=""
               ></img>
             </>

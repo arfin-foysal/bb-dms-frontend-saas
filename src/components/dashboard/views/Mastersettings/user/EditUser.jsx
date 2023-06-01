@@ -297,13 +297,13 @@ const EditUser = ({ handleClose, param }) => {
         </div>
         <Modal.Footer>
           <div className=" d-flex">
-            <div className="mx-5">
+            <div className="me-2">
               <button type="submit" className="btn btn-success">
                 Submit
               </button>
             </div>
 
-            <div className="mx-5">
+            <div>
               <button
                 type="button"
                 className="btn btn-dark"

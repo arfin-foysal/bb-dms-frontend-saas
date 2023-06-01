@@ -59,7 +59,20 @@ const AllDocumentList = () => {
               data?.map((item, i) => (
                 <div className="mx-1 m-2 " key={i}>
                   <Card style={{ width: "15rem" }} className=" border-0">
-                    <NoImage item={item} />
+
+                  <Link
+                          to={
+                            (authUser?.user_type === "Admin" &&
+                              `/dashboard/document-view/${item.id}`) ||
+                            (authUser?.user_type === "User" &&
+                              `/dashboard/user/document-view/${item.id}`) ||
+                            (authUser?.user_type === "Superadmin" &&
+                              `/dashboard/superadmin/document-view/${item.id}`)
+                          }
+                        >
+                         <NoImage item={item} />
+                        </Link>
+                    
                     <Card.Body className=" px-2 text-dark">
                       <div className=" d-flex">
                         <div className="mb-1">

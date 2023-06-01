@@ -58,7 +58,7 @@ const GroupDocumentView = () => {
                       <div className="d-flex flex-wrap justify-content-start">
                         <div>
                           <img
-                            onClick={(e) => groupdownload(e, data&&data)}
+                            onClick={(e) => groupdownload(e, data)}
                             className="btn"
                             width={60}
                             src={downloade}
@@ -128,7 +128,7 @@ const GroupDocumentView = () => {
                             This Document is Not Viewable, Please Download this
                             Document 👉
                             <img
-                              onClick={(e) => download(e, data)}
+                              onClick={(e) => groupdownload(e, data)}
                               className="btn"
                               width={50}
                               src={downloade}

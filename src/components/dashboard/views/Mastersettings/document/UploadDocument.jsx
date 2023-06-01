@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
 import React, { useState, useRef } from "react";
-import { Col, Form, Row } from "react-bootstrap";
+import { Form, } from "react-bootstrap";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import JoditEditor from "jodit-react";
@@ -11,11 +11,7 @@ import {
   useThirdCateBySubCateIdQuery,
 } from "../../../../../services/ThirdSubCategoryApi";
 import { useUploadeDocumentMutation } from "../../../../../services/documentApi";
-import { useNavigate } from "react-router-dom";
-
 const UploadDocument = ({ handleClose }) => {
-  const navigate = useNavigate();
-
   const [uploadeDocument, res] = useUploadeDocumentMutation();
 
   const [category, setcategory] = useState(0);
@@ -25,6 +21,9 @@ const UploadDocument = ({ handleClose }) => {
   const cateRes = useAllCategoryQuery();
   const subCateRes = useSubCategoryByCategoryIdQuery(category);
   const thirdSubCateRes = useThirdCateBySubCateIdQuery(subCategory);
+
+
+  
 
   const [previewImage, setPreviewImage] = useState();
   function handelImage(e) {
@@ -58,7 +57,6 @@ const UploadDocument = ({ handleClose }) => {
       resetForm();
 
       try {
-        console.log(values);
         const result = await uploadeDocument(formData).unwrap();
         toast.success(result.message);
       } catch (error) {
@@ -85,6 +83,7 @@ const UploadDocument = ({ handleClose }) => {
             onSubmit={formik.handleSubmit}
             encType="multipart/form-data"
           >
+         
             <div className="row">
               <div className="col ">
                 <label className="mb-2">Name</label>
@@ -109,6 +108,7 @@ const UploadDocument = ({ handleClose }) => {
               <div className="col">
                 <div className="row">
                   <div className="col">
+
                     <Form.Label>Category</Form.Label>
                     <select
                    
@@ -141,6 +141,13 @@ const UploadDocument = ({ handleClose }) => {
 
                         
                   </div>
+
+                  {cateRes.data?.length === 0 && (
+                    <p className="text-warning">
+                      *Please Create Category First !
+                    </p>
+                    )}
+                
                   <div
                     className={
                       formik.values.catagory_id === ""
@@ -234,7 +241,7 @@ const UploadDocument = ({ handleClose }) => {
               </div>
             </div>
 
-            <div className="mx-3">
+            <div className="mx-2">
               <img
                 className="py-2"
                 src={previewImage}
@@ -243,8 +250,9 @@ const UploadDocument = ({ handleClose }) => {
                 alt=""
               />
             </div>
+
             <div className=" d-flex justify-content-end">
-              <div className="mx-5">
+              <div className="me-2">
                 <button type="submit" className="btn btn-success">
                   Submit
                 </button>

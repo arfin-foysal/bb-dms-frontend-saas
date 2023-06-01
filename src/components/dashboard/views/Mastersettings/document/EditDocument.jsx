@@ -1,6 +1,5 @@
 import { useFormik } from "formik";
 import React, { useState, useRef, useEffect } from "react";
-import { Col, Form } from "react-bootstrap";
 import { toast } from "react-toastify";
 import JoditEditor from "jodit-react";
 import PageTopHeader from "../../../common/PageTopHeader";
@@ -113,31 +112,32 @@ const EditDocument = () => {
                   <option value="Pending">No</option>
                 </select>
               </div>
-          
 
-            <div className="col-12 mt-3">
-              <label>Description</label>
-              <JoditEditor
-                ref={editor}
-                value={description}
-                // config={config}
-                tabIndex={1} // tabIndex of textarea
-                onBlur={(newContent) => setDescription(newContent)} // preferred to use only this option to update the content for performance reasons
-                // onChange={(newContent) => {setDescription(newContent.target.value)}}
-              />
-            </div>
+              <div className="col-12 mt-3">
+                <label>Description</label>
+                <JoditEditor
+                  ref={editor}
+                  value={description}
+                  // config={config}
+                  tabIndex={1} // tabIndex of textarea
+                  onBlur={(newContent) => setDescription(newContent)} // preferred to use only this option to update the content for performance reasons
+                  // onChange={(newContent) => {setDescription(newContent.target.value)}}
+                />
+              </div>
 
-            <div className="col-12 my-1">
-              <label className="col-12 col-form-label">Select Your File</label>
-              <div className="col-12">
-                <input
-                  type="file"
-                  name="file"
-                  accept="image/*,.pdf,.doc,.docx,.ppt,.pptx,.txt,.xlsx,.xls,.csv,"
-                  onChange={(e) => {
-                    formik.setFieldValue("file", e.currentTarget.files[0]);
-                    handelImage(e);
-                  }}
+              <div className="col-12 my-1">
+                <label className="col-12 col-form-label">
+                  Select Your File
+                </label>
+                <div className="col-12">
+                  <input
+                    type="file"
+                    name="file"
+                    accept="image/*,.pdf,.doc,.docx,.ppt,.pptx,.txt,.xlsx,.xls,.csv,"
+                    onChange={(e) => {
+                      formik.setFieldValue("file", e.currentTarget.files[0]);
+                      handelImage(e);
+                    }}
                     onBlur={formik.handleBlur}
                     className={
                       formik.errors.file && formik.touched.file
@@ -146,15 +146,12 @@ const EditDocument = () => {
                     }
                   />
                   {formik.errors.file && formik.touched.file ? (
-                    <div className="invalid-feedback">
-                      {formik.errors.file}
-
-                    </div>
+                    <div className="invalid-feedback">{formik.errors.file}</div>
                   ) : null}
+                </div>
               </div>
             </div>
-            </div>
-            <div>
+            <div className="mx-3">
               {previewImage ? (
                 <img
                   className="py-2"
@@ -181,7 +178,7 @@ const EditDocument = () => {
             </div>
 
             <div className=" d-flex justify-content-end">
-              <div className="mx-5">
+              <div className="me-2">
                 <button type="submit" className="btn btn-success">
                   Submit
                 </button>
